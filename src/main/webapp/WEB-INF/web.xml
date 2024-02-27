@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  <display-name>smartMukkam</display-name>
+  <welcome-file-list>
+    
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+ <servlet>
+    <servlet-name>UserSignupServlet</servlet-name>
+    <servlet-class>smartMukkam.main.user.userData.UserSignIn</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UserSignupServlet</servlet-name>
+    <url-pattern>/userSignup</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+    <servlet-name>UserLoginServlet</servlet-name>
+    <servlet-class>smartMukkam.main.user.Login.UserLoginServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UserLoginServlet</servlet-name>
+    <url-pattern>/userLogin</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>UserProfile</servlet-name>
+    <servlet-class>smartMukkam.main.user.Login.UserProfileImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UserProfile</servlet-name>
+    <url-pattern>/userPhoto</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>MunicipalityLogin</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.login.MunicipalityLoginServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MunicipalityLogin</servlet-name>
+    <url-pattern>/mLogin</url-pattern>
+</servlet-mapping>
+  
+ <servlet>
+    <servlet-name>UserProjectSubmission</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.ProjectServelet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>UserProjectSubmission</servlet-name>
+    <url-pattern>/uProject</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+    <servlet-name>GetProjectPDF</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.GetPdfServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>GetProjectPDF</servlet-name>
+    <url-pattern>/GetPdf</url-pattern>
+</servlet-mapping>
+
+ <servlet>
+    <servlet-name>municipalityCompalint</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.ComplaintServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>municipalityCompalint</servlet-name>
+    <url-pattern>/complaint</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>pdfCompalint</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.GetComplaintPDFServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>pdfCompalint</servlet-name>
+    <url-pattern>/getcompPDF</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>MprofileUpload</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.MunicipalityProfileServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MprofileUpload</servlet-name>
+    <url-pattern>/mprofile</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>GprofileUpload</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.GovernorProfileServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>GprofileUpload</servlet-name>
+    <url-pattern>/gprofile</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>CoImages</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.ImageCouncilor</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>CoImages</servlet-name>
+    <url-pattern>/cimg</url-pattern>
+</servlet-mapping>
+  
+<servlet>
+    <servlet-name>MGallery</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.MunicipalityGalleryServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MGallery</servlet-name>
+    <url-pattern>/mg</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>MVGallery</servlet-name>
+    <servlet-class>smartMukkam.com.municipality.MunicipalityGalleryImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>MVGallery</servlet-name>
+    <url-pattern>/ivg</url-pattern>
+</servlet-mapping>
+  
+<servlet>
+    <servlet-name>shopSingin</servlet-name>
+    <servlet-class>smartMukkam.com.shop.ShopRegistrationServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>shopSingin</servlet-name>
+    <url-pattern>/shopsign</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>shopLicense</servlet-name>
+    <servlet-class>smartMukkam.com.shop.ShopLicenseServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>shopLicense</servlet-name>
+    <url-pattern>/license</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>shopProfile</servlet-name>
+    <servlet-class>smartMukkam.com.shop.ShopImageServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>shopProfile</servlet-name>
+    <url-pattern>/shopImage</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>shopLogin</servlet-name>
+    <servlet-class>smartMukkam.com.shop.ShopLoginServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>shopLogin</servlet-name>
+    <url-pattern>/shopL</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>productAdd</servlet-name>
+    <servlet-class>smartMukkam.com.shop.ProductServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>productAdd</servlet-name>
+    <url-pattern>/pAdd</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>productImage</servlet-name>
+    <servlet-class>smartMukkam.com.shop.ProductImageServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>productImage</servlet-name>
+    <url-pattern>/pImage</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>addAds</servlet-name>
+    <servlet-class>smartMukkam.com.shop.AdsServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>addAds</servlet-name>
+    <url-pattern>/ads</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>imagAds</servlet-name>
+    <servlet-class>smartMukkam.com.shop.GetAdsImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>imagAds</servlet-name>
+    <url-pattern>/imAds</url-pattern>
+</servlet-mapping>
+  
+</web-app>
