@@ -57,6 +57,36 @@ public class ShopDAO {
 		}
 		return li;
 	}
+	public static List<ProductDTO> getProductBasedOnShopIdForUsers(int sid){
+		ArrayList<ProductDTO> li =new ArrayList<ProductDTO>();
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql = "SELECT tid,sid,product,description,price,discount,status from product where sid="+sid+";";
+	        PreparedStatement stm = connection.prepareStatement(sql);
+	        ResultSet rs = stm.executeQuery();
+	        while(rs.next()) {
+	        	ProductDTO pro = new ProductDTO();
+	        	pro.setTid(rs.getInt(1));
+	        	pro.setSid(rs.getInt(2));
+	        	pro.setProduct(rs.getString(3));
+	        	pro.setDescription(rs.getString(4));
+	        	pro.setPrice(rs.getDouble(5));
+	        	pro.setDiscount(rs.getDouble(6));
+	        	pro.setStatus(rs.getString(7));
+	        	if(pro.getStatus() == null || pro.getStatus().equals("active")){
+	        		li.add(pro);
+	        	}else {
+	        		
+	        	}
+	        	
+	        }
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return li;
+	}
 	//product delete
 	public static int productDeleteAccept(int tid) {
 		int i = 0;
@@ -758,6 +788,82 @@ public class ShopDAO {
 			Conn con = new Conn();
 			Connection connection = con.connection;
 			String update = "UPDATE ads SET status='delete' WHERE tid=?";
+			    	
+	    	try {
+	    		PreparedStatement preparedStatement = connection.prepareStatement(update);
+	    		
+	    		preparedStatement.setInt(1, tid);
+	    		int rowsAffected = preparedStatement.executeUpdate();
+		        if(rowsAffected > 0) {
+		        	i = 1;
+		        	return i;
+		        }
+		        
+			} catch (Exception e) {
+				System.out.println(e+"Jaseem");
+				
+			}
+			return i;
+		}
+		
+		
+		public static List<ShopGalleryDTO> getGalleryBaseSidForUser(int sid) {
+			ArrayList<ShopGalleryDTO> li = new ArrayList<ShopGalleryDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid,sid,description,status from sGallery where sid="+sid+";";
+				PreparedStatement stm = connection.prepareStatement(sql);
+			    ResultSet rs = stm.executeQuery();
+			    while(rs.next()) {
+			    	ShopGalleryDTO g = new ShopGalleryDTO();
+			    	g.setTid(rs.getInt(1));
+			    	g.setSid(rs.getInt(2));
+			    	g.setDescription(rs.getString(3));
+			    	g.setStatus(rs.getString(4));
+			    	if(g.getStatus() == null) {
+			    		li.add(g);
+			    	}
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			
+			return li;
+			
+		}
+		
+		public static List<ShopGalleryDTO> getGalleryBaseSidForShop(int sid) {
+			ArrayList<ShopGalleryDTO> li = new ArrayList<ShopGalleryDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid,sid,description,status from sGallery where sid="+sid+";";
+				PreparedStatement stm = connection.prepareStatement(sql);
+			    ResultSet rs = stm.executeQuery();
+			    while(rs.next()) {
+			    	ShopGalleryDTO g = new ShopGalleryDTO();
+			    	g.setTid(rs.getInt(1));
+			    	g.setSid(rs.getInt(2));
+			    	g.setDescription(rs.getString(3));
+			    	g.setStatus(rs.getString(4));
+			    	li.add(g);
+			    	
+			    }
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			
+			return li;
+			
+		}
+		public static int updateGalleryDelete(int tid) {
+			int i = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			String update = "UPDATE sGallery SET status='delete' WHERE tid=?";
 			    	
 	    	try {
 	    		PreparedStatement preparedStatement = connection.prepareStatement(update);

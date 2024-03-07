@@ -1,3 +1,6 @@
+<%@page import="smartMukkam.com.shop.ShopDAO"%>
+<%@page import="smartMukkam.com.shop.ShopGalleryDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -21,6 +24,7 @@ String state = (String) session.getAttribute("state");
 if(shopType == null){
 	response.sendRedirect("index.jsp?message=unautherizedAccess");
 }
+String alert = (String) request.getParameter("message");
 
 %>
 
@@ -211,8 +215,19 @@ if(shopType == null){
     			<span style="color: white;">Upload Gallery</span>
     			
     		</div>
-    		<form action="" method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  
+    		<%			if(alert != null && alert.equals("success")){
+                        	out.print("<div id='alert' class='alert alert-success' style='color:black;' role='alert'>Gallery update Success</div>");
+                        }else if(alert != null && alert.equals("failed")){
+                        	out.print("<div id='alert' class='alert alert-dainger' style='color:red;' role='alert'>Gallery update failed</div>");
+                        	
+                        }
+                        else{
+                        	
+                        }
+    		%>
+    		
+    		<form action="gimShop" method="post" enctype="multipart/form-data" style="margin: 30px;">
+				  <input type="hidden" value="<%=sid%>" class="form-control" id="sid" name="sid" aria-describedby="sid">
 				  <div class="mb-3">
 				    <label for="description" class="form-label">Description</label>
 				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
@@ -224,7 +239,41 @@ if(shopType == null){
 		
 				  <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
-    			
+    		<div class="home">
+    			<span style="color: white;">Manage Gallery</span>
+    		</div>
+    		<%			if(alert != null && alert.equals("DeleteSuccess")){
+                        	out.print("<div id='alert' class='alert alert-success' style='color:black;' role='alert'>Image Deleted Success</div>");
+                        }else if(alert != null && alert.equals("DeleteFailed")){
+                        	out.print("<div id='alert' class='alert alert-dainger' style='color:red;' role='alert'>Image Deleted failed</div>");
+                        	
+                        }
+                        else{
+                        	
+                        }
+    		%>	
+    			<div class="row" style="margin: 10px;">
+    			<%
+    			List<ShopGalleryDTO> images = ShopDAO.getGalleryBaseSidForShop(sid);
+    			for(ShopGalleryDTO im : images){
+    			%>
+    				<div class="col" style="margin: 10px;">
+	    				<div class="card" style="width: 16rem;">
+							  <img src="showImShopG?id=<%=im.getTid() %>" class="card-img-top" style="max-height: 150px;" alt="...">
+							  <div class="card-body">
+							  	<a href="shopGalleryDelete.jsp?tid=<%=im.getTid()%>"><i class="fa fa-trash" aria-hidden="true" style="position: relative; left: 90%;color: red;"></i></a>
+							    <p class="card-text"><%=im.getDescription() %></p>
+							    <p class="card-text"><%if(im.getStatus() != null){
+							    	out.print("<span style='color:red'>it's Deleted </span>");
+							    }
+							    	%></p>
+							    
+							  </div>  
+						</div>
+					</div>
+				<%} %>
+    		</div>
+    		
     	</div>
     
     </div>
@@ -251,5 +300,19 @@ if(shopType == null){
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    var alertElement = document.getElementById('alert');
+    if (alertElement) {
+        setTimeout(function() {
+            alertElement.style.display = 'none';
+        }, 2000); // 2000 milliseconds = 2 seconds
+    }
+});
+
+
+</script>
 </body>
 </html>

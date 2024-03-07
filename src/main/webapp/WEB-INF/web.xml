@@ -194,5 +194,50 @@
     <servlet-name>imagAds</servlet-name>
     <url-pattern>/imAds</url-pattern>
 </servlet-mapping>
+
+<servlet>
+    <servlet-name>sGallery</servlet-name>
+    <servlet-class>smartMukkam.com.shop.AddGalleryServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>sGallery</servlet-name>
+    <url-pattern>/gimShop</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>vsGallery</servlet-name>
+    <servlet-class>smartMukkam.com.shop.GetShopGalleryImg</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>vsGallery</servlet-name>
+    <url-pattern>/showImShopG</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>touristSign</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.TouristSignUpServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>touristSign</servlet-name>
+    <url-pattern>/tSign</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>touristImage</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.TouristProfileImageServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>touristImage</servlet-name>
+    <url-pattern>/timg</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>touristLic</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.TouristLicensePDFServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>touristLic</servlet-name>
+    <url-pattern>/tlic</url-pattern>
+</servlet-mapping>
+
   
 </web-app>

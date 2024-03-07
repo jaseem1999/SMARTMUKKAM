@@ -1,3 +1,5 @@
+<%@page import="smartMukkam.com.tourist.TouristDAO"%>
+<%@page import="smartMukkam.com.tourist.TouristDTO"%>
 <%@page import="smartMukkam.com.municipality.ServicesDTO"%>
 <%@page import="smartMukkam.com.shop.ShopDTO"%>
 <%@page import="java.util.List"%>
@@ -70,7 +72,7 @@
 		}
 		.homeFull{
 		 	max-width: 1370px;
-		 	height: 500px;
+		 	height: 600px;
 		 	border: 1px solid;
 		}
 		.home{
@@ -185,7 +187,7 @@ if(email == null){
 			<div id="registrationRejectSuccessAlert" class="alert alert-success" style="color: green; display: none;" role="alert">
 			    Shop registration reject successfully
 			</div>
-    		
+    		<div style="overflow:auto; height: 250px;">
     			<table id="appointmentTable" class="table table-striped" style="margin: 20px; width: 97%;">
  					<thead>
 					    <tr>
@@ -247,6 +249,75 @@ if(email == null){
 					    <%} %>
 					    </tbody>
 					  </table>
+					 </div>
+			<div class="home1" style="">
+    			<span>Tourist place Registration approval portal </span>
+    		</div>
+    		<div style="overflow:auto; height: 250px;">
+    		<table id="Table" class="table table-striped" style="margin: 20px; width: 97%;">
+ 					<thead >
+					    <tr>
+					      <th scope="col">Tourist</th>
+					      <th scope="col">Owner</th>
+					      <th scope="col">Email</th>
+					      <th scope="col">Phone</th>
+					      <th scope="col">Tourist place name</th>
+					      <th scope="col">License</th>
+					      <th scope="col">Address1</th>
+					      <th scope="col">Address2</th>
+					      <th scope="col">City</th>
+					      <th scope="col">State</th>
+					      <th scope="col">Status</th>
+					      <th scope="col">Menu</th>
+					    </tr>
+					 </thead>
+					 <tbody >
+					 <%
+					 List<TouristDTO> tourist = TouristDAO.getAllTouristDetails();
+					 
+					 for(TouristDTO t : tourist){
+					 %>
+					 <tr>
+					 	<td><img src="timg?id=<%=t.getTouristId()%>" style="width: 40px; border: 1px solid; border-radius: 5px;" alt="" ></td>
+					 	<td><%=t.getName() %></td>
+					 	<td><%=t.getEmail() %></td>
+					 	<td><%=t.getPhone() %></td>
+					 	<td><%=t.getTouristPlace() %></td>
+					 	<td><a href="touristLicenseServlet.jsp?id=<%=t.getTouristId()%>" class=" badge-primary">view</a></td>
+					 	<td><%=t.getAddressOne() %></td>
+					 	<td><%=t.getAddressTwo() %></td>
+					 	<td><%=t.getCity() %></td>
+					 	<td><%=t.getState() %></td>
+					 	<td><%
+					    		 	if(t.getStatus() == null){
+						                out.print("<span  style='color : blue;'>Processing</span>");
+						            } else if(t.getStatus().equals("accept")){
+						                out.print("<span  style='color : green;'>Accept</span>");
+						            } else if(t.getStatus().equals("reject")){
+						                out.print("<span  style='color : red;'>Reject</span>");
+						            }else{
+						            	out.print("<span  style='color : red;'></span>");
+						            }
+					    %></td>
+					    <td>
+					    			<div class="dropdown">
+					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					                    Menu
+					                </button>
+					                <ul class="dropdown-menu">
+					                    <li><a href="#" class="dropdown-item acceptLinkTourist" data-tid="<%=t.getTouristId()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLinkTourist" data-tid="<%=t.getTouristId() %>" type="button">Reject</a></li>
+					                </ul>
+		           					 </div>
+					    		</td>
+					    
+					 	
+					 </tr>
+					 <%}%>
+					 
+				    </tbody>
+				</table>
+				</div>
     		
     	</div>
     
@@ -358,6 +429,64 @@ $(document).ready(function() {
                 }
             });
         });
+
+        $(".acceptLinkTourist").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "municipalityTouristRegistrationAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                 
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+        $(".rejectLinkTourist").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "municipalityTouristRegistrationReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                 
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+        
     }
 });
    

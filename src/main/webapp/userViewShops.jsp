@@ -1,3 +1,4 @@
+<%@page import="smartMukkam.com.shop.ShopGalleryDTO"%>
 <%@page import="smartMukkam.com.shop.ProductDTO"%>
 <%@page import="smartMukkam.com.shop.ShopDAO"%>
 <%@page import="smartMukkam.com.shop.ShopDTO"%>
@@ -19,7 +20,7 @@ Long number =(Long) session.getAttribute("phone");
 if (email == null){
 	response.sendRedirect("index.jsp?message=login");
 }
-Integer sid = Integer.parseInt(request.getParameter("id"));
+Integer sid = Integer.parseInt(request.getParameter("sid"));
 %>
 
 <title>Shop</title>
@@ -79,6 +80,25 @@ Integer sid = Integer.parseInt(request.getParameter("id"));
 .list-group-item{
 	width: 300px;
 }
+
+.homeFull{
+		 	max-width: 100%;
+		 	height: auto;
+		 	border: 1px solid white;
+		 	box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5);
+		}
+		.home{
+			width: 100%;
+			height: 30px;
+			background: #353f5a;
+			color: white;
+		}
+		.home span{
+			margin: 5px;
+		    color: black;
+		    font-size: medium;
+		    font-weight: 600;
+		}
 
 .tooltip {
 		  visibility: hidden;
@@ -203,43 +223,31 @@ shopType = s.getShopType();
 	
 </div>
 <div class="container-xxl" style="margin-top: 50px;">
-	<a href="userViewShops.jsp?sid=<%=sid%>" class="btn btn-outline-success ">View Gallery</a>
-</div>
+	<div class="homeFull" style="margin: 50px;">
+    		
+    		<div class="home" style="background: #6a61c6;">
+    			<span style="color: white;">Gallery</span>
+    			    			
+    		</div>
+    		<div class="row">
+    				<%
+    				List<ShopGalleryDTO> gallery = ShopDAO.getGalleryBaseSidForUser(sid);
+    				for(ShopGalleryDTO g : gallery){
+    				%>
+    				<div class="col">
+    				<div class="card" style="width: 16rem;">
+					  <img src="showImShopG?id=<%=g.getTid() %>" class="card-img-top" style="max-height: 150px;" alt="...">
+					  <div class="card-body">
+					    <p class="card-text"><%=g.getDescription() %></p>
+					  </div>  
+					</div>
+    				</div>
+    				<%} %>
+    			</div>
+    		
+    </div>
 
-<div class="container-xxl" style="margin-top: 50px;">
-<%
-List<ProductDTO> pro = ShopDAO.getProductBasedOnShopIdForUsers(sid);
-for(ProductDTO product : pro){
-%>
-	<div class="row" style="background-color: #ffffff; border: 1px solid white;box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5);">
-		<div class="col-2">
-			<img alt="" src="pImage?id=<%=product.getTid()%>" style="width: 200px; height:150px;margin: 30px; ">
-		</div>
-		 <div class="col-8">
-		 	<div class="container"> 
-		 	<ul class="unlist"> 
-		 	<li class="list"><%=product.getProduct() %></li> 
-		 	<li class="list">product id : <%=product.getTid() %></li> 
-		 	<li class="list"><%=product.getDescription() %></li>  
-		 	<li class="list" style="color: blue;"><a href="userProductReview.jsp?sid=<%=product.getSid()%>&pid=<%=product.getTid()%>"><i class="fa fa-star" aria-hidden="true"></i> review</a></li>
-		 	</ul> 
-		 	<p class="mrp">M.R.P.: <span class="discount"><%=product.getPrice() %></span></p> 
-		 	<p class="price">Save extra with No Cost EMI <span class="save"> <%=product.getDiscount() %></span></p>
-		 	 <p class="price">Final Price: <span class="finalprice"><%=product.getPrice() - product.getDiscount()%></span></p>
-		 	 
-		 </div>
-			
-		</div>
-		<div class="col-2">
-			<div class="" style="">
-				<a class="btn btn-outline-primary" style="position : relative;left: 42px;top: 182px;" href="userShopCart.jsp?pid=<%=product.getTid()%>&typeShop=<%=shopType %>&sid=<%=sid%>">Go to <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
-			</div>
-		</div>
-	</div>
-	<hr>
-	<%} %>
 </div>
-
 
 
 <!-- Template Javascript -->
