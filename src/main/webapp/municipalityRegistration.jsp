@@ -116,7 +116,7 @@ if(email == null){
 <nav class="navbar bg-body-tertiary" style="height: 80px; background: #84818317;">
   <div class="container">
     <a class="navbar-brand" href="municipality.jsp" >
-      <img src="images/png-transparent-government-of-india-logo-gold.png"Bootstrap" style="width: 50px;" >
+      <img src="images/png-transparent-government-of-india-logo-gold.png" style="width: 50px;" >
       <img src="images/kerala-govt-logo.png" alt="Bootstrap" style="width: 60px; margin-left: 20px;" >
      </a>
       <ul class="nav justify-content-end">

@@ -239,5 +239,73 @@
     <url-pattern>/tlic</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>touristTicket</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.AddTicketServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>touristTicket</servlet-name>
+    <url-pattern>/toTick</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>ImageTicket</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.ImageTicketServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ImageTicket</servlet-name>
+    <url-pattern>/imTick</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>TouristGallery</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.TouristGalleryUpload</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>TouristGallery</servlet-name>
+    <url-pattern>/tGallery</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>TouristGalleryImage</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.GetTouristGallaryImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>TouristGalleryImage</servlet-name>
+    <url-pattern>/tGallIm</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>TouristWallpaper</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.TouristWallpaperUpload</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>TouristWallpaper</servlet-name>
+    <url-pattern>/tWallpeper</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+    <servlet-name>GetTouristWallpaper</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.GetWallpaperImages</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>GetTouristWallpaper</servlet-name>
+    <url-pattern>/getTWallpeper</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>bookTicket</servlet-name>
+    <servlet-class>smartMukkam.com.tourist.BookTicketServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>bookTicket</servlet-name>
+    <url-pattern>/ticket</url-pattern>
+</servlet-mapping>
+
+
+
+
+
   
 </web-app>
