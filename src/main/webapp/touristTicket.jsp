@@ -1,3 +1,4 @@
+<%@page import="smartMukkam.com.tourist.TicketBookedDTO"%>
 <%@page import="smartMukkam.com.tourist.TicketDTO"%>
 <%@page import="smartMukkam.com.tourist.TouristDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDTO"%>
@@ -158,7 +159,7 @@ String alert = (String) request.getParameter("message");
 	</div>
 </div>
 
-<div class="container-sm" >
+<div class="container-sm" id="contentToRefresh">
 	<div style="background: #000802b8; margin: 10px; box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5); color: white;">
 	<div style="width: 100%; height: 30px; background: white;">
 		<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Upload Tickets</span>
@@ -230,8 +231,8 @@ String alert = (String) request.getParameter("message");
 		                out.print("<span  style='color : blue;'>Processing</span>");
 		            } else if(ticket.getStatus().equals("accept")){
 		                out.print("<span  style='color : green;'>Accept</span>");
-		            } else if(ticket.getStatus().equals("reject")){
-		                out.print("<span  style='color : red;'>Reject</span>");
+		            } else if(ticket.getStatus().equals("delete")){
+		                out.print("<span  style='color : red;'>delete</span>");
 		            }else{
 		            	out.print("<span  style='color : red;'></span>");
 		            }
@@ -274,18 +275,57 @@ String alert = (String) request.getParameter("message");
 			<table class="table table-dark table-striped">
 			  <thead>
 			    <tr>
-			      <th scope="col">Tourist</th>
+			      <th scope="col">UID</th>
 			      <th scope="col">Image</th>
 			      <th scope="col">Activity </th>
-			      <th scope="col">Price </th>
+			      <th scope="col">Price/one </th>
 			      <th scope="col">No of slot</th>
+			      <th scope="col">Total price</th>
+			      <th scope="col">Date</th>
 			      <th scope="col">Status</th>
 			      <th scope="col">Menu</th>
 			    </tr>
 			  </thead>
 			 
 			  <tbody >
-			 			    
+			  <%
+			  List<TicketBookedDTO> ticketsBooked = TouristDAO.getAllTicketBookedBasedOnToidAndUIDForTourist(toId);
+			  for(TicketBookedDTO tb : ticketsBooked){
+			  %>
+			 		<tr>
+			 		<td><img src="userPhoto?id=<%=tb.getUid()%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></td>
+			 		<td><img alt="cd" src="imTick?id=<%=tb.getTicketId()%>" style="width: 100px; height:50px;"></td>
+			 		<td><%=TouristDAO.ticketName(tb.getTicketId()) %></td>
+			 		<td><%=TouristDAO.ticketPrice(tb.getTicketId()) %></td>
+			 		<td><%=tb.getSlot() %></td>
+			 		<td><%=Double.parseDouble(String.valueOf(tb.getSlot())) * TouristDAO.ticketPrice(tb.getTicketId()) %></td>
+				    <td><%=tb.getDate() %></td>
+				    <td>
+				        <%
+				        if(tb.getStatus() == null){
+				            out.print("<span  style='color : blue;'>Processing</span>");
+				        } else if(tb.getStatus().equals("Accept")){
+				            out.print("<span  style='color : green;'>Accept</span>");
+				        } else if(tb.getStatus().equals("Reject")){
+				            out.print("<span  style='color : red;'>Reject</span>");
+				        } else {
+				            out.print("<span  style='color : red;'></span>");
+				        }
+				        %>
+				    </td>
+				     <td>
+			      	<div class="dropdown">
+		                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+		                    Menu
+		                </button>
+		                <ul class="dropdown-menu">
+		                    <li><a href="#" class="dropdown-item acceptLinkBooking" data-tid="<%=tb.getTid()%>" type="button">Accept</a></li>
+		                    <li><a href="#" class="dropdown-item rejectLinkBooking" data-tid="<%=tb.getTid() %>" type="button">Reject</a></li>
+		                </ul>
+		            </div>
+			      </td>
+			 		</tr>
+			 <%} %>		    
 			  </tbody>
 			</table>
 		
@@ -312,8 +352,9 @@ String alert = (String) request.getParameter("message");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    
    
-   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  
 
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
@@ -324,6 +365,158 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000); // 2000 milliseconds = 2 seconds
     }
 });
+
+
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContent = function() {
+        $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlers();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+ 
+
+    // Initial binding of event handlers
+    bindEventHandlers();
+
+    // Function to bind event handlers
+    function bindEventHandlers() {
+        // Handle the click event on the "Accept" link
+        $(".acceptLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "TouristPlaceAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+
+       
+        // Handle the click event on the "Reject" link
+        $(".rejectLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the rejection
+            $.ajax({
+                type: "GET",
+                url: "TouristPlaceReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment rejected successfully");
+
+                    // Show the rejection success message
+                   
+
+                    // Reload the content within the div with id "contentToRefresh" after rejection
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error rejecting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+
+        $(".acceptLinkBooking").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the rejection
+            $.ajax({
+                type: "GET",
+                url: "TouristBookAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment rejected successfully");
+
+                    // Show the rejection success message
+                   
+
+                    // Reload the content within the div with id "contentToRefresh" after rejection
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error rejecting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+        
+
+        $(".rejectLinkBooking").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the rejection
+            $.ajax({
+                type: "GET",
+                url: "TouristBookReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment rejected successfully");
+
+                    // Show the rejection success message
+                   
+
+                    // Reload the content within the div with id "contentToRefresh" after rejection
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error rejecting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+    }
+});
+
+
 
 </script>
 

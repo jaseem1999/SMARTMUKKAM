@@ -201,7 +201,7 @@ String alert = (String) request.getParameter("message");
 		<div style="width: 100%; height: 30px; background: lightgreen;">
 			<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">View gallery</span>
 		</div>
-		 <div class="row">
+		 <div class="row" id="contentToRefresh">
 		 <%
 		 List<TouristGalleryDTO> gallery = TouristDAO.getGalleryBasedToidforTourist(toId);
 		 for(TouristGalleryDTO g : gallery){
@@ -210,7 +210,7 @@ String alert = (String) request.getParameter("message");
 	    				<div class="card" style="width: 16rem;">
 							  <img src="tGallIm?id=<%=g.getTid() %>" class="card-img-top" style="max-height: 150px;" alt="...">
 							  <div class="card-body">
-							  	<a href=""><i class="fa fa-trash" aria-hidden="true" style="position: relative; left: 90%;color: red;"></i></a>
+							  	<a href="" href="#" class="acceptLink" data-tid="<%=g.getTid()%>"><i class="fa fa-trash" aria-hidden="true" style="position: relative; left: 90%;color: red;"></i></a>
 							    <p class="card-text"><%=g.getDescription() %></p>
 							    <p class="card-text"><%if(g.getStatus() != null){
 							    	out.print("<span style='color:red'>it's Deleted </span>");
@@ -262,6 +262,60 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000); // 2000 milliseconds = 2 seconds
     }
 });
+
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContent = function() {
+        $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlers();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+ 
+
+    // Initial binding of event handlers
+    bindEventHandlers();
+
+    // Function to bind event handlers
+    function bindEventHandlers() {
+        // Handle the click event on the "Accept" link
+        $(".acceptLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "TouristGalleryDelete.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+    }
+});
+
 
 </script>
 

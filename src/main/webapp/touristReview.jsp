@@ -1,4 +1,4 @@
-<%@page import="smartMukkam.com.tourist.WallpaperDTO"%>
+<%@page import="smartMukkam.com.tourist.ReviewDTO"%>
 <%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDTO"%>
@@ -151,92 +151,65 @@ String alert = (String) request.getParameter("message");
 		<ul class="nav justify-content-center">
 			<li style=" margin: 10px;"><a class="nav-link" style="color: white;" href="touristTicket.jsp">Ticket management</a></li>
 			<li style=" margin: 10px;"><a class="nav-link" style="color: white;" href="touristGallery.jsp">Gallery management</a></li>
-			<li style=" margin: 10px;"><a class="nav-link" style="color: white;" href="touristReview.jsp">Review</a></li>
 			<li style=" margin: 10px;"><a class="nav-link" style="color: white;" href="touristHome.jsp">Home</a></li>
+			<li style=" margin: 10px;"><a class="nav-link" style="color: white;" href="touristWallpapper.jsp">Wallpaper management</a></li>
 			<li style=" margin: 10px;"><a class="nav-link" style="color: white;" href="touristFeedback.jsp">Feedback</a></li>
 		</ul>
 	</div>
 </div>
 
-<div class="container" style="">
-<div style="background: #000802b8; margin: 10px; box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5); color: white; height: 500px;">
-	<div style="width: 100%; height: 30px; background: white;">
-		<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Wallpaper</span>
+<div class="container" style="margin-top: 50px;">
+	
+
+	<div style="background: #000802b8; margin: 10px; box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5); color: white; height: 500px;">
+		<div style="width: 100%; height: 30px; background: white;">
+			<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Review</span>
+		</div>
+		
+		<table class="table" style="margin-top: 10px;" id="contentToRefresh">
+  <thead>
+    <tr>
+      <th scope="col">UID</th>
+      <th scope="col">Place name</th>
+      <th scope="col">Place img</th>
+      <th scope="col">Review</th>
+      <th scope="col">Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%
+  List<ReviewDTO> review = TouristDAO.getReviewBasedToidForTourist(toId);
+  for(ReviewDTO r : review){
+  %>
+    <tr>
+      <th scope="row"><img alt="" src="userPhoto?id=<%=r.getUid()%>" style="width: 50px;height: 50px; border-radius: 50%; "></th>
+      <td><%=TouristDAO.ticketName(r.getTicketId()) %></td>
+      <td><img alt="cd" src="imTick?id=<%=r.getTicketId()%>" style="width: 100px; height:50px;"></td>
+      <td><div class="col-10" style="margin-left: 40px;"><%=r.getReview() %></div></td>
+      <td>
+      	<form id="reviewForm_<%= r.getTid() %>" class="reviewForm">
+            <input type="hidden" value="<%= r.getTid() %>" name="tid" />
+            <input type="text" placeholder="Enter review comment" value="<%= r.getComment() %>" name="comment" />
+            <button type="button" class="btn btn-primary submitReview">Submit</button>
+        </form>
+      </td>
+    </tr>
+   <%} %>
+  </tbody>
+</table>
+		
+		
 	</div>
 	
-	<div class="row">
 	
-		<div class="col">
-		<div style="border: 1px solid; height: 480px;">
-		<div style="width: 100%; height: 30px; background: lightgreen;">
-			<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Upload Wallpaper</span>
-		</div>
-			<%
-			if(alert != null && alert.equals("success")){
-	        	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Ticket added success</div>");
-	        }
-			if(alert != null && alert.equals("failed")){
-				out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Ticket added Failed</div>");
-	        }
-			%>
-			<form action="tWallpeper" method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  
-				  <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid">
-				  <div class="mb-3">
-				    <label for="description" class="form-label">Description</label>
-				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload Image</label>
-				    <input type="file" class="form-control" id="image" name="image">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
-			</form>
-		</div>	
-		</div>
-		
-		<div class="col" id="contentToRefresh">
-		<div style="border: 1px solid; height: 480px; overflow: scroll;">
-		<div style="width: 100%; height: 30px; background: lightgreen;">
-			<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">View Wallpaper</span>
-		</div>
-		 <div class="row">
-		 <%
-		List<WallpaperDTO> wallpaper = TouristDAO.getWallpaperBasedToidforTourist(toId);
-		 
-		 for(WallpaperDTO w : wallpaper){
-		 %>		
-				<div class="col" style="margin: 10px;">
-	    				<div class="card" style="width: 16rem;">
-							  <img src="getTWallpeper?id=<%=w.getTid() %>" class="card-img-top" style="max-height: 150px;" alt="...">
-							  <div class="card-body">
-							  	<a href="" class="acceptLink" data-tid="<%=w.getTid()%>"><i class="fa fa-trash" aria-hidden="true" style="position: relative; left: 90%;color: red;"></i></a>
-							    <p class="card-text"><%=w.getDescription() %></p>
-							    <p class="card-text"><%if(w.getStatus() != null){
-							    	out.print("<span style='color:red'>it's Deleted </span>");
-							    }
-							    	%></p>
-							  </div>  
-						</div>
-					</div>
-		<%
-		 }
-		%>
-				</div>
-		
-		
-		</div>
-		</div>
-	
-	</div>
-	
-</div>
+
 </div>
 
 
 
- <!-- JavaScript Libraries -->
+
+
+<!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -249,77 +222,39 @@ String alert = (String) request.getParameter("message");
 
     <!-- Template Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   
-   
-   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    var alertElement = document.getElementById('alert');
-    if (alertElement) {
-        setTimeout(function() {
-            alertElement.style.display = 'none';
-        }, 2000); // 2000 milliseconds = 2 seconds
-    }
-});
 
 
-$(document).ready(function() {
-    // Function to refresh the content of the specified element
-    window.refreshContent = function() {
-        $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
-            // Rebind event handlers after content refresh
-            bindEventHandlers();
+$(document).ready(function () {
+    // Attach the event listener to a parent element and delegate it to '.submitReview' elements
+    $('#contentToRefresh').on('click', '.submitReview', function () {
+        var form = $(this).closest('form');
+        var formData = form.serialize();
+
+        $.ajax({
+            type: 'GET', // or 'GET' depending on your server-side implementation
+            url: 'touristReviewComment.jsp', // replace with the actual server endpoint
+            data: formData,
+            success: function (response) {
+                // Handle success response here
+
+                // Refresh the content of the table without reloading the entire page
+                $('#contentToRefresh').load(location.href + ' #contentToRefresh');
+
+                // Clear the form fields if needed
+                form[0].reset();
+            },
+            error: function (error) {
+                // Handle error response here
+                console.error('Error:', error);
+            }
         });
-    }
-
-    // Click event to trigger the content refresh when the button is clicked
- 
-
-    // Initial binding of event handlers
-    bindEventHandlers();
-
-    // Function to bind event handlers
-    function bindEventHandlers() {
-        // Handle the click event on the "Accept" link
-        $(".acceptLink").on("click", function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Get the appointment id from the data-tid attribute
-            var appointmentId = $(this).data("tid");
-
-            // Make an AJAX request to the server to handle the acceptance
-            $.ajax({
-                type: "GET",
-                url: "TouristWallpaperDelete.jsp",
-                data: { id: appointmentId },
-                success: function(response) {
-                    // Handle the success response (if needed)
-                    console.log("Appointment accepted successfully");
-
-                    // Show the success message
-                    
-
-                    // Reload the content within the div with id "contentToRefresh" after acceptance
-                    window.refreshContent();
-                },
-                error: function(xhr, status, error) {
-                    // Handle the error response (if needed)
-                    console.error("Error accepting appointment: " + error);
-
-                    // You can show an error message if needed
-                }
-            });
-        });
-
-    }
+    });
 });
-
 
 </script>
-
-
 
 </body>
 </html>

@@ -1,4 +1,4 @@
-<%@page import="smartMukkam.com.tourist.TicketBookedDTO"%>
+<%@page import="smartMukkam.com.tourist.TouristGalleryDTO"%>
 <%@page import="smartMukkam.com.tourist.TouristDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDTO"%>
 <%@page import="java.util.List"%>
@@ -20,7 +20,7 @@ if (email == null){
 }
 
 Integer toid = Integer.parseInt(request.getParameter("toid"));
-String alert = (String) request.getParameter("message");
+
 %>
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -69,7 +69,24 @@ String alert = (String) request.getParameter("message");
     color: #494545;
     border: 0px;
 }
-
+.homeFull{
+		 	max-width: 100%;
+		 	height: auto;
+		 	border: 1px solid white;
+		 	box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5);
+		}
+		.home{
+			width: 100%;
+			height: 30px;
+			background: #353f5a;
+			color: white;
+		}
+		.home span{
+			margin: 5px;
+		    color: black;
+		    font-size: medium;
+		    font-weight: 600;
+		}
 	
 	</style>
 </head>
@@ -99,8 +116,6 @@ String alert = (String) request.getParameter("message");
     
   </div>
 </nav>
-
-
 
 
 
@@ -144,116 +159,42 @@ String alert = (String) request.getParameter("message");
                 <%} %>
 			</nav>
 		</div>
-
-<h6 class="text-primary text-uppercase" style="letter-spacing: 5px; align-content: center;align-items: center;text-align: center; margin-top: 40px;">Your ticket status</h6>
-
-
-<div class="container-sm">
-	<table class="table" style="margin-top: 30px;">
-  <thead>
-    <tr>
-      <th scope="col">User</th>
-      <th scope="col">Ticket</th>
-      <th scope="col">Ticket place image</th>
-      <th scope="col">Slot</th>
-      <th scope="col">Price</th>
-      <th scope="col">Date</th>
-      <th scope="col">status</th>
-      <th scope="col">Print</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%
-List<TicketBookedDTO> tbs = TouristDAO.getAllTicketBookedBasedOnToidAndUIDForUser(toid, uid);
-for(TicketBookedDTO tb : tbs) {
-%>
-<tr>
-    <td><img src="userPhoto?id=<%=tb.getUid()%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></td>
-    <td><%=TouristDAO.ticketName(tb.getTicketId()) %></td>
-    <td><img alt="cd" src="imTick?id=<%=tb.getTicketId()%>" style="width: 100px; height:50px;"></td>
-    <td><%=tb.getSlot() %></td>
-    <td><%=Double.parseDouble(String.valueOf(tb.getSlot())) * TouristDAO.ticketPrice(tb.getTicketId()) %></td>
-    <td><%=tb.getDate() %></td>
-    <td>
-        <%
-        if(tb.getStatus() == null){
-            out.print("<span  style='color : blue;'>Processing</span>");
-        } else if(tb.getStatus().equals("Accept")){
-            out.print("<span  style='color : green;'>Accept</span>");
-        } else if(tb.getStatus().equals("Reject")){
-            out.print("<span  style='color : red;'>Reject</span>");
-        } else {
-            out.print("<span  style='color : red;'></span>");
-        }
-        %>
-    </td>
-    <td><a href="javascript:void(0);" onclick="printRow('<%=tb.getUid()%>', '<%=TouristDAO.ticketName(tb.getTicketId()) %>', '<%=tb.getTicketId()%>', '<%=tb.getSlot()%>', '<%=Double.parseDouble(String.valueOf(tb.getSlot())) * TouristDAO.ticketPrice(tb.getTicketId()) %>', '<%=tb.getStatus()%>')">Print</a></td>
-</tr>
-<%
-}
-%>
-  </tbody>
-</table>
+		
+		<div class="container-xxl" style="margin-top: 50px;">
+	<div class="homeFull" style="margin: 50px;">
+    		
+    		<div class="home" style="background: #6a61c6;">
+    			<span style="color: white;">Gallery</span>
+    			    			
+    		</div>
+    		<div class="row">
+    				<%
+    				List<TouristGalleryDTO> gallery = TouristDAO.getGalleryBasedToidforUser(toid);
+    				for(TouristGalleryDTO g : gallery){
+    				%>
+    				<div class="col">
+    				<div class="card" style="width: 16rem;">
+					  <img src="tGallIm?id=<%=g.getTid() %>" class="card-img-top" style="max-height: 150px;" alt="...">
+					  <div class="card-body">
+					    <p class="card-text"><%=g.getDescription() %></p>
+					  </div>  
+					</div>
+    				</div>
+    				<%} %>
+    			</div>
+    		
+    </div>
 
 </div>
 
 
-
-
-
+<!-- Template Javascript -->
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		
 
-<script type="text/javascript">
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    var alertElement = document.getElementById('alert');
-    if (alertElement) {
-        setTimeout(function() {
-            alertElement.style.display = 'none';
-        }, 2000); // 2000 milliseconds = 2 seconds
-    }
-});
-
-
-function printRow(uid, ticketName, ticketId, slot, totalPrice, status) {
-    var printWindow = window.open('', '_blank');
-    var htmlContent = '<!DOCTYPE html>';
-    htmlContent += '<html>';
-    htmlContent += '<head>';
-    htmlContent += '<title>Print Ticket</title>';
-    htmlContent += '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">';
-    htmlContent += '</head>';
-    htmlContent += '<body>';
-    htmlContent += '<div class="container">';
-    htmlContent += '<h2>Bill Details</h2>';
-    htmlContent += '<ul class="list-group">';
-    htmlContent += '<li class="list-group-item"><strong>User ID: </strong>' + uid + '<img src="userPhoto?id=' + uid + '" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></li>';
-    htmlContent += '<li class="list-group-item"><strong>Ticket Name: </strong>' + ticketName + '</li>';
-    htmlContent += '<li class="list-group-item"><strong>Ticket ID: </strong>' + ticketId + '</li>';
-    htmlContent += '<li class="list-group-item"><strong>Slot: </strong>' + slot + '</li>';
-    htmlContent += '<li class="list-group-item"><strong>Total Price: </strong>' + totalPrice + '</li>';
-    if (status == 'null') {
-        htmlContent += '<li class="list-group-item"><strong>Status: </strong> Processing </li>';
-    } else {
-        htmlContent += '<li class="list-group-item"><strong>Status: </strong>' + status + '</li>';
-    }
-    htmlContent += '</ul>';
-    htmlContent += '</div>';
-    htmlContent += '</body>';
-    htmlContent += '</html>';
-
-    printWindow.document.open();
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
-    printWindow.print();
-}
-
-
-</script>
 
 </body>
 </html>

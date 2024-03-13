@@ -1,7 +1,9 @@
-<%@page import="smartMukkam.com.tourist.TicketBookedDTO"%>
+<%@page import="smartMukkam.com.tourist.ReviewDTO"%>
+<%@page import="smartMukkam.com.tourist.TicketDTO"%>
 <%@page import="smartMukkam.com.tourist.TouristDAO"%>
-<%@page import="smartMukkam.com.tourist.TouristDTO"%>
 <%@page import="java.util.List"%>
+<%@page import="smartMukkam.main.user.userData.UserDAO"%>
+<%@page import="smartMukkam.com.tourist.TouristDTO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -20,6 +22,7 @@ if (email == null){
 }
 
 Integer toid = Integer.parseInt(request.getParameter("toid"));
+Integer ticketId = Integer.parseInt(request.getParameter("ticketId"));
 String alert = (String) request.getParameter("message");
 %>
 
@@ -43,7 +46,7 @@ String alert = (String) request.getParameter("message");
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-     <link href="css/style.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
      <%
      List<TouristDTO> tourists = TouristDAO.getAllTouristDetailsBasedToId(toid);
      for(TouristDTO t : tourists){
@@ -69,7 +72,35 @@ String alert = (String) request.getParameter("message");
     color: #494545;
     border: 0px;
 }
+.product { text-align: center; }
 
+.unlist { list-style-type: none; padding: 0; }
+
+.list { margin-bottom: 10px; }
+
+.mrp{ 
+	color: #648bd9; 
+	font-weight: bold;
+ }
+ 
+
+.discount 
+{ 
+	
+	color: #999;
+}
+.finalprice{
+	color: #fd2727;
+    font-size: xx-large;
+    font-weight: bolder;
+}
+.save { color: #008000; font-weight: bold; }
+
+.laptop-image { display: block; margin: 0 auto; width: 100%; height: auto; }
+
+.list-group-item{
+	width: 100%;
+}
 	
 	</style>
 </head>
@@ -99,8 +130,6 @@ String alert = (String) request.getParameter("message");
     
   </div>
 </nav>
-
-
 
 
 
@@ -144,116 +173,97 @@ String alert = (String) request.getParameter("message");
                 <%} %>
 			</nav>
 		</div>
-
-<h6 class="text-primary text-uppercase" style="letter-spacing: 5px; align-content: center;align-items: center;text-align: center; margin-top: 40px;">Your ticket status</h6>
-
-
-<div class="container-sm">
-	<table class="table" style="margin-top: 30px;">
-  <thead>
-    <tr>
-      <th scope="col">User</th>
-      <th scope="col">Ticket</th>
-      <th scope="col">Ticket place image</th>
-      <th scope="col">Slot</th>
-      <th scope="col">Price</th>
-      <th scope="col">Date</th>
-      <th scope="col">status</th>
-      <th scope="col">Print</th>
-    </tr>
-  </thead>
-  <tbody>
-  <%
-List<TicketBookedDTO> tbs = TouristDAO.getAllTicketBookedBasedOnToidAndUIDForUser(toid, uid);
-for(TicketBookedDTO tb : tbs) {
-%>
-<tr>
-    <td><img src="userPhoto?id=<%=tb.getUid()%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></td>
-    <td><%=TouristDAO.ticketName(tb.getTicketId()) %></td>
-    <td><img alt="cd" src="imTick?id=<%=tb.getTicketId()%>" style="width: 100px; height:50px;"></td>
-    <td><%=tb.getSlot() %></td>
-    <td><%=Double.parseDouble(String.valueOf(tb.getSlot())) * TouristDAO.ticketPrice(tb.getTicketId()) %></td>
-    <td><%=tb.getDate() %></td>
-    <td>
-        <%
-        if(tb.getStatus() == null){
-            out.print("<span  style='color : blue;'>Processing</span>");
-        } else if(tb.getStatus().equals("Accept")){
-            out.print("<span  style='color : green;'>Accept</span>");
-        } else if(tb.getStatus().equals("Reject")){
-            out.print("<span  style='color : red;'>Reject</span>");
-        } else {
-            out.print("<span  style='color : red;'></span>");
-        }
-        %>
-    </td>
-    <td><a href="javascript:void(0);" onclick="printRow('<%=tb.getUid()%>', '<%=TouristDAO.ticketName(tb.getTicketId()) %>', '<%=tb.getTicketId()%>', '<%=tb.getSlot()%>', '<%=Double.parseDouble(String.valueOf(tb.getSlot())) * TouristDAO.ticketPrice(tb.getTicketId()) %>', '<%=tb.getStatus()%>')">Print</a></td>
-</tr>
-<%
-}
-%>
-  </tbody>
-</table>
-
-</div>
-
-
-
-
-
+		
+		
+		<div class="container-xxl" style="margin-top: 50px;">
+			<%
+			 List<TicketDTO> tickets = TouristDAO.getAllTicketBasedOnToidForUserForReview(ticketId);
+			for(TicketDTO t : tickets){
+			%>
+				<div class="row" style="background-color: #ffffff; border: 1px solid white;box-shadow: 3px 3px 3px 5px rgba(0, 0, 0, 0.5);">
+					<div class="col-2">
+						<img alt="cd" src="imTick?id=<%=t.getTid()%>" style="width: 200px; height:150px;margin: 30px; ">
+					</div>
+					 <div class="col-8">
+					 	<div class="container"> 
+					 	<ul class="unlist"> 
+					 	<li class="list"><%=t.getTicket() %></li> 
+					 	<li class="list"><%=t.getSlot() - TouristDAO.getSlotOnBooked(t.getTid()) %></li> 
+					 	<li class="list"></li>  
+					 	<li class="list" style="color: blue;"><a href="userTouristPlaceReview.jsp?toid=<%=t.getToid()%>&ticketId=<%=t.getTid()%>"><i class="fa fa-star" aria-hidden="true"></i> review</a></li>
+					 	</ul> 
+					 	<p class="mrp">Ticket Price : <span class="discount"><%= t.getPrice() %></span></p> 
+					 	<p class="price">Available Tickets <span class="save"> <%=t.getSlot() %></span></p>
+					 	 
+					 </div>
+						
+					</div>
+					<div class="col-2">
+						<div class="" style="">
+						<a class="btn btn-outline-primary" style="position: relative; left: 42px; top: 145px;" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setTicketDetails('<%= t.getTid() %>', '<%= t.getTicket() %>', '<%= t.getSlot() - TouristDAO.getSlotOnBooked(t.getTid()) %>', '<%= t.getPrice() %>');">Go to <i class="fa fa-cart-plus" aria-hidden="true"></i></a>
+			
+			
+			
+							
+						</div>
+					</div>
+				</div>
+				<hr>
+					<% } %>
+			</div>
+			<div class="container" style="margin-top: 30px;">
+			<form action="userTouristReviewServlet.jsp" method="get">
+				<input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
+				<input type="hidden" value="<%=toid %>" class="form-control" id="sid" name="toid" aria-describedby="commentHelp">
+				<input type="hidden" value="<%=ticketId %>" class="form-control" id="pid" name="ticketId" aria-describedby="commentHelp">
+			 	<div class="mb-3">
+			   	<label for="comment" class="form-label">Review</label>
+			    <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
+			    </div>
+			  <button type="submit" class="btn btn-primary">Review</button>
+			</form>
+			
+	<ul class="list-group" style="margin-top: 20px">
+	<%
+	List<ReviewDTO> review = TouristDAO.getReviewBasedToid(ticketId);
+	for(ReviewDTO r : review){
+	%>
+	  <li class="list-group-item" style="background: white;">
+	  	<div class="row">
+	  		<div class="col-2">
+	  		<img alt="" src="userPhoto?id=<%=r.getUid()%>" style="width: 50px;height: 50px; border-radius: 50%; ">
+	  		
+	  		</div>
+	  		<div class="col-10" style="margin-left: 40px;"><%=r.getReview() %></div>
+	  	</div>
+	  	<hr>
+	  	<div class="row justify-content-end">
+		    <div class="col-11 text-right" style="">
+		        <span>
+		            <% if(r.getComment() != null) {
+		                out.print(r.getComment());
+		            } else {
+		                out.print("");
+		            } %>
+		        </span>
+		    </div>
+		    <div class="col-1">
+		        <img alt="" src="timg?id=<%=r.getToid()%>" style="width: 50px;height: 50px; border-radius: 50%;">
+		    </div>
+		</div>
+	  	
+	  </li>
+	  <hr>
+	  <%} %>
+	  
+	</ul>
+			
+			</div>
+		<!-- Template Javascript -->
  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script type="text/javascript">
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    var alertElement = document.getElementById('alert');
-    if (alertElement) {
-        setTimeout(function() {
-            alertElement.style.display = 'none';
-        }, 2000); // 2000 milliseconds = 2 seconds
-    }
-});
-
-
-function printRow(uid, ticketName, ticketId, slot, totalPrice, status) {
-    var printWindow = window.open('', '_blank');
-    var htmlContent = '<!DOCTYPE html>';
-    htmlContent += '<html>';
-    htmlContent += '<head>';
-    htmlContent += '<title>Print Ticket</title>';
-    htmlContent += '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">';
-    htmlContent += '</head>';
-    htmlContent += '<body>';
-    htmlContent += '<div class="container">';
-    htmlContent += '<h2>Bill Details</h2>';
-    htmlContent += '<ul class="list-group">';
-    htmlContent += '<li class="list-group-item"><strong>User ID: </strong>' + uid + '<img src="userPhoto?id=' + uid + '" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></li>';
-    htmlContent += '<li class="list-group-item"><strong>Ticket Name: </strong>' + ticketName + '</li>';
-    htmlContent += '<li class="list-group-item"><strong>Ticket ID: </strong>' + ticketId + '</li>';
-    htmlContent += '<li class="list-group-item"><strong>Slot: </strong>' + slot + '</li>';
-    htmlContent += '<li class="list-group-item"><strong>Total Price: </strong>' + totalPrice + '</li>';
-    if (status == 'null') {
-        htmlContent += '<li class="list-group-item"><strong>Status: </strong> Processing </li>';
-    } else {
-        htmlContent += '<li class="list-group-item"><strong>Status: </strong>' + status + '</li>';
-    }
-    htmlContent += '</ul>';
-    htmlContent += '</div>';
-    htmlContent += '</body>';
-    htmlContent += '</html>';
-
-    printWindow.document.open();
-    printWindow.document.write(htmlContent);
-    printWindow.document.close();
-    printWindow.print();
-}
-
-
-</script>
 
 </body>
 </html>

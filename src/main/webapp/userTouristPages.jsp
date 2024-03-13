@@ -274,6 +274,11 @@ String alert = (String) request.getParameter("message");
     <span class="visually-hidden">Next</span>
   </button>
   
+  
+  <div class="container-xxl" style="margin-top: 50px;">
+	<a href="userTouristGallery.jsp?toid=<%=toid%>" class="btn btn-outline-success ">View Gallery</a>
+</div>
+  
  <%
 if(alert != null && alert.equals("ticketFull")){
 	out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Sorry slot is full</div>");
@@ -284,7 +289,12 @@ if(alert != null && alert.equals("ticketSuccess")){
 }
 
 %>
+
 <div class="container-xxl" style="margin-top: 50px;">
+
+
+
+
 <%
  List<TicketDTO> tickets = TouristDAO.getAllTicketBasedOnToidForUser(toid);
 for(TicketDTO t : tickets){
@@ -299,7 +309,7 @@ for(TicketDTO t : tickets){
 		 	<li class="list"><%=t.getTicket() %></li> 
 		 	<li class="list"><%=t.getSlot() - TouristDAO.getSlotOnBooked(t.getTid()) %></li> 
 		 	<li class="list"></li>  
-		 	<li class="list" style="color: blue;"><a href=""><i class="fa fa-star" aria-hidden="true"></i> review</a></li>
+		 	<li class="list" style="color: blue;"><a href="userTouristPlaceReview.jsp?toid=<%=t.getToid()%>&ticketId=<%=t.getTid()%>"><i class="fa fa-star" aria-hidden="true"></i> review</a></li>
 		 	</ul> 
 		 	<p class="mrp">Ticket Price : <span class="discount"><%= t.getPrice() %></span></p> 
 		 	<p class="price">Available Tickets <span class="save"> <%=t.getSlot() %></span></p>
