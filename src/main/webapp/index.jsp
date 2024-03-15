@@ -168,6 +168,7 @@ String alert = (String) request.getParameter("message");
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -227,6 +228,35 @@ String alert = (String) request.getParameter("message");
   </div>
 </div>
 
+<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Hotel Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form action="hotelLoginServlet.jsp" method="post">
+        <div class="mb-3">
+			  <label for="exampleFormControlInput1" class="form-label">Email address</label>
+			  <input type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com">
+		</div>
+				<label for="inputPassword5" class="form-label">Password</label>
+			<input type="password" id="inputPassword5" name="pass" class="form-control" aria-describedby="passwordHelpBlock">
+			
+			<input style=" margin-top: 10px;"  type="submit" class="btn btn-success" value="Login"/>
+			<a style="margin-top: 10px;"  href="hotelValidateEmail.jsp" class="btn btn-primary" >Sign up</a>
+			<P style="margin-top: 10px;"><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <% 
                         if(alert != null && alert.equals("login")){
@@ -253,6 +283,20 @@ String alert = (String) request.getParameter("message");
 						if(alert != null && alert.equals("touristLoginFailed")){
 							out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Tourist login Failed</div>");
 						}
+						if(alert != null && alert.equals("hotelRegistrationSuccess")){
+							out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Hotel Sign up success</div>");
+						}
+						if(alert != null && alert.equals("hotelRegistrationFailed")){
+							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Hotel Sign up failed</div>");
+						}
+						
+						if(alert != null && alert.equals("wait")){
+							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Hotel Login stoped contact municipality</div>");
+						}
+						if(alert != null && alert.equals("LoginFailed")){
+							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Hotel Login Failed</div>");
+						}
+						
 						
                         	
                         %>
@@ -293,7 +337,7 @@ String alert = (String) request.getParameter("message");
                                 <a href="#" class="dropdown-item">Administration</a>
                                 <a href="municipalityLogin.jsp" class="dropdown-item">Municipality</a>
                                 <a data-bs-toggle="modal" data-bs-target="#exampleModal2" class="dropdown-item">Shops</a>
-                                <a href="#" class="dropdown-item">Hotels</a>
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal4"  class="dropdown-item">Hotels</a>
                                 <a data-bs-toggle="modal" data-bs-target="#exampleModal3" class="dropdown-item">Tourist place</a>
                             </div>
                         </div>

@@ -1,3 +1,5 @@
+<%@page import="smartMukkam.com.hotel.HotelDAO"%>
+<%@page import="smartMukkam.com.hotel.HotelDTO"%>
 <%@page import="smartMukkam.com.tourist.TouristDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDTO"%>
 <%@page import="smartMukkam.com.municipality.ServicesDTO"%>
@@ -72,7 +74,7 @@
 		}
 		.homeFull{
 		 	max-width: 1370px;
-		 	height: 600px;
+		 	height: 850px;
 		 	border: 1px solid;
 		}
 		.home{
@@ -299,7 +301,7 @@ if(email == null){
 						            	out.print("<span  style='color : red;'></span>");
 						            }
 					    %></td>
-					    <td>
+					    	<td>
 					    			<div class="dropdown">
 					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					                    Menu
@@ -318,6 +320,77 @@ if(email == null){
 				    </tbody>
 				</table>
 				</div>
+				<div class="home1" style="">
+    			<span>Hotel Registration approval portal </span>
+    		</div>
+    		<div style="overflow:auto; height: 250px;">
+    		<table id="Table" class="table table-striped" style="margin: 20px; width: 97%;">
+ 					<thead >
+					    <tr>
+					      <th scope="col">Hotel</th>
+					      <th scope="col">Owner</th>
+					      <th scope="col">Email</th>
+					      <th scope="col">Phone</th>
+					      <th scope="col">Hotel name</th>
+					      <th scope="col">License</th>
+					      <th scope="col">Address1</th>
+					      <th scope="col">Address2</th>
+					      <th scope="col">City</th>
+					      <th scope="col">State</th>
+					       <th scope="col">Pin</th>
+					      <th scope="col">Status</th>
+					      <th scope="col">Menu</th>
+					    </tr>
+					 </thead>
+					 <tbody >
+					 <%
+					 List<HotelDTO> hotels = HotelDAO.getAllHotelDetailsForMunicipality();
+					 
+					 for(HotelDTO h : hotels){
+					 %>
+					 	<tr>
+					 		<td><img src="himg?id=<%=h.getHotelId()%>" style="width: 40px; border: 1px solid; border-radius: 5px;" alt="" ></td>
+					 		<td><%=h.getOwnerName() %></td>
+					 		<td><%=h.getEmail() %></td>
+					 		<td><%=h.getPhone() %></td>
+					 		<td><%=h.getHotelName() %></td>
+					 		<td><a href="hotelLicenseServlet.jsp?id=<%=h.getHotelId()%>" class=" badge-primary">view</a></td>
+					 		<td><%=h.getAddressOne() %></td>
+					 		<td><%=h.getAddressTwo() %></td>
+					 		<td><%=h.getCity() %></td>
+					 		<td><%=h.getState() %></td>
+					 		<td><%=h.getPin() %></td>
+					 		<td><%
+					    		 	if(h.getStatus() == null){
+						                out.print("<span  style='color : blue;'>Processing</span>");
+						            } else if(h.getStatus().equals("accept")){
+						                out.print("<span  style='color : green;'>Accept</span>");
+						            } else if(h.getStatus().equals("reject")){
+						                out.print("<span  style='color : red;'>Reject</span>");
+						            }else{
+						            	out.print("<span  style='color : red;'></span>");
+						            }
+					    %></td>
+					    <td>
+					    			<div class="dropdown">
+					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					                    Menu
+					                </button>
+					                <ul class="dropdown-menu">
+					                    <li><a href="#" class="dropdown-item acceptLinkHotel" data-tid="<%=h.getHotelId()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLinkHotel" data-tid="<%=h.getHotelId() %>" type="button">Reject</a></li>
+					                </ul>
+		           					 </div>
+					    		</td>
+					 		
+					 		
+					 	</tr>
+					 <%} %>
+					 </tbody>
+					 
+			</table>
+    		
+    		</div>
     		
     	</div>
     
@@ -468,6 +541,66 @@ $(document).ready(function() {
             $.ajax({
                 type: "GET",
                 url: "municipalityTouristRegistrationReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                 
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+
+        $(".acceptLinkHotel").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "municipalityHotelRegistrationAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                 
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+
+        $(".rejectLinkHotel").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "municipalityHotelRegistrationReject.jsp",
                 data: { id: appointmentId },
                 success: function(response) {
                     // Handle the success response (if needed)

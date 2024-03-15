@@ -304,6 +304,54 @@
 </servlet-mapping>
 
 
+<servlet>
+    <servlet-name>hotelSingin</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.HotelSignupServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelSingin</servlet-name>
+    <url-pattern>/hsign</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>hotelImage</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.GetImageOfHotel</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelImage</servlet-name>
+    <url-pattern>/himg</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>hotelLicense</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.GetLicenseOfHotel</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelLicense</servlet-name>
+    <url-pattern>/hLpdf</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>hotelRoom</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.AddRoomServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelRoom</servlet-name>
+    <url-pattern>/adRoom</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>ImageRoom</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.GetRoomImageServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ImageRoom</servlet-name>
+    <url-pattern>/imRoom</url-pattern>
+</servlet-mapping>
+
+
+
+
 
 
 
