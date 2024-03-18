@@ -349,7 +349,62 @@
     <url-pattern>/imRoom</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>hotelFood</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.AddFoodServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelFood</servlet-name>
+    <url-pattern>/adFood</url-pattern>
+</servlet-mapping>
 
+<servlet>
+    <servlet-name>ImageFood</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.GetFoodImageServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ImageFood</servlet-name>
+    <url-pattern>/imfood</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>hotelTaxi</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.AddTaxiServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelTaxi</servlet-name>
+    <url-pattern>/adTaxi</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+    <servlet-name>ImageTaxi</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.GetTaxiImage</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ImageTaxi</servlet-name>
+    <url-pattern>/imTaxi</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+    <servlet-name>hotelGallery</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.AddGallery</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>hotelGallery</servlet-name>
+    <url-pattern>/adHGallery</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+    <servlet-name>ImageHGallery</servlet-name>
+    <servlet-class>smartMukkam.com.hotel.GetImageGallery</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>ImageHGallery</servlet-name>
+    <url-pattern>/imHGallery</url-pattern>
+</servlet-mapping>
 
 
 

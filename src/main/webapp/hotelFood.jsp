@@ -1,16 +1,15 @@
 <%@page import="smartMukkam.com.hotel.ServiceDAO"%>
-<%@page import="smartMukkam.com.hotel.RoomDTO"%>
-<%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
+<%@page import="smartMukkam.com.hotel.FoodDTO"%>
 <%@page import="smartMukkam.com.hotel.HotelDAO"%>
 <%@page import="smartMukkam.com.hotel.HotelDTO"%>
 <%@page import="java.util.List"%>
+<%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<%
+<meta charset="ISO-8859-1"><%
 Integer hoid = (Integer) session.getAttribute("hoid");
 String owner = (String) session.getAttribute("owner");
 String hotel = (String) session.getAttribute("hotel");
@@ -145,8 +144,8 @@ String alert = (String) request.getParameter("message");
             	<img src="himg?id=<%=h.getHotelId()%>" alt="Logo" width="150" height="130" class="d-inline-block align-text-top">
                 <div class="row" style="margin: auto; width: 100%; color: white; height: 150px; background: #000000c4; border-radius: 16px;">
                 	<ul class="col list-group" style="margin-top: 15px;">
+                		<li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelRoomBooking.jsp"><i class="fa fa-bed" aria-hidden="true"></i> Manage rooms booking services</a></li>
 					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelHome.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
-					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelFood.jsp"><i class="fas fa-utensils"></i> Manage food ordering</a></li>
 					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelTaxi.jsp"><i class="fa fa-taxi" aria-hidden="true"></i> Manage taxi service</a></li>
 					</ul>
 					<ul class="col list-group" style="margin-top: 15px;">
@@ -163,7 +162,7 @@ String alert = (String) request.getParameter("message");
     </div>
     
    	<div class="text-center mb-3 pb-3" style=" margin-top: 30px;">
-        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px; color: rgb(43 46 52) !important;">Manage Room Booking Services</h6>
+        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px; color: rgb(43 46 52) !important;">Manage Food And Delivery Services</h6>
        
     </div>
     
@@ -174,29 +173,29 @@ String alert = (String) request.getParameter("message");
 		
 	    	<div class="col">
 	    	<div style="width: 100%; height: 30px; background: #a1cceb;">
-				<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Upload Room Details</span>
+				<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Upload food Details</span>
 			</div>
     		<%
 			if(alert != null && alert.equals("addSuccess")){
-	        	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Room added success</div>");
+	        	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Food added success</div>");
 	        }
 			if(alert != null && alert.equals("addFailed")){
-				out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Room added Failed</div>");
+				out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Food added Failed</div>");
 	        }
 			%>
 	    		
-	    		<form action="adRoom"  method="post" enctype="multipart/form-data" style="margin: 30px;">
+	    		<form action="adFood"  method="post" enctype="multipart/form-data" style="margin: 30px;">
 				  <div class="mb-3">
 				    
 				    <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
 				   </div>
 				  <div class="mb-3">
-				    <label for="room" class="form-label">Room</label>
-				    <input type="text" class="form-control" id="room" name="room" placeholder="Enter room name">
+				    <label for="food" class="form-label">Food name</label>
+				    <input type="text" class="form-control" id="food" name="food" placeholder="Enter food name">
 				  </div>
 				    <div class="mb-3">
-				    <label for="no" class="form-label">No. rooms</label>
-				    <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of rooms">
+				    <label for="no" class="form-label">Quandity</label>
+				    <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of quandity">
 				  </div>
 				  <div class="mb-3">
 				    <label for="description" class="form-label">Description</label>
@@ -211,7 +210,7 @@ String alert = (String) request.getParameter("message");
 				    <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
 				  </div>
 				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload room image</label>
+				    <label for="image" class="form-label">Upload food image</label>
 				    <input type="file" class="form-control" id="image" name="image">
 				  </div>
 		
@@ -224,7 +223,7 @@ String alert = (String) request.getParameter("message");
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="descriptionModalLabel">Room Description</h5>
+        <h5 class="modal-title" id="descriptionModalLabel">Food Description</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -240,15 +239,15 @@ String alert = (String) request.getParameter("message");
 	    	
 	    	<div class="col">
 	    		<div style="width: 100%; height: 30px; background: #a1cceb;">
-					<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Rooms</span>
+					<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Food</span>
 				</div>
 				<div style="height: 600px; width: 100%; overflow: auto;" id="contentToRefresh">
 				<table class="table table-striped">
 				  <thead>
 				    <tr>
-				    <th scope="col">Image</th>
-				      <th scope="col">Room</th>
-				      <th scope="col">No. room</th>
+				      <th scope="col">Image</th>
+				      <th scope="col">Food</th>
+				      <th scope="col">Quandity</th>
 				      <th scope="col">Description</th>
 				      <th scope="col">Price</th>
 				      <th scope="col">Discount</th>
@@ -258,50 +257,46 @@ String alert = (String) request.getParameter("message");
 				    </tr>
 				  </thead>
 				  <tbody>
-				  
-				  
-				  
 				  <%
-				  List<RoomDTO> room = ServiceDAO.getAllRoomsUSEDHoidForHotel(hoid);
-				  
-				  for(RoomDTO r : room){
+				  List<FoodDTO> food = ServiceDAO.getAllFoodUSEDHoidForHotel(hoid);
+				  for(FoodDTO f : food){
 				  %>
+				  
 				    <tr>
-				      <th scope="row"><img src="imRoom?id=<%=r.getTid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
-				      <td><%=r.getRoom() %></td>
-				      <td><%=r.getNoRoom() %></td>
-				      <td style="color: green;" class="description" data-description="<%= r.getDescription() %>">Click to view description</td>
-				      <td><%=r.getPrice() %></td>
-				      <td ><%=r.getDiscount() %></td>
-				      <td><%=r.getActive() %></td>
+				      <th scope="row"><img src="imfood?id=<%=f.getTid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+				      <td><%=f.getFood() %></td>
+				      <td><%=f.getQuandity() %></td>
+				       <td style="color: green;" class="description" data-description="<%= f.getDescription() %>">Click to view description</td>
+				      <td><%=f.getPrice() %></td>
+				      <td ><%=f.getDiscount() %></td>
+				      <td><%=f.getActive() %></td>
 				      <td><%
-				      if(r.getStatus() == null){
+				      if(f.getStatus() == null){
 			                out.print("<span  style='color : blue;'>Processing</span>");
-			            } else if(r.getStatus().equals("accept")){
+			            } else if(f.getStatus().equals("accept")){
 			                out.print("<span  style='color : green;'>Accept</span>");
-			            } else if(r.getStatus().equals("reject")){
+			            } else if(f.getStatus().equals("reject")){
 			                out.print("<span  style='color : red;'>Reject</span>");
 			            }else{
 			            	out.print("<span  style='color : red;'></span>");
 			            }
 				      
 				      %></td>
+				      
 				      <td>
-				      		
-					    			<div class="dropdown">
+				      <div class="dropdown">
 					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					                    Menu
 					                </button>
 					                <ul class="dropdown-menu">
-					                    <li><a href="#" class="dropdown-item acceptLink" data-tid="<%=r.getTid()%>" type="button">Accept</a></li>
-					                    <li><a href="#" class="dropdown-item rejectLink" data-tid="<%=r.getTid() %>" type="button">Reject</a></li>
+					                    <li><a href="#" class="dropdown-item acceptLink" data-tid="<%=f.getTid()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLink" data-tid="<%=f.getTid() %>" type="button">Reject</a></li>
 					                </ul>
-		           					 </div>
-				      
+		           		</div>
 				      </td>
+				      
 				    </tr>
-				   <%} %>
-				   
+				  <%} %>
 				  </tbody>
 				</table>
 				</div>
@@ -312,7 +307,7 @@ String alert = (String) request.getParameter("message");
 	    
 			    <div style="height: 400px; width: 100%; overflow: auto;">
 			    <div style="width: 100%; height: 30px; background: #a1cceb;">
-							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Room booking</span>
+							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Food delivery services</span>
 					</div>
 			    </div>
 	    
@@ -320,6 +315,7 @@ String alert = (String) request.getParameter("message");
 
     </div>
     
+
 
 
 
@@ -343,8 +339,8 @@ String alert = (String) request.getParameter("message");
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script type="text/javascript">
+
 document.addEventListener('DOMContentLoaded', function() {
     var alertElement = document.getElementById('alert');
     if (alertElement) {
@@ -396,7 +392,7 @@ $(document).ready(function() {
             // Make an AJAX request to the server to handle the acceptance
             $.ajax({
                 type: "GET",
-                url: "hotelRoomAccept.jsp",
+                url: "hotelFoodAccept.jsp",
                 data: { id: appointmentId },
                 success: function(response) {
                     // Handle the success response (if needed)
@@ -426,7 +422,7 @@ $(document).ready(function() {
             // Make an AJAX request to the server to handle the acceptance
             $.ajax({
                 type: "GET",
-                url: "hotelRoomReject.jsp",
+                url: "hotelFoodReject.jsp",
                 data: { id: appointmentId },
                 success: function(response) {
                     // Handle the success response (if needed)

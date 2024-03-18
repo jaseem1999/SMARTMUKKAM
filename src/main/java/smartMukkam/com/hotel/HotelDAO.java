@@ -185,4 +185,40 @@ public class HotelDAO {
 		return i;
 	}
 	
+	public static String getHotelName(int hoid) {
+		String name = null;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		 try {
+		        String sql = "select hotelName from hotel_details where hoid = ?";
+		        PreparedStatement stm = connection.prepareStatement(sql);
+		        stm.setInt(hoid, 1);
+		        ResultSet rs = stm.executeQuery();
+		        while (rs.next()) {
+		           name = rs.getString(1);
+		        }
+		    } catch (Exception e) {
+		        System.out.println(e);
+		    }
+		return name;
+	}
+	
+	public static String owner(int hoid) {
+		String name = null;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		 try {
+		        String sql = "select name from hotel where hotelId = ?";
+		        PreparedStatement stm = connection.prepareStatement(sql);
+		        stm.setInt(hoid, 1);
+		        ResultSet rs = stm.executeQuery();
+		        while (rs.next()) {
+		           name = rs.getString(1);
+		        }
+		    } catch (Exception e) {
+		        System.out.println(e);
+		    }
+		return name;
+	}
+	
 }

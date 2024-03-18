@@ -1,9 +1,9 @@
 <%@page import="smartMukkam.com.hotel.ServiceDAO"%>
-<%@page import="smartMukkam.com.hotel.RoomDTO"%>
-<%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
+<%@page import="smartMukkam.com.hotel.TaxiDTO"%>
 <%@page import="smartMukkam.com.hotel.HotelDAO"%>
 <%@page import="smartMukkam.com.hotel.HotelDTO"%>
 <%@page import="java.util.List"%>
+<%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -145,9 +145,9 @@ String alert = (String) request.getParameter("message");
             	<img src="himg?id=<%=h.getHotelId()%>" alt="Logo" width="150" height="130" class="d-inline-block align-text-top">
                 <div class="row" style="margin: auto; width: 100%; color: white; height: 150px; background: #000000c4; border-radius: 16px;">
                 	<ul class="col list-group" style="margin-top: 15px;">
-					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelHome.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelRoomBooking.jsp"><i class="fa fa-bed" aria-hidden="true"></i> Manage rooms booking services</a></li>
 					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelFood.jsp"><i class="fas fa-utensils"></i> Manage food ordering</a></li>
-					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelTaxi.jsp"><i class="fa fa-taxi" aria-hidden="true"></i> Manage taxi service</a></li>
+					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelHome.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
 					</ul>
 					<ul class="col list-group" style="margin-top: 15px;">
 					    <li class="list-group-item" style="background: #00000000;"><a style="text-decoration: none; color: white;" href="hotelGallery.jsp"><i class="fas fa-images"></i> Manage gallery</a></li>
@@ -163,55 +163,48 @@ String alert = (String) request.getParameter("message");
     </div>
     
    	<div class="text-center mb-3 pb-3" style=" margin-top: 30px;">
-        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px; color: rgb(43 46 52) !important;">Manage Room Booking Services</h6>
+        <h6 class="text-primary text-uppercase" style="letter-spacing: 5px; color: rgb(43 46 52) !important;">Manage Taxi Services</h6>
        
     </div>
-    
-    <div class="container">
+	<div class="container">
     	<div class="row">
-    	
-    	
-		
-	    	<div class="col">
+    		<div class="col">
 	    	<div style="width: 100%; height: 30px; background: #a1cceb;">
-				<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Upload Room Details</span>
+				<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Upload Taxi Details</span>
 			</div>
     		<%
 			if(alert != null && alert.equals("addSuccess")){
-	        	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Room added success</div>");
+	        	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Food added success</div>");
 	        }
 			if(alert != null && alert.equals("addFailed")){
-				out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Room added Failed</div>");
+				out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Food added Failed</div>");
 	        }
 			%>
 	    		
-	    		<form action="adRoom"  method="post" enctype="multipart/form-data" style="margin: 30px;">
+	    		<form action="adTaxi"  method="post" enctype="multipart/form-data" style="margin: 30px;">
 				  <div class="mb-3">
 				    
 				    <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
 				   </div>
 				  <div class="mb-3">
-				    <label for="room" class="form-label">Room</label>
-				    <input type="text" class="form-control" id="room" name="room" placeholder="Enter room name">
+				    <label for="taxi" class="form-label">Driver name</label>
+				    <input type="text" class="form-control" id="taxi" name="taxi" placeholder="Enter taxi driver name">
 				  </div>
-				    <div class="mb-3">
-				    <label for="no" class="form-label">No. rooms</label>
-				    <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of rooms">
+				  
+				  <div class="mb-3">
+				    <label for="vehicle" class="form-label">Vehicle name</label>
+				    <input type="text" class="form-control" id="vehicle" name="vehicle" placeholder="Enter vehicle">
 				  </div>
 				  <div class="mb-3">
-				    <label for="description" class="form-label">Description</label>
-				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+				    <label for="plate" class="form-label">No. Plate</label>
+				    <input type="text" class="form-control" id="plate" name="plate" placeholder="Enter plate">
 				  </div>
 				  <div class="mb-3">
-				    <label for="price" class="form-label">Price</label>
+				    <label for="price" class="form-label">Price per KM</label>
 				    <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
 				  </div>
 				  <div class="mb-3">
-				    <label for="discount" class="form-label">Discount</label>
-				    <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload room image</label>
+				    <label for="image" class="form-label">Upload Vehicle image</label>
 				    <input type="file" class="form-control" id="image" name="image">
 				  </div>
 		
@@ -220,106 +213,88 @@ String alert = (String) request.getParameter("message");
 		
 	    	</div>
 	    	
-	    	<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="descriptionModalLabel">Room Description</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p id="modalDescription"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-	    	
 	    	
 	    	<div class="col">
 	    		<div style="width: 100%; height: 30px; background: #a1cceb;">
-					<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Rooms</span>
+					<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Taxi Services</span>
 				</div>
 				<div style="height: 600px; width: 100%; overflow: auto;" id="contentToRefresh">
 				<table class="table table-striped">
 				  <thead>
 				    <tr>
-				    <th scope="col">Image</th>
-				      <th scope="col">Room</th>
-				      <th scope="col">No. room</th>
-				      <th scope="col">Description</th>
-				      <th scope="col">Price</th>
-				      <th scope="col">Discount</th>
+				      <th scope="col">Image</th>
+				      <th scope="col">Vehicle</th>
+				      <th scope="col">Driver</th>
+				      <th scope="col">No.Plate</th>
+				      <th scope="col">Price per km</th>
 				      <th scope="col">Active</th>
 				      <th scope="col">Status</th>
 				      <th scope="col">Menu</th>
 				    </tr>
 				  </thead>
 				  <tbody>
-				  
-				  
-				  
 				  <%
-				  List<RoomDTO> room = ServiceDAO.getAllRoomsUSEDHoidForHotel(hoid);
-				  
-				  for(RoomDTO r : room){
+				  List<TaxiDTO> taxi = ServiceDAO.getAllTaxiForHotel(hoid);
+				  for(TaxiDTO t : taxi){
 				  %>
 				    <tr>
-				      <th scope="row"><img src="imRoom?id=<%=r.getTid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
-				      <td><%=r.getRoom() %></td>
-				      <td><%=r.getNoRoom() %></td>
-				      <td style="color: green;" class="description" data-description="<%= r.getDescription() %>">Click to view description</td>
-				      <td><%=r.getPrice() %></td>
-				      <td ><%=r.getDiscount() %></td>
-				      <td><%=r.getActive() %></td>
-				      <td><%
-				      if(r.getStatus() == null){
+				    	<th scope="row"><img src="imTaxi?id=<%=t.getTid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+				    	<td><%=t.getVehicle() %></td>
+				    	<td><%=t.getDriver() %></td>
+				    	<td><%=t.getPlate() %></td>
+				    	<td><%=t.getPrice() %></td>
+				    	<td><%=t.getActive() %></td>
+				    	<td><%
+				      	if(t.getStatus() == null){
 			                out.print("<span  style='color : blue;'>Processing</span>");
-			            } else if(r.getStatus().equals("accept")){
+			            } else if(t.getStatus().equals("accept")){
 			                out.print("<span  style='color : green;'>Accept</span>");
-			            } else if(r.getStatus().equals("reject")){
+			            } else if(t.getStatus().equals("reject")){
 			                out.print("<span  style='color : red;'>Reject</span>");
 			            }else{
 			            	out.print("<span  style='color : red;'></span>");
 			            }
 				      
 				      %></td>
+				      
 				      <td>
-				      		
-					    			<div class="dropdown">
+				      <div class="dropdown">
 					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 					                    Menu
 					                </button>
 					                <ul class="dropdown-menu">
-					                    <li><a href="#" class="dropdown-item acceptLink" data-tid="<%=r.getTid()%>" type="button">Accept</a></li>
-					                    <li><a href="#" class="dropdown-item rejectLink" data-tid="<%=r.getTid() %>" type="button">Reject</a></li>
+					                    <li><a href="#" class="dropdown-item acceptLink" data-tid="<%=t.getTid()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLink" data-tid="<%=t.getTid() %>" type="button">Reject</a></li>
 					                </ul>
-		           					 </div>
-				      
+		           		</div>
 				      </td>
-				    </tr>
-				   <%} %>
-				   
+				 	</tr>
+				  <% }%>
 				  </tbody>
 				</table>
 				</div>
-	    	</div>
-	    </div>
-	    
-	    
-	    
-			    <div style="height: 400px; width: 100%; overflow: auto;">
-			    <div style="width: 100%; height: 30px; background: #a1cceb;">
-							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Room booking</span>
-					</div>
-			    </div>
-	    
-	    
-
+    	
+    	
+    	</div>
     </div>
     
+    <div style="height: 400px; width: 100%; overflow: auto;">
+			    <div style="width: 100%; height: 30px; background: #a1cceb;">
+							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Taxi services</span>
+					</div>
+	 </div>
+    
+   </div>
+    	
+    	
+    	
+
+
+
+
+
+
+
 
 
 
@@ -343,8 +318,8 @@ String alert = (String) request.getParameter("message");
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script type="text/javascript">
+
 document.addEventListener('DOMContentLoaded', function() {
     var alertElement = document.getElementById('alert');
     if (alertElement) {
@@ -354,18 +329,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Add click event listener to description cells
-    var descriptionCells = document.querySelectorAll('.description');
-    descriptionCells.forEach(function(cell) {
-      cell.addEventListener('click', function() {
-        var description = this.getAttribute('data-description');
-        document.getElementById('modalDescription').textContent = description; // Set description in modal
-        var descriptionModal = new bootstrap.Modal(document.getElementById('descriptionModal'));
-        descriptionModal.show(); // Show modal
-      });
-    });
-  });
 
 
 
@@ -396,7 +359,7 @@ $(document).ready(function() {
             // Make an AJAX request to the server to handle the acceptance
             $.ajax({
                 type: "GET",
-                url: "hotelRoomAccept.jsp",
+                url: "hotelTaxiAccept.jsp",
                 data: { id: appointmentId },
                 success: function(response) {
                     // Handle the success response (if needed)
@@ -426,7 +389,7 @@ $(document).ready(function() {
             // Make an AJAX request to the server to handle the acceptance
             $.ajax({
                 type: "GET",
-                url: "hotelRoomReject.jsp",
+                url: "hotelTaxiReject.jsp",
                 data: { id: appointmentId },
                 success: function(response) {
                     // Handle the success response (if needed)
@@ -454,6 +417,7 @@ $(document).ready(function() {
 
 
 </script>
+
 
 </body>
 </html>
