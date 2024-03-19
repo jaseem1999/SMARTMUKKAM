@@ -345,6 +345,254 @@ public class ServiceDAO {
 			
 			return i;
 		}
-	
-	
+		public static List<FoodDTO> getAllFoodUSEDHoidForUser(int hoid){
+			ArrayList<FoodDTO> li = new ArrayList<FoodDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+			    String sql = "SELECT tid, hoid, food, quandity, description, price, discount, status, active FROM food WHERE hoid=?";
+			    PreparedStatement stm = connection.prepareStatement(sql);
+			    stm.setInt(1, hoid); // Set the parameter index to 1
+			    ResultSet rs = stm.executeQuery();
+			    while (rs.next()) {
+			    	FoodDTO r = new FoodDTO();
+			        r.setTid(rs.getInt(1));
+			        r.setHoid(rs.getInt(2));
+			        r.setFood(rs.getString(3));
+			        r.setQuandity(rs.getInt(4));
+			        r.setDescription(rs.getString(5)); // Adjusted index for description
+			        r.setPrice(rs.getDouble(6)); // Adjusted index for price
+			        r.setDiscount(rs.getDouble(7)); // Adjusted index for discount
+			        r.setStatus(rs.getString(8));
+			        r.setActive(rs.getString(9)); // Adjusted index for active
+			        if(r.getStatus().equals("accept")) {
+			        	li.add(r);
+			        }
+			        
+			    }
+			} catch (Exception e) {
+			    // Handle exception properly, don't just print
+			    e.printStackTrace();
+			}
+
+			
+			return li;
+		}
+		
+		public static String getFoodName(int tid) {
+			String name = null;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select food from food where tid ="+tid;
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			      
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			           name = rs.getString(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e);
+			    }
+			return name;
+		}
+		
+		public static String getFoodDescription(int tid) {
+			String name = null;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select description from food where tid = "+tid;
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			           name = rs.getString(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e);
+			    }
+			return name;
+		}
+		
+		public static String getFoodActive(int tid) {
+			String name = null;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select active from food where tid="+tid;
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			           name = rs.getString(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e);
+			    }
+			return name;
+		}
+		
+		public static int getFoodQuandity(int tid) {
+			int q = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select quandity from food where tid ="+tid+";";
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			        
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			           q = rs.getInt(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e+"jaseem");
+			        
+			    }
+			return q;
+		}
+		
+		public static double getFoodPrice(int tid) {
+			double price = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select price from food where tid ="+tid;
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			      
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			        	price = rs.getDouble(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e);
+			    }
+			return price;
+		}
+		
+		public static double getFoodDiscount(int tid) {
+			double price = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select discount from food where tid ="+tid;
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			    
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			        	price = rs.getDouble(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e);
+			    }
+			return price;
+		}
+		
+		public static int updatefoodCart(int uid,int hoid,int foid ,int quantity) {
+			 int rowsAffected = 0;
+		        Conn con = new Conn();
+		        Connection connection = con.connection;
+		        PreparedStatement preparedStatement = null;
+
+		        try {
+		            // Prepare the SQL statement for inserting into the cart table
+		            String insertQuery = "INSERT INTO foodOrder (uid, hoid, foid, qunatity) VALUES (?, ?, ?, ?)";
+		            preparedStatement = connection.prepareStatement(insertQuery);
+
+		            // Set values for the parameters
+		            preparedStatement.setInt(1, uid);
+		            preparedStatement.setInt(2, hoid);
+		            preparedStatement.setInt(3, foid);
+		            preparedStatement.setInt(4, quantity);
+
+		            // Execute the update
+		            rowsAffected = preparedStatement.executeUpdate();
+
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		            // Handle the SQL exception as needed
+		        } finally {
+		            // Close the PreparedStatement and Connection
+		            try {
+		                if (preparedStatement != null) {
+		                    preparedStatement.close();
+		                }
+		                if (connection != null) {
+		                    connection.close();
+		                }
+		            } catch (SQLException e) {
+		                e.printStackTrace();
+		            }
+		        }
+
+		        return rowsAffected;
+		}
+		
+		public static int getCartFoodQuandity(int tid) {
+			int q = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			 try {
+			        String sql = "select sum(qunatity) from foodOrder where foid ="+tid+";";
+			        PreparedStatement stm = connection.prepareStatement(sql);
+			        ResultSet rs = stm.executeQuery();
+			        while (rs.next()) {
+			           q = rs.getInt(1);
+			        }
+			    } catch (Exception e) {
+			        System.out.println(e+"jassem 2");
+			    }
+			return q;
+		}
+		
+		
+		public static List<FoodCartDTO> getAllOrederByUIDandHOIDforUser(int uid , int hoid){
+			ArrayList<FoodCartDTO> li = new ArrayList<FoodCartDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql = "select tid,uid,hoid,foid,qunatity,booking_timestamp,status from foodOrder where uid="+uid+" and hoid="+hoid+";";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					FoodCartDTO f = new FoodCartDTO();
+					f.setTid(rs.getInt(1));
+					f.setUid(rs.getInt(2));
+					f.setHoid(rs.getInt(3));
+					f.setFoid(rs.getInt(4));
+					f.setQuantity(rs.getInt(5));
+					f.setDate(rs.getString(6));
+					f.setStatus(rs.getString(7));
+					li.add(f);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			return li;
+		}
+		public static List<FoodCartDTO> getAllFoodOrederByHOIDforHotel(int hoid){
+			ArrayList<FoodCartDTO> li = new ArrayList<FoodCartDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql = "select tid,uid,hoid,foid,qunatity,booking_timestamp,status from foodOrder where hoid="+hoid+";";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					FoodCartDTO f = new FoodCartDTO();
+					f.setTid(rs.getInt(1));
+					f.setUid(rs.getInt(2));
+					f.setHoid(rs.getInt(3));
+					f.setFoid(rs.getInt(4));
+					f.setQuantity(rs.getInt(5));
+					f.setDate(rs.getString(6));
+					f.setStatus(rs.getString(7));
+					li.add(f);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			return li;
+		}
+		
 }

@@ -1,3 +1,5 @@
+<%@page import="smartMukkam.main.user.userData.UserDAO"%>
+<%@page import="smartMukkam.com.hotel.FoodCartDTO"%>
 <%@page import="smartMukkam.com.hotel.ServiceDAO"%>
 <%@page import="smartMukkam.com.hotel.FoodDTO"%>
 <%@page import="smartMukkam.com.hotel.HotelDAO"%>
@@ -309,6 +311,82 @@ String alert = (String) request.getParameter("message");
 			    <div style="width: 100%; height: 30px; background: #a1cceb;">
 							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Food delivery services</span>
 					</div>
+					<table class="table table-striped">
+						  <thead>
+						    <tr>
+						      <th scope="col">*</th>
+						      <th scope="col">Food</th>
+						      <th scope="col">Quandity</th>
+						      <th scope="col">Order date & time</th>
+						      <th scope="col">Bill amount</th>
+						      <th scope="col">*</th>
+						      <th scope="col">Name</th>
+						      <th scope="col">Address one</th>
+						      <th scope="col">Address two</th>
+						      <th scope="col">City</th>
+						      <th scope="col">State</th>
+						      <th scope="col">Pin</th>
+						      <th scope="col">Status</th>
+						      <th scope="col">Menu</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						  <%
+						  List<FoodCartDTO> orders= ServiceDAO.getAllFoodOrederByHOIDforHotel(hoid);
+						  for(FoodCartDTO o : orders){
+						  %>
+						  	<tr>
+						  		<td><img src="imfood?id=<%=o.getFoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></td>
+						  		<td><%=ServiceDAO.getFoodName(o.getFoid()) %></td>
+						  		<td><%=ServiceDAO.getCartFoodQuandity(o.getFoid()) %></td>
+						  		<td><%=o.getDate() %></td>
+						  		<td><%=(ServiceDAO.getFoodPrice(o.getFoid())- ServiceDAO.getFoodDiscount(o.getFoid()) ) * ServiceDAO.getCartFoodQuandity(o.getFoid())%></td>
+     							
+     							<td><img src="userPhoto?id=<%=o.getUid()%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></td>
+     							<td><%=UserDAO.getUserName(o.getUid()) %></td>
+     							<td><%=UserDAO.getUserAddressOne(o.getUid()) %></td>
+     							<td><%=UserDAO.getUserAddressTWO(o.getUid()) %></td>
+     							<td><%=UserDAO.getUserCity(o.getUid()) %></td>
+     							<td><%=UserDAO.getUserState(o.getUid()) %></td>
+     							<td></td>
+     							<td>
+     							<%
+     							 if(o.getStatus() == null){
+     				                out.print("<span  style='color : blue;'>Processing</span>");
+     				            } else if(o.getStatus().equals("accept")){
+     				                out.print("<span  style='color : green;'>Accept</span>");
+     				            } else if(o.getStatus().equals("reject")){
+     				                out.print("<span  style='color : red;'>Reject</span>");
+     				            }else if(o.getStatus().equals("delivery")){
+     				                out.print("<span  style='color : blue;'>Delivery</span>");
+     				            }else if(o.getStatus().equals("delivered")){
+     				                out.print("<span  style='color : green;'>Delivery</span>");
+     				            }
+     				            
+     				            else{
+     				            	out.print("<span  style='color : red;'></span>");
+     				            }
+     							%>
+     							
+     							</td>
+     							<td>
+     							<div class="dropdown">
+					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					                    Menu
+					                </button>
+					                <ul class="dropdown-menu">
+					                    <li><a href="#" class="dropdown-item accepOrdertLink" data-tid="<%=o.getTid()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectOrderLink" data-tid="<%=o.getTid() %>" type="button">Reject</a></li>
+					                    <li><a href="#" class="dropdown-item deliveryOrderLink" data-tid="<%=o.getTid() %>" type="button">Delivery</a></li>
+					                    <li><a href="#" class="dropdown-item deliveredOrderLink" data-tid="<%=o.getTid() %>" type="button">Delivered</a></li>
+					                </ul>
+		           		</div>
+     							</td>
+						  	</tr>
+						  	<%} %>
+						  </tbody>
+				  </table>
+					
 			    </div>
 	    
 	    
