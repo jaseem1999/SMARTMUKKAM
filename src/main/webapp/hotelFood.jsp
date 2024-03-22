@@ -168,7 +168,7 @@ String alert = (String) request.getParameter("message");
        
     </div>
     
-    <div class="container">
+    <div class="container" >
     	<div class="row">
     	
     	
@@ -243,8 +243,8 @@ String alert = (String) request.getParameter("message");
 	    		<div style="width: 100%; height: 30px; background: #a1cceb;">
 					<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Food</span>
 				</div>
-				<div style="height: 600px; width: 100%; overflow: auto;" id="contentToRefresh">
-				<table class="table table-striped">
+				<div style="height: 600px; width: 100%; overflow: auto;" >
+				<table class="table table-striped table-hover" id="contentToRefresh">
 				  <thead>
 				    <tr>
 				      <th scope="col">Image</th>
@@ -307,11 +307,11 @@ String alert = (String) request.getParameter("message");
 	    
 	    
 	    
-			    <div style="height: 400px; width: 100%; overflow: auto;">
+			    <div style="height: 400px; width: 100%; overflow: auto;" >
 			    <div style="width: 100%; height: 30px; background: #a1cceb;">
 							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Food delivery services</span>
 					</div>
-					<table class="table table-striped">
+					<table class="table table-striped table-hover" id="contentToRefreshTwo">
 						  <thead>
 						    <tr>
 						      <th scope="col">*</th>
@@ -338,9 +338,9 @@ String alert = (String) request.getParameter("message");
 						  	<tr>
 						  		<td><img src="imfood?id=<%=o.getFoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></td>
 						  		<td><%=ServiceDAO.getFoodName(o.getFoid()) %></td>
-						  		<td><%=ServiceDAO.getCartFoodQuandity(o.getFoid()) %></td>
+						  		<td><%=o.getQuantity() %></td>
 						  		<td><%=o.getDate() %></td>
-						  		<td><%=(ServiceDAO.getFoodPrice(o.getFoid())- ServiceDAO.getFoodDiscount(o.getFoid()) ) * ServiceDAO.getCartFoodQuandity(o.getFoid())%></td>
+						  		<td><%=(ServiceDAO.getFoodPrice(o.getFoid())- ServiceDAO.getFoodDiscount(o.getFoid()) ) * o.getQuantity()%></td>
      							
      							<td><img src="userPhoto?id=<%=o.getUid()%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></td>
      							<td><%=UserDAO.getUserName(o.getUid()) %></td>
@@ -360,7 +360,7 @@ String alert = (String) request.getParameter("message");
      				            }else if(o.getStatus().equals("delivery")){
      				                out.print("<span  style='color : blue;'>Delivery</span>");
      				            }else if(o.getStatus().equals("delivered")){
-     				                out.print("<span  style='color : green;'>Delivery</span>");
+     				                out.print("<span  style='color : green;'>Delivered</span>");
      				            }
      				            
      				            else{
@@ -445,10 +445,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $(document).ready(function() {
     // Function to refresh the content of the specified element
-    window.refreshContent = function() {
+    window.refreshContentOne = function() {
         $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
             // Rebind event handlers after content refresh
-            bindEventHandlers();
+            bindEventHandlersOne();
         });
     }
 
@@ -456,10 +456,10 @@ $(document).ready(function() {
  
 
     // Initial binding of event handlers
-    bindEventHandlers();
+    bindEventHandlersOne();
 
     // Function to bind event handlers
-    function bindEventHandlers() {
+    function bindEventHandlersOne() {
         // Handle the click event on the "Accept" link
         $(".acceptLink").on("click", function(event) {
             event.preventDefault(); // Prevent the default behavior of the link
@@ -480,7 +480,7 @@ $(document).ready(function() {
                     
 
                     // Reload the content within the div with id "contentToRefresh" after acceptance
-                    window.refreshContent();
+                    window.refreshContentOne();
                 },
                 error: function(xhr, status, error) {
                     // Handle the error response (if needed)
@@ -510,6 +510,64 @@ $(document).ready(function() {
                     
 
                     // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContentOne();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+                
+        
+        
+
+    }
+});
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContent = function() {
+        $('#contentToRefreshTwo').load(location.href + ' #contentToRefreshTwo', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlers();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+ 
+
+    // Initial binding of event handlers
+    bindEventHandlers();
+
+    // Function to bind event handlers
+    function bindEventHandlers() {
+        // Handle the click event on the "Accept" link
+
+
+        $(".accepOrdertLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "hotelFoodOrderAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
                     window.refreshContent();
                 },
                 error: function(xhr, status, error) {
@@ -520,6 +578,100 @@ $(document).ready(function() {
                 }
             });
         });
+
+        $(".rejectOrderLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "hotelFoodOrderReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+        $(".deliveryOrderLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "hotelFoodOrderDelivery.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+        $(".deliveredOrderLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "hotelFoodOrderDelivered.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+        
+		
+        
+        
         
 
     }

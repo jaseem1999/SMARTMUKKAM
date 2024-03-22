@@ -190,9 +190,9 @@ public class HotelDAO {
 		Conn con = new Conn();
 		Connection connection = con.connection;
 		 try {
-		        String sql = "select hotelName from hotel_details where hoid = ?";
+		        String sql = "select hotelName from hotel_details where hoid ="+hoid+";";
 		        PreparedStatement stm = connection.prepareStatement(sql);
-		        stm.setInt(hoid, 1);
+		        
 		        ResultSet rs = stm.executeQuery();
 		        while (rs.next()) {
 		           name = rs.getString(1);
@@ -208,9 +208,9 @@ public class HotelDAO {
 		Conn con = new Conn();
 		Connection connection = con.connection;
 		 try {
-		        String sql = "select name from hotel where hotelId = ?";
+		        String sql = "select name from hotel where hotelId ="+hoid+";";
 		        PreparedStatement stm = connection.prepareStatement(sql);
-		        stm.setInt(hoid, 1);
+		       
 		        ResultSet rs = stm.executeQuery();
 		        while (rs.next()) {
 		           name = rs.getString(1);

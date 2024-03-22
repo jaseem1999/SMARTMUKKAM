@@ -1,5 +1,5 @@
 <%@page import="smartMukkam.com.hotel.ServiceDAO"%>
-<%@page import="smartMukkam.com.hotel.FoodCartDTO"%>
+<%@page import="smartMukkam.com.hotel.RoomBookingDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.hotel.HotelDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -56,7 +56,6 @@ if (email == null){
     <ul class="nav justify-content-end">
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="index.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="userHotelPages.jsp?id=<%=hoid%>"><i class="fas fa-utensils"></i> Restuarent</a></li>
-    	<li class="nav-item"><a class="nav-link" style="color: white;" href="room.jsp?hoid=<%=hoid%>"><i class="fa fa-bed" aria-hidden="true"></i> Room</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="taxi.jsp?hoid=<%=hoid%>"><i class="fa fa-taxi" aria-hidden="true"></i> Taxi</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: red;" href="useLogout.jsp">Logout</a></li>
     	<li class="nav-item"><img src="userPhoto?id=<%=uid%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></li>
@@ -66,7 +65,7 @@ if (email == null){
 </nav>
 
 <div style="width: 100%; height: 250px; margin-top: -57px;">
-	<img src="images/restaurant.jpg" class="img-fluid" alt="Responsive image" style="width: 100%; height: 250px;">
+	<img src="images/room1.jpg" class="img-fluid" alt="Responsive image" style="width: 100%; height: 250px;">
 </div>
 
 <div class="container" style="">
@@ -74,8 +73,8 @@ if (email == null){
   <thead>
     <tr>
     	<th scope="col">*</th>
-      <th scope="col">Food Name</th>
-      <th scope="col">Quandity</th>
+      <th scope="col">Room Name</th>
+      <th scope="col">No room booked</th>
       <th scope="col">Price</th>
       <th scope="col">Date and time</th>
       <th scope="col">Status</th>
@@ -84,51 +83,41 @@ if (email == null){
   </thead>
   <tbody>
   <%
-  List<FoodCartDTO> foods = ServiceDAO.getAllOrederByUIDandHOIDforUser(uid, hoid);
-  for(FoodCartDTO f : foods){
-  %>
+    List<RoomBookingDTO> rooms = ServiceDAO.getAllRoomBookingForUser(hoid, uid);
+    for(RoomBookingDTO r : rooms) {
+%>
     <tr>
-      <th scope="row"><img src="imfood?id=<%=f.getFoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
-      <td><%=ServiceDAO.getFoodName(f.getFoid()) %></td>
-      <td><%=f.getQuantity()%></td>
-      <td><%=(ServiceDAO.getFoodPrice(f.getFoid())- ServiceDAO.getFoodDiscount(f.getFoid()) ) * f.getQuantity()%></td>
-      <td><%=f.getDate() %></td>
-      <td>
-      <%
-      	if(f.getStatus() == null){
-      		out.print("<span style='color:blue'>Preparing</span>");
-      	}else if(f.getStatus().equals("delivery")){
-      		out.print("<span style='color:blue'>Delevery</span>");
-      	}else if(f.getStatus().equals("delivered")){
-      		out.print("<span style='color:green'>Delivered</span>");
-      	}
-      	else if(f.getStatus().equals("accept")){
-      		out.print("<span style='color:green'>Accept</span>");
-      	}
-      	
-      	else if(f.getStatus().equals("reject")){
-      		out.print("<span style='color:red'>Cancelled</span>");
-      	}else{
-      		
-      	}
-      %>
-      </td>
-      <td><a href="javascript:void(0);" onclick="printRow('<%=f.getUid()%>', '<%=f.getFoid()%>', '<%=ServiceDAO.getFoodName(f.getFoid())%>','<%=(ServiceDAO.getFoodPrice(f.getFoid())- ServiceDAO.getFoodDiscount(f.getFoid()) ) * ServiceDAO.getCartFoodQuandity(f.getFoid()) %>' ,'<%=ServiceDAO.getCartFoodQuandity(f.getFoid())%>', '<%=f.getDate()%>', '<%=f.getStatus()%>')">Print</a></td>
+        <th scope="row"><img src="imRoom?id=<%=r.getRoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt=""></th>
+        <td><%=ServiceDAO.getRoomName(r.getRoid())%></td>
+        <td><%=r.getNoRooms()%></td>
+        <td><%=(ServiceDAO.getRoomPrice(r.getRoid()) - ServiceDAO.getRoomDiscount(r.getRoid())) * r.getNoRooms()%></td>
+        <td><%=r.getDate()%></td>
+        
+        <td>
+        <%
+            if(r.getStatus() == null) {
+                out.print("<span style='color:blue'>Processing</span>");
+            } else if(r.getStatus().equals("accept")) {
+                out.print("<span style='color:green'>Conformed</span>");
+            } else if(r.getStatus().equals("reject")) {
+                out.print("<span style='color:red'>Reject</span>");
+            } else {
+                // Handle other cases if needed
+            }
+        %>
+        </td>
+        
+        <td><a href="javascript:void(0);" onclick="printRow('<%=r.getUid()%>', '<%=r.getRoid()%>', '<%=ServiceDAO.getRoomName(r.getRoid())%>', '<%=(ServiceDAO.getRoomPrice(r.getRoid()) - ServiceDAO.getRoomDiscount(r.getRoid())) * r.getNoRooms() %>', '<%=r.getNoRooms()%>', '<%=r.getDate()%>', '<%=r.getStatus()%>')">Print</a></td>
     </tr>
-  <%} %>
+<% } %>
+  
   </tbody>
 </table>
 </div>
 
 
 
-
-
-
-
-
-
- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
@@ -143,29 +132,34 @@ if (email == null){
    
    
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <script>
    
-  <script>
-    function printRow(uid, foid, foodName, price , quantity, date, status) {
-        // Open a new window for printing
-        var printWindow = window.open('bill_template.jsp', '_blank');
+   function printRow(uid, roid, roomName, totalPrice, noRooms, date, status) {
+	    // Open a new window for printing
+	    var printWindow = window.open('bill_room.jsp', '_blank');
 
-        if(status == 'null'){
-			status = 'Preparing'
-        }
-        // Pass bill details to the opened window
-        printWindow.onload = function() {
-            printWindow.document.getElementById('foodName').innerText = foodName;
-            printWindow.document.getElementById('foodPrice').innerText = price;
-            printWindow.document.getElementById('quantity').innerText = quantity;
-            printWindow.document.getElementById('date').innerText = date;
-            printWindow.document.getElementById('status').innerText = status;
-        };
-        
-        // Close the print window after printing
-        printWindow.setTimeout(function() {
-            printWindow.close();
-        }, 1000);
-    }
-</script>
+	    // Modify status if it's null
+	    if (status === 'null') {
+	        status = 'Proccessing';
+	    }
+
+	    // Pass bill details to the opened window
+	    printWindow.onload = function() {
+	        printWindow.document.getElementById('roomName').innerText = roomName;
+	        printWindow.document.getElementById('totalPrice').innerText = totalPrice;
+	        printWindow.document.getElementById('noRooms').innerText = noRooms;
+	        printWindow.document.getElementById('date').innerText = date;
+	        printWindow.document.getElementById('status').innerText = status;
+	    };
+	    
+	    // Close the print window after printing
+	    printWindow.setTimeout(function() {
+	        printWindow.close();
+	    }, 1000);
+	}		
+
+   </script>
+   
+
 </body>
 </html>

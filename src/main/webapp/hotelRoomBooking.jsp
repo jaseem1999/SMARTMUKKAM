@@ -1,3 +1,6 @@
+<%@page import="smartMukkam.main.user.userData.UserDAO"%>
+<%@page import="smartMukkam.com.hotel.RoomBookingDTO"%>
+<%@page import="smartMukkam.com.hotel.FoodCartDTO"%>
 <%@page import="smartMukkam.com.hotel.ServiceDAO"%>
 <%@page import="smartMukkam.com.hotel.RoomDTO"%>
 <%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
@@ -314,6 +317,75 @@ String alert = (String) request.getParameter("message");
 			    <div style="width: 100%; height: 30px; background: #a1cceb;">
 							<span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Manage Room booking</span>
 					</div>
+					
+					<table class="table table-striped" id="contentToRefreshTwo">
+				  <thead>
+				    <tr>
+				      <th scope="col">*</th>
+				      <th scope="col">Room</th>
+				      <th scope="col">No.room</th>
+				      <th scope="col">Bill</th>
+				      <th scope="col">Date</th>
+				      <th scope="col">*</th>
+				      <th scope="col">Name</th>
+				      <th scope="col">Address One</th>
+				      <th scope="col">Address Two</th>
+				      <th scope="col">City</th>
+				      <th scope="col">State</th>
+				      <th scope="col">PIN</th>
+				      <th scope="col">Status</th>
+				      <th scope="col">Menu</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  <%
+				  List<RoomBookingDTO> rooms = ServiceDAO.getAllRoomBookingForHotel(hoid);
+				  for(RoomBookingDTO rms : rooms ){
+				  %>
+				  	<tr>
+				  		<th scope="row"><img src="imRoom?id=<%=rms.getRoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+				  		<td><%=ServiceDAO.getRoomName(rms.getRoid()) %></td>
+				  		<td><%=rms.getNoRooms() %></td>
+				  		<td><%=(ServiceDAO.getRoomPrice(rms.getRoid()) - ServiceDAO.getRoomDiscount(rms.getRoid())) * rms.getNoRooms()%></td>
+				  		<td><%=rms.getDate() %></td>
+				  		<td><img src="userPhoto?id=<%=rms.getUid()%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></td>
+				  		<td><%=UserDAO.getUserName(rms.getUid()) %></td>
+				  		<td><%=UserDAO.getUserAddressOne(rms.getUid()) %></td>
+				  		<td><%=UserDAO.getUserAddressTWO(rms.getUid()) %></td>
+				  		<td><%=UserDAO.getUserCity(rms.getUid()) %></td>
+				  		<td><%=UserDAO.getUserState(rms.getUid()) %></td>
+				  		<td></td>
+				  		<td><%
+				      if(rms.getStatus() == null){
+			                out.print("<span  style='color : blue;'>Processing</span>");
+			            } else if(rms.getStatus().equals("accept")){
+			                out.print("<span  style='color : green;'>Accept</span>");
+			            } else if(rms.getStatus().equals("reject")){
+			                out.print("<span  style='color : red;'>Reject</span>");
+			            }else{
+			            	out.print("<span  style='color : red;'></span>");
+			            }
+				      
+				      %></td>
+				      <td>
+				      		
+					    			<div class="dropdown">
+					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					                    Menu
+					                </button>
+					                <ul class="dropdown-menu">
+					                    <li><a href="#" class="dropdown-item acceptLinkBooking" data-tid="<%=rms.getTid()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLinkBooking" data-tid="<%=rms.getTid() %>" type="button">Reject</a></li>
+					                </ul>
+		           					 </div>
+				      
+				      </td>
+				  		
+				  	</tr>
+				  	<%} %>
+				  </tbody>
+				  </table>
+					
 			    </div>
 	    
 	    
@@ -437,6 +509,89 @@ $(document).ready(function() {
 
                     // Reload the content within the div with id "contentToRefresh" after acceptance
                     window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+        
+
+    }
+});
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContentTwo = function() {
+        $('#contentToRefreshTwo').load(location.href + ' #contentToRefreshTwo', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlersTwo();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+ 
+
+    // Initial binding of event handlers
+    bindEventHandlersTwo();
+
+    // Function to bind event handlers
+    function bindEventHandlersTwo() {
+        // Handle the click event on the "Accept" link
+        $(".acceptLinkBooking").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "hotelRoomAcceptBooking.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContentTwo();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+        $(".rejectLinkBooking").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "hotelRoomRejectBooking.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment accepted successfully");
+
+                    // Show the success message
+                    
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContentTwo();
                 },
                 error: function(xhr, status, error) {
                     // Handle the error response (if needed)

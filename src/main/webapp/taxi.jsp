@@ -1,5 +1,5 @@
 <%@page import="smartMukkam.com.hotel.ServiceDAO"%>
-<%@page import="smartMukkam.com.hotel.FoodDTO"%>
+<%@page import="smartMukkam.com.hotel.TaxiDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.hotel.HotelDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -8,8 +8,6 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-
-<meta charset="ISO-8859-1">
 <%
 Integer uid = (Integer) session.getAttribute("uid");
 String name = (String) session.getAttribute("name");
@@ -17,7 +15,7 @@ String email = (String) session.getAttribute("email");
 String country = (String) session.getAttribute("country");
 Long number =(Long) session.getAttribute("phone");
 
-Integer hoid = Integer.parseInt(request.getParameter("id"));
+Integer hoid = Integer.parseInt(request.getParameter("hoid"));
 String alert = (String) request.getParameter("message");
 if (email == null){
 	response.sendRedirect("index.jsp?message=login");
@@ -57,51 +55,47 @@ if (email == null){
   
     <ul class="nav justify-content-end">
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="index.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
+    	<li class="nav-item"><a class="nav-link" style="color: white;" href="userHotelPages.jsp?id=<%=hoid%>"><i class="fas fa-utensils"></i> Restuarent</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="room.jsp?hoid=<%=hoid%>"><i class="fa fa-bed" aria-hidden="true"></i> Room</a></li>
-    	<li class="nav-item"><a class="nav-link" style="color: white;" href="taxi.jsp?hoid=<%=hoid%>"><i class="fa fa-taxi" aria-hidden="true"></i> Taxi</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: red;" href="useLogout.jsp">Logout</a></li>
     	<li class="nav-item"><img src="userPhoto?id=<%=uid%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></li>
     	
     </ul>
     
 </nav>
-
-<div style="width: 100%; height: 150px; margin-top: -57px;">
-	<img src="images/restaurant.jpg" class="img-fluid" alt="Responsive image" style="width: 100%; height: 250px;">
+<div style="width: 100%; height: 250px; margin-top: -57px;">
+	<img src="images/taxi2.jpg" class="img-fluid" alt="Responsive image" style="width: 100%; height: 250px;">
 </div>
 
 
-<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Food Details</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Taxi Details</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div style="width: 100%; height: 150px;">
-                    <img id="foodImage" class="img-fluid" alt="Responsive image" style="width: 100%; height: 250px;">
+                    <img id="carImage" class="img-fluid" alt="Responsive image" style="width: 100%; height: 250px;">
                 </div>
                 <ul class="list-group">
-                    <li class="list-group-item" id="foodName"></li>
-                    <li class="list-group-item" id="foodDescription"></li>
-                    <li class="list-group-item" id="foodQuantity">Quantity : </li>
-                    <li class="list-group-item" id="foodPrice">Price : </li>
-                    <li class="list-group-item" id="foodDiscount">Discount : </li>
-                    <li class="list-group-item" id="foodFinalPrice">Final Price : </li>
+                    <li class="list-group-item" id="vehicleName"></li>
+                    <li class="list-group-item" id="vehicleDriver"></li>
+                    <li class="list-group-item" id="vehiclePlate"></li>
+                    <li class="list-group-item" id="vehiclePrice"></li>
                 </ul>
-				<form action="addFoodCart.jsp" method="post" id="form-1">
+				<form action="taxiBookingServlet.jsp" method="post" id="form-1">
 					<input type="hidden" id="uid" name="uid" value="<%=uid%>">
 					<input type="hidden" id="hoid" name="hoid" value="<%=hoid%>">
-					<input type="hidden" id="foid" name="foid" value="">
+					<input type="hidden" id="txoid" name="txoid" value="">
 					<div class="mb-3">
-					    <label for="exampleInput" class="form-label">Enter quantity</label>
-					    <input type="number" class="form-control" id="quantity" name="quantity" value="1">
-					</div>
-					<button type="submit" class="btn btn-primary">Order</button>
+					    <label for="exampleInputEmail1" class="form-label">Enter KM</label>
+					    <input type="number" class="form-control" id="km" name="km" required="required">
+					 </div>
+					<button type="submit" style="margin: 10px;" class="btn btn-primary">Book</button>
 				</form>
             </div>
             <div class="modal-footer">
@@ -113,40 +107,39 @@ if (email == null){
 
 
 
-<div class="container" style="height: auto; margin-top: 50px;">
+<div class="container" >
 
 <div class="container-fluid py-5">
         <div class="container pt-5 pb-3" id="services">
-        	<a href="userHotelFoodOrder.jsp?hoid=<%=hoid%>" type="button" class="btn btn-outline-primary"><i class="fas fa-utensils"></i> Orders</a>
+        	<a href="userHotelTaxiBooking.jsp?hoid=<%=hoid%>" type="button" class="btn btn-outline-primary"><i class="fa fa-taxi" aria-hidden="true"></i> Your bookings</a>
             <div class="text-center mb-3 pb-3">
-                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Restuarent Services</h6>
+                <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Taxi Services</h6>
             </div>
             <div class="row">
 	<%
-if(alert != null && alert.equals("quantityFull")){
-	out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Sorry not available</div>");
+if(alert != null && alert.equals("failedTaxiBooked")){
+	out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Taxi booked failed</div>");
 }
 
-if(alert != null && alert.equals("foodCartSuccess")){
-	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Food order successfully</div>");
+if(alert != null && alert.equals("sucessTaxiBooked")){
+	out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Taxi booked successfully</div>");
 }
 %>
 								<%
-					    List<FoodDTO> foods = ServiceDAO.getAllFoodUSEDHoidForUser(hoid);
-					    for(FoodDTO f : foods){
+					    List<TaxiDTO> taxi = ServiceDAO.getTaxiForUser(hoid);
+						for(TaxiDTO tx : taxi){
 					%>
 					    <div class="col-lg-4 col-md-6 mb-4" style="">
 					        <div class="destination-item position-relative overflow-hidden mb-2">
-					            <img class="img-fluid" src="imfood?id=<%=f.getTid()%>" style="max-height: 150px; width: 100%" alt="">
+					            <img class="img-fluid" src="imTaxi?id=<%=tx.getTid()%>" style="max-height: 150px; width: 100%" alt="">
 					            <a class="destination-overlay text-white text-decoration-none open-modal" 
-					               data-tid="<%=f.getTid()%>" 
-					               data-description="<%=f.getDescription()%>" 
-					               data-quandity="<%=f.getQuandity() - ServiceDAO.getCartFoodQuandity(f.getTid())%>" 
-					               data-price="<%=f.getPrice()%>" 
-					               data-discount="<%=f.getDiscount()%>" 
-					               data-active="<%=f.getActive()%>" 
+					               data-tid="<%=tx.getTid()%>" 
+					               data-driver="<%=tx.getDriver() %>"
+					               data-vehicle="<%=tx.getVehicle() %>"
+					               data-plate="<%=tx.getPlate() %>"
+					               data-price="<%=tx.getPrice() %>"
 					               href="#" data-toggle="modal" data-target="#exampleModal">
-					                <h5 class="text-white"><%=f.getFood() %></h5>
+					                <h5 class="text-white"><%=tx.getVehicle() %></h5>
 					                <span>Click to see details</span>
 					            </a>
 					        </div>
@@ -157,7 +150,6 @@ if(alert != null && alert.equals("foodCartSuccess")){
                 </div>
                 </div>
     </div>
-	
 
 
 
@@ -184,22 +176,20 @@ $(document).ready(function() {
     // Function to populate modal fields with food details
     $('.open-modal').click(function() {
         var tid = $(this).data('tid'); // Get tid from data-tid attribute
-        var description = $(this).data('description'); // Get description from data-description attribute
-        var quantity = $(this).data('quandity'); // Get quantity from data-quandity attribute
+        var driver = $(this).data('driver'); // Get description from data-description attribute
+        var vehicle = $(this).data('vehicle'); // Get quantity from data-quandity attribute
+        var plate = $(this).data('plate');
         var price = $(this).data('price'); // Get price from data-price attribute
-        var discount = $(this).data('discount'); // Get discount from data-discount attribute
-        var active = $(this).data('active'); // Get active from data-active attribute
         
         // Populate modal fields with food details
         $('#exampleModalLabel').text('Food Details');
-        $('#foodImage').attr('src', 'imfood?id=' + tid);
-        $('#foodName').text('Name: ' + $(this).find('h5').text());
-        $('#foodDescription').text('Description: ' + description);
-        $('#foodQuantity').text('Quantity: ' + quantity);
-        $('#foodPrice').text('Price: ' + price);
-        $('#foodDiscount').text('Discount: ' + discount);
-        $('#foodFinalPrice').text('Final Price: ' + (price - discount));
-        $('#foid').val(tid);
+        $('#carImage').attr('src', 'imTaxi?id=' + tid);
+        $('#vehicleName').text('Vehicle name : ' + $(this).find('h5').text());
+        $('#vehicleDriver').text('Driver: ' + driver);
+        $('#vehiclePlate').text('Plate No : ' + plate);
+        $('#vehiclePrice').text('Fair for 1 Km: ' + price);
+       
+        $('#txoid').val(tid);
     });
 });
 
@@ -216,9 +206,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 </script>
 
- 
-   
-   
-   
 </body>
 </html>
