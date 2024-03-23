@@ -1105,5 +1105,176 @@ public class ServiceDAO {
 		    return li;
 			
 		}
+		
+		public static int acceptTaxiBooking(int tid) {
+			int i = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			String update = "UPDATE bookCar SET status = 'accept' WHERE tid="+tid+";";				    	
+			try {
+	    		java.sql.Statement statement = connection.createStatement();
+		        int rowsAffected = statement.executeUpdate(update);
+		        if(rowsAffected > 0) {
+		        	i = 1;
+		        	return i;
+		        }
+		        statement.close();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			return i;
+		}
+		public static int rejectTaxiBooking(int tid) {
+			int i = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			String update = "UPDATE bookCar SET status = 'reject' WHERE tid="+tid+";";				    	
+			try {
+	    		java.sql.Statement statement = connection.createStatement();
+		        int rowsAffected = statement.executeUpdate(update);
+		        if(rowsAffected > 0) {
+		        	i = 1;
+		        	return i;
+		        }
+		        statement.close();
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			return i;
+		}
+		
+		public static List<GalleryDTO> getGalleryForUser(int hoid){
+			ArrayList<GalleryDTO> li = new ArrayList<GalleryDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid,hoid,description,status from hGallery where hoid= ?;"; 
+				PreparedStatement stm = connection.prepareStatement(sql);
+				stm.setInt(hoid, 1);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					GalleryDTO g = new GalleryDTO();
+					g.setTid(rs.getInt(1));
+					g.setHoid(rs.getInt(2));
+					g.setDescription(rs.getString(3));
+					g.setStatus(rs.getString(4));
+					if(g.getStatus() == null) {
+						li.add(g);
+					}
+					
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			
+			return li;
+		}
+		
+		public static int insertReview(int uid, int hoid, String review) {
+		    int i = 0;
+		    Conn con = new Conn();
+		    Connection connection = con.connection;
+
+		    try {
+		        String sql = "INSERT INTO reviewHotelTable (uid, hoid, review) VALUES (?, ?, ?)";
+		        PreparedStatement statement = connection.prepareStatement(sql);
+		        statement.setInt(1, uid);
+		        statement.setInt(2, hoid);
+		        statement.setString(3, review);
+		        int rowsAffected = statement.executeUpdate();
+		        if (rowsAffected > 0) {
+		            i = 1;
+		        }
+		    } catch (SQLException e) {
+		        // Handle SQL exception
+		        e.printStackTrace();
+		    } finally {
+		        // Close the connection
+		        if (connection != null) {
+		            try {
+		                connection.close();
+		            } catch (SQLException e) {
+		                e.printStackTrace();
+		            }
+		        }
+		    }
+
+		    return i;
+		}
+
+		public static List<ReviewDTO> getReviewForUser(int hoid){
+			ArrayList<ReviewDTO> li = new ArrayList<ReviewDTO>();
+			Conn con = new Conn();
+		    Connection connection = con.connection;
+		    try {
+		    	String sql = "SELECT tid, uid, hoid, review, comment, status FROM reviewHotelTable WHERE hoid = " + hoid + " ORDER BY tid DESC;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while (rs.next()) {
+					ReviewDTO r = new ReviewDTO();
+					r.setTid(rs.getInt(1));
+					r.setUid(rs.getInt(2));
+					r.setHoid(rs.getInt(3));
+					r.setReview(rs.getString(4));
+					r.setComment(rs.getString(5));
+					r.setStatus(rs.getString(6));
+					li.add(r);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			return li;
+		}
+		public static List<ReviewDTO> getReviewForHotel(int hoid){
+			ArrayList<ReviewDTO> li = new ArrayList<ReviewDTO>();
+			Conn con = new Conn();
+		    Connection connection = con.connection;
+		    try {
+		    	String sql = "SELECT tid, uid, hoid, review, comment, status FROM reviewHotelTable WHERE hoid = " + hoid + " ORDER BY tid DESC;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while (rs.next()) {
+					ReviewDTO r = new ReviewDTO();
+					r.setTid(rs.getInt(1));
+					r.setUid(rs.getInt(2));
+					r.setHoid(rs.getInt(3));
+					r.setReview(rs.getString(4));
+					r.setComment(rs.getString(5));
+					r.setStatus(rs.getString(6));
+					li.add(r);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			return li;
+		}
+		
+		public static int reviewHotelTable(int tid,String comment) {
+			int i = 0;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			String update = "UPDATE reviewHotelTable SET comment=? WHERE tid=?";
+			    	
+	    	try {
+	    		PreparedStatement preparedStatement = connection.prepareStatement(update);
+	    		
+	    		preparedStatement.setString(1, comment);
+	    		preparedStatement.setInt(2, tid);
+	    		int rowsAffected = preparedStatement.executeUpdate();
+		        if(rowsAffected > 0) {
+		        	i = 1;
+		        	return i;
+		        }
+		        
+			} catch (Exception e) {
+				System.out.println(e+"Jaseem");
+				
+			}
+			return i;
+		}
 
 }

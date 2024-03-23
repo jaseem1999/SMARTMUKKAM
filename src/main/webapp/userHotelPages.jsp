@@ -59,6 +59,8 @@ if (email == null){
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="index.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="room.jsp?hoid=<%=hoid%>"><i class="fa fa-bed" aria-hidden="true"></i> Room</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: white;" href="taxi.jsp?hoid=<%=hoid%>"><i class="fa fa-taxi" aria-hidden="true"></i> Taxi</a></li>
+    	<li class="nav-item"><a class="nav-link" style="color: white;" href="userHotelGallery.jsp?hoid=<%=hoid%>"><i class="fas fa-images"></i> Gallery</a></li>
+    	<li class="nav-item"><a class="nav-link" style="color: white;" href="userHotelReview.jsp?hoid=<%=hoid%>"><i class="fab fa-telegram" aria-hidden="true"></i> Review</a></li>
     	<li class="nav-item"><a class="nav-link" style="color: red;" href="useLogout.jsp">Logout</a></li>
     	<li class="nav-item"><img src="userPhoto?id=<%=uid%>" alt="" style="height: 40px; width: 40px; border: 1px solid white; border-radius: 50%;"></li>
     	

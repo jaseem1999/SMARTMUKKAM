@@ -107,6 +107,9 @@ if (email == null){
 		            }
 		        %>
 			      </td>
+			      <td>
+			      	<a href="javascript:void(0);" onclick="printRow('<%=t.getUid()%>', '<%=ServiceDAO.getTaxiName(t.getTxoid())%>', '<%=ServiceDAO.getTaxiDriver(t.getTxoid())%>', '<%=ServiceDAO.getTaxiPlate(t.getTxoid()) %>', '<%=t.getKm()%>','<%=ServiceDAO.getTaxiParice(t.getTxoid()) * t.getKm() %>' ,'<%=t.getDate()%>', '<%=t.getStatus()%>')">Print</a>
+			      </td>
 			      
 			    </tr>
 			<%} %>    
@@ -135,6 +138,35 @@ if (email == null){
    
    
    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   
+   <script type="text/javascript">
+   function printRow(uid, taxiName, taxiDriver, taxiPlate, km, totalPrice, date, status) {
+	    // Open a new window for printing
+	    var printWindow = window.open('bill_taxi.jsp', '_blank');
+
+	    // Modify status if it's null
+	    if (status === 'null') {
+	        status = 'Processing';
+	    }
+
+	    // Pass taxi details to the opened window
+	    printWindow.onload = function() {
+	        printWindow.document.getElementById('taxiName').innerText = taxiName;
+	        printWindow.document.getElementById('taxiDriver').innerText = taxiDriver;
+	        printWindow.document.getElementById('taxiPlate').innerText = taxiPlate;
+	        printWindow.document.getElementById('km').innerText = km;
+	        printWindow.document.getElementById('totalPrice').innerText = totalPrice;
+	        printWindow.document.getElementById('date').innerText = date;
+	        printWindow.document.getElementById('status').innerText = status;
+	    };
+	    
+	    // Close the print window after printing
+	    printWindow.setTimeout(function() {
+	        printWindow.close();
+	    }, 1000); // 1000 milliseconds delay before closing the window
+	}
+		
+   </script>
 
 </body>
 </html>
