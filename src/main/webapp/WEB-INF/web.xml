@@ -406,6 +406,25 @@
     <url-pattern>/imHGallery</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>AdminProfileUpload</servlet-name>
+    <servlet-class>smartMukkam.com.admin.UpdateAdminDetailsServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>AdminProfileUpload</servlet-name>
+    <url-pattern>/adminPro</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>AdminProfile</servlet-name>
+    <servlet-class>smartMukkam.com.admin.GetAdminProfile</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>AdminProfile</servlet-name>
+    <url-pattern>/adminProView</url-pattern>
+</servlet-mapping>
+
+
 
 
 

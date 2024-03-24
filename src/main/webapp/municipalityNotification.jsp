@@ -1,3 +1,4 @@
+<%@page import="smartMukkam.com.admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -55,19 +56,26 @@
 		  visibility: visible;
 		  opacity: 1;
 		}
-		.availability-status.online {
-		    background: #1bcfb4;
+				.availability-status.online {
+			<%
+			String adminActive=AdminDAO.getActiveAdmin() ;
+			if(adminActive.equals("active")){
+				out.print("background: #1bcfb4;");
+			}else{
+				out.print("background: black;");  
+			}
+			%>
 		    position: absolute;
-		    width: 10px;
-		    height: 10px;
+		    width: 12px;
+		    height: 12px;
 		    border-radius: 57%;
 		    border: 2px solid #ffffff;
-		    margin-left: -10px;
-    		margin-top: 29px;
+		    margin-left: -5px;
+  			margin-top: 29px;
 		}
 		.homeFull{
-		 	max-width: 1000px;
-		 	height: 500px;
+		 	max-width: 1370px;
+		 	height: 850px;
 		 	border: 1px solid;
 		}
 		.home{
@@ -75,9 +83,20 @@
 			height: 30px;
 			background: #bebcd4;;
 		}
+		.home1{
+			width: 100%;
+			height: 30px;
+			background: #6a61c6;
+		}
 		.home span{
 			margin: 5px;
 		    color: #311B92;
+		    font-size: medium;
+		    font-weight: 600;
+		}
+		.home1 span{
+			margin: 5px;
+		    color: white;
 		    font-size: medium;
 		    font-weight: 600;
 		}
@@ -100,16 +119,25 @@ if(email == null){
 <nav class="navbar bg-body-tertiary" style="height: 80px; background: #84818317;">
   <div class="container">
     <a class="navbar-brand" href="municipality.jsp" >
-      <img src="images/png-transparent-government-of-india-logo-gold.png"Bootstrap" style="width: 50px;" >
+      <img src="images/png-transparent-government-of-india-logo-gold.png" style="width: 50px;" >
       <img src="images/kerala-govt-logo.png" alt="Bootstrap" style="width: 60px; margin-left: 20px;" >
      </a>
       <ul class="nav justify-content-end">
-      	   <li class="nav-item">
-		      <img alt="" src="images/jaseem.jpg" class="profile-image">
+      	  <li class="nav-item">
+		      <img alt="" src="adminProView?id=<%=1%>" class="profile-image">
 		      <span class="tooltip">Admin online</span>
 		      <span class="availability-status online"></span>
-		    </li>
-		  <li class="nav-item">
+		      <span class="tooltip">
+					<%
+						      
+					  if(adminActive.equals("active")){
+						   out.print("Admin is online");
+					  }else{
+						    out.print("Admin is offline");  
+						}
+				      %>
+					</span>
+		    </li>		  <li class="nav-item">
 		    <a class="nav-link active" aria-current="page" href="municipality.jsp">home</a>
 		  </li>
 		  <li class="nav-item">

@@ -156,4 +156,45 @@ public class UserDAO {
 		
 		return r;
 	}
+	
+	
+	public static int logoutActive(int id) {
+		int i = 0;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		String update = "UPDATE user SET active ='inactive' WHERE userId="+id+";";				    	
+		try {
+    		java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(update);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		return i;
+	
+	}
+	public static int loginActive(int id) {
+		int i = 0;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		String update = "UPDATE user SET active ='active' WHERE userId="+id+";";				    	
+		try {
+    		java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(update);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		return i;
+	
+	}
+	
 }

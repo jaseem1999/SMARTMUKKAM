@@ -334,7 +334,7 @@ String alert = (String) request.getParameter("message");
                         %>
                             
                             <div class="dropdown-menu border-0 rounded-0 m-0">
-                                <a href="#" class="dropdown-item">Administration</a>
+                                <a href="AdminLogin.jsp" class="dropdown-item">Administration</a>
                                 <a href="municipalityLogin.jsp" class="dropdown-item">Municipality</a>
                                 <a data-bs-toggle="modal" data-bs-target="#exampleModal2" class="dropdown-item">Shops</a>
                                 <a data-bs-toggle="modal" data-bs-target="#exampleModal4"  class="dropdown-item">Hotels</a>

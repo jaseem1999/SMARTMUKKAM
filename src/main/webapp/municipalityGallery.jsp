@@ -1,3 +1,4 @@
+<%@page import="smartMukkam.com.admin.AdminDAO"%>
 <%@page import="smartMukkam.com.municipality.ServicesDTO"%>
 <%@page import="smartMukkam.com.municipality.GalleryDTO"%>
 <%@page import="java.util.List"%>
@@ -59,14 +60,21 @@
 		  opacity: 1;
 		}
 		.availability-status.online {
-		    background: #1bcfb4;
+			<%
+			String adminActive=AdminDAO.getActiveAdmin() ;
+			if(adminActive.equals("active")){
+				out.print("background: #1bcfb4;");
+			}else{
+				out.print("background: black;");  
+			}
+			%>
 		    position: absolute;
-		    width: 10px;
-		    height: 10px;
+		    width: 12px;
+		    height: 12px;
 		    border-radius: 57%;
 		    border: 2px solid #ffffff;
-		    margin-left: -10px;
-    		margin-top: 29px;
+		    margin-left: -5px;
+  			margin-top: 29px;
 		}
 		.homeFull{
 		 	max-width: 1000px;
@@ -110,10 +118,20 @@ String alert = (String) request.getParameter("message");
       
     
       <ul class="nav justify-content-end">
-      	   <li class="nav-item">
-		      <img alt="" src="images/jaseem.jpg" class="profile-image">
+      	    <li class="nav-item">
+		      <img alt="" src="adminProView?id=<%=1%>" class="profile-image">
 		      <span class="tooltip">Admin online</span>
 		      <span class="availability-status online"></span>
+		      <span class="tooltip">
+					<%
+						      
+					  if(adminActive.equals("active")){
+						   out.print("Admin is online");
+					  }else{
+						    out.print("Admin is offline");  
+						}
+				      %>
+					</span>
 		    </li>
 		  <li class="nav-item">
 		    <a class="nav-link active" aria-current="page" href="municipality.jsp">home</a>

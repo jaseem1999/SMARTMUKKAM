@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 
 import smartMukkam.connection.Conn;
+import smartMukkam.main.user.userData.UserDAO;
 
 /**
  * Servlet implementation class UserLoginServlet
@@ -84,6 +85,7 @@ public class UserLoginServlet extends HttpServlet {
 			}
             
             if(status > 0) {
+            	int i =UserDAO.loginActive(uid);
             	session.setAttribute("uid", uid);
             	session.setAttribute("name", name);
             	session.setAttribute("email", emailName);
