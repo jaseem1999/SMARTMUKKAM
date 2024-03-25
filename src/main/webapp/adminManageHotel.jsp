@@ -1,3 +1,5 @@
+<%@page import="smartMukkam.com.hotel.TaxiDTO"%>
+<%@page import="smartMukkam.com.hotel.FoodDTO"%>
 <%@page import="smartMukkam.com.admin.ServicesDAO"%>
 <%@page import="smartMukkam.com.hotel.RoomDTO"%>
 <%@page import="java.util.List"%>
@@ -308,11 +310,11 @@ String alert = (String) request.getParameter("message");
 				 		<td><%=h.getState() %></td>
 				 		<td><%=h.getPin() %></td>
 				 		<td><%
-				    		 	if(h.getStatus() == null){
+				    		 	if(h.getActive() == null){
 				    		 		out.print("<i class='fa-solid fa-hotel' style='color: blue;'></i>");
-					            } else if(h.getStatus().equals("accept")){
+					            } else if(h.getActive().equals("active")){
 					                out.print("<i class='fa-solid fa-hotel' style='color: green;'></i>");
-					            } else if(h.getStatus().equals("reject")){
+					            } else if(h.getActive().equals("inactive")){
 					            	out.print("<i class='fa-solid fa-hotel' style='color: red;'></i>");
 					            }else{
 					            	out.print("<span  style='color : red;'></span>");
@@ -320,7 +322,20 @@ String alert = (String) request.getParameter("message");
 				    %></td>
 				    <td>
 				    			<div class="dropdown">
-				                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+				                <button class="btn btn-secondary dropdown-toggle"
+				                style="background:<%
+				                	if(h.getStatus() == null){
+				                		out.print("blue");
+				                	}else if(h.getStatus().equals("accept")){
+				                		out.print("green");
+				                	}
+				                	else if(h.getStatus().equals("reject")){
+				                		out.print("red");
+				                	}else{
+				                		
+				                	}
+				                %>;" 
+				                 type="button" data-bs-toggle="dropdown" aria-expanded="false">
 				                    <i class="fa-solid fa-bars" style="color: black;"></i>
 				                </button>
 				                <ul class="dropdown-menu">
@@ -342,7 +357,7 @@ String alert = (String) request.getParameter("message");
 			  <div class="modal-dialog">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="descriptionModalLabel">Room Description</h5>
+			        <h5 class="modal-title" id="descriptionModalLabel">Description</h5>
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
@@ -380,7 +395,7 @@ String alert = (String) request.getParameter("message");
 
 		<div class="container-sm">
 			Inactive <i class="fa-solid fa-bed" style="color: red;"></i> Active <i class="fa-solid fa-bed" style="color: green;"></i> Proccessing <i class="fa-solid fa-bed" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;" id="contentToRefresh">
+			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">
@@ -456,6 +471,58 @@ String alert = (String) request.getParameter("message");
 		</div>
 		
 		
+		<div class="container-sm">
+			Not available <i class="fa-solid fa-bowl-food" style="color: red;"></i> Available <i class="fa-solid fa-bowl-food" style="color: green;"></i> Preparing <i class="fa-solid fa-bowl-food" style="color: blue;"></i>
+			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+		
+
+				<table class="table table-striped table-hover">
+			    <thead>
+			        <tr >
+			            <th scope="col" ><i class="fa-solid fa-hotel" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-bowl-food" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-bowl-food" style="color: black;"></i></th>
+			            <th scope="col">No .<i class="fa-solid fa-bowl-food" style="color: black;"></i></th>
+			            <th scope="col">Description</th>
+			            <th scope="col">Price <i class="fa-solid fa-rupee-sign" style="color: black;"></i></th>
+			        	<th scope="col">Discount <i class="fa-solid fa-rupee-sign" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-bowl-food" style="color: black;"></i></th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			    <%
+			    List<FoodDTO> foods = ServicesDAO.getAllFoodforAdmin();
+			    for(FoodDTO f : foods){
+			    %>
+			    <tr>
+			    	<th scope="row"><img src="himg?id=<%=f.getHoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+			    	<th scope="row"><img src="imfood?id=<%=f.getTid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+				      <td><%=f.getFood() %></td>
+				      <td><%=f.getQuandity() %></td>
+				       <td style="color: green;" class="description" data-description="<%= f.getDescription() %>">Click to view description</td>
+				      <td><%=f.getPrice() %></td>
+				      <td ><%=f.getDiscount() %></td>
+				      <td><%
+				      if(f.getStatus() == null){
+		    		 		out.print("<i class='fa-solid fa-bowl-food' style='color: blue;'></i>");
+			            } else if(f.getStatus().equals("accept")){
+			                out.print("<i class='fa-solid fa-bowl-food' style='color: green;'></i>");
+			            } else if(f.getStatus().equals("reject")){
+			            	out.print("<i class='fa-solid fa-bowl-food' style='color: red;'></i>");
+			            }else{
+			            	out.print("<span  style='color : red;'></span>");
+			            }
+				      
+				      %></td>
+				      
+				      <td>
+			    </tr>
+			    <%} %>
+			    </tbody>
+			  </table>
+			  </div>
+		</div>
+		
 		
 		<div class="container-sm" style="margin-top: 40px;">
 			
@@ -480,8 +547,79 @@ String alert = (String) request.getParameter("message");
 				  </figcaption>
 				</figure>
 		</div>
+		
+		<div class="container-sm">
+			Not available <i class="fa-solid fa-taxi" style="color: red;"></i> Available <i class="fa-solid fa-taxi" style="color: green;"></i> Preparing <i class="fa-solid fa-taxi" style="color: blue;"></i>
+			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+		
 
+				<table class="table table-striped table-hover">
+			    <thead>
+			        <tr >
+			        	
+			            <th scope="col" ><i class="fa-solid fa-hotel" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-taxi" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-taxi" style="color: black;"></i></th>
+			           	<th scope="col"><i class="fa-solid fa-user" style="color: black;"></i> <i class="fa-solid fa-id-card" style="color: black;"></i></th>
+			            <th scope="col">No .plate</th>
+			            <th scope="col">Rent <i class="fa-solid fa-rupee-sign" style="color: black;"></i></th>
+			   
+			            <th scope="col"><i class="fa-solid fa-taxi" style="color: black;"></i></th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			      <%
+				  List<TaxiDTO> taxi = ServicesDAO.getAllTaxiForAdmin();
+				  for(TaxiDTO t : taxi){
+				  %>
+				    <tr>
+				    	<th scope="row"><img src="himg?id=<%=t.getHoid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+				    	<th scope="row"><img src="imTaxi?id=<%=t.getTid()%>" style="width: 100px; border: 1px solid; border-radius: 5px;" alt="" ></th>
+				    	<td><%=t.getVehicle() %></td>
+				    	<td><%=t.getDriver() %></td>
+				    	<td><%=t.getPlate() %></td>
+				    	<td><%=t.getPrice() %></td>
+				    	
+				    	<td><%
+				    	if(t.getStatus() == null){
+		    		 		out.print("<i class='fa-solid fa-taxi' style='color: blue;'></i>");
+			            } else if(t.getStatus().equals("accept")){
+			                out.print("<i class='fa-solid fa-taxi' style='color: green;'></i>");
+			            } else if(t.getStatus().equals("reject")){
+			            	out.print("<i class='fa-solid fa-taxi' style='color: red;'></i>");
+			            }else{
+			            	out.print("<span  style='color : red;'></span>");
+			            }
+				      
+				      %></td>
+				    </tr>
+				    <%} %>
+			    </tbody>
+			    </table>
+			 </div>
+		</div>
 
+		
+		<figure class="text-center" style="margin-bottom: 40px; margin-top: 100px;">
+				  <blockquote class="blockquote">
+				    <p></p>
+				  </blockquote>
+				  <figcaption class="blockquote-footer">
+				    <img alt="" src="images/keralaLogo.png" class="profile-image">
+					<span class="tooltip">
+					<%
+						      
+					  if(munAdminActive.equals("active")){
+						   out.print("Municipality Admin is online");
+					  }else{
+						    out.print("Municipality Admin is offline");  
+						}
+				      %>
+					</span>
+			      <span class="availability-status online"></span>
+				     From Mukkam <cite title="Source Title">Municipality</cite>
+				  </figcaption>
+		</figure>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -500,6 +638,91 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   });
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContent = function() {
+        $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlers();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+    $('#refreshButton').on('click', function() {
+        window.refreshContent();
+    });
+
+    // Initial binding of event handlers
+    bindEventHandlers();
+
+    // Function to bind event handlers
+    function bindEventHandlers() {
+
+
+        $(".acceptLinkHotel").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "municipalityHotelRegistrationAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                 
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+
+        $(".rejectLinkHotel").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "municipalityHotelRegistrationReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                 
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+        
+    }
+});
+
 
 </script>
 

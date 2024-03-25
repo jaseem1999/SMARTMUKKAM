@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import smartMukkam.com.hotel.FoodDTO;
 import smartMukkam.com.hotel.RoomDTO;
+import smartMukkam.com.hotel.TaxiDTO;
 import smartMukkam.connection.Conn;
 import smartMukkam.main.user.userData.UserCompleteDTO;
 
@@ -123,5 +125,62 @@ public class ServicesDAO {
 		
 		return li;
 	}
+	
+	public static List<FoodDTO> getAllFoodforAdmin(){
+		ArrayList<FoodDTO> li = new ArrayList<FoodDTO>();
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+		    String sql = "SELECT tid, hoid, food, quandity, description, price, discount, status, active FROM food;";
+		    PreparedStatement stm = connection.prepareStatement(sql);
+		    ResultSet rs = stm.executeQuery();
+		    while (rs.next()) {
+		    	FoodDTO r = new FoodDTO();
+		        r.setTid(rs.getInt(1));
+		        r.setHoid(rs.getInt(2));
+		        r.setFood(rs.getString(3));
+		        r.setQuandity(rs.getInt(4));
+		        r.setDescription(rs.getString(5)); // Adjusted index for description
+		        r.setPrice(rs.getDouble(6)); // Adjusted index for price
+		        r.setDiscount(rs.getDouble(7)); // Adjusted index for discount
+		        r.setStatus(rs.getString(8));
+		        r.setActive(rs.getString(9)); // Adjusted index for active
+		        li.add(r);
+		    }
+		} catch (Exception e) {
+		    // Handle exception properly, don't just print
+		    e.printStackTrace();
+		}
+
+		
+		return li;
+	}
+	 public static List<TaxiDTO> getAllTaxiForAdmin() {
+	        ArrayList<TaxiDTO> taxiList = new ArrayList<>();
+	        Conn con = new Conn();
+	        try (Connection connection = con.connection) {
+	            String sql = "SELECT * FROM taxi;";
+	            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+	                
+	                try (ResultSet rs = statement.executeQuery()) {
+	                    while (rs.next()) {
+	                        TaxiDTO taxi = new TaxiDTO();
+	                        taxi.setTid(rs.getInt("tid"));
+	                        taxi.setHoid(rs.getInt("hoid"));
+	                        taxi.setDriver(rs.getString("driver"));
+	                        taxi.setVehicle(rs.getString("vehicle"));
+	                        taxi.setPlate(rs.getString("plate"));
+	                        taxi.setPrice(rs.getDouble("price"));
+	                        taxi.setStatus(rs.getString("status"));
+	                        taxi.setActive(rs.getString("active"));
+	                        taxiList.add(taxi);
+	                    }
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return taxiList;
+	    }
 
 }

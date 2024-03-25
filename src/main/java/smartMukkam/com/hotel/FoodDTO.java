@@ -63,6 +63,5 @@ public class FoodDTO {
 	}
 	public void setActive(String active) {
 		this.active = active;
-	}
-		
+	}		
 }
