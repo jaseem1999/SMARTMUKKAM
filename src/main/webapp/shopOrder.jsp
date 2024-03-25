@@ -223,6 +223,7 @@ if(shopType == null){
 					      <th scope="col">Address two</th>
 					      <th scope="col">City</th>
 					      <th scope="col">State</th>
+					      <th scope="col">PIN</th>
 					      <th scope="col">status</th>
 					      <th scope="col">Menu</th>
 					    </tr>
@@ -243,6 +244,7 @@ if(shopType == null){
 					      <td><%=UserDAO.getUserAddressTWO(c.getUid()) %></td>
 					      <td><%=UserDAO.getUserCity(c.getUid()) %></td>
 					      <td><%=UserDAO.getUserState(c.getUid()) %></td>
+					      <td><%=UserDAO.getUserPIN(c.getUid()) %></td>
 					      <td>
 					      <%
 					     	 if(c.getStatus() == null){

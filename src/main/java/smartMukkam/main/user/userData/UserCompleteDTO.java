@@ -13,7 +13,15 @@ public class UserCompleteDTO {
 	private String addressOne;
 	private String addressTwo;
 	private String city;
+	private int pin;
 	private String state;
+	
+	public int getPin() {
+		return pin;
+	}
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
 	public int getUid() {
 		return uid;
 	}

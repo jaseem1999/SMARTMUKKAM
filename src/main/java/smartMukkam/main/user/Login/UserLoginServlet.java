@@ -81,10 +81,15 @@ public class UserLoginServlet extends HttpServlet {
 				pass = rs.getString(4);
 				phone = rs.getLong(5);
 				country = rs.getString(6);
-				status = 1;
+				if(UserDAO.getUserStatus(emailName) == null) {
+					status = 1;
+				}else {
+					status = 2;
+				}
+				
 			}
             
-            if(status > 0) {
+            if(status == 1) {
             	int i =UserDAO.loginActive(uid);
             	session.setAttribute("uid", uid);
             	session.setAttribute("name", name);
@@ -92,8 +97,10 @@ public class UserLoginServlet extends HttpServlet {
             	session.setAttribute("phone", phone);
             	session.setAttribute("country", country);
             	response.sendRedirect("index.jsp");
-            }else {
+            }else if(status < 1) {
             	response.sendRedirect("index.jsp?message=useLoginFailed");
+            }else {
+            	response.sendRedirect("index.jsp?message=useLoginBlocked");
             }
             
             

@@ -11,8 +11,13 @@
 <%
 Integer hoid = Integer.parseInt(request.getParameter("hoid"));
 int i = HotelDAO.logout(hoid);
-session.invalidate();
-response.sendRedirect("index.jsp?message=userLogoutSuccess");
+if(i > 0){
+	session.invalidate();
+	response.sendRedirect("index.jsp?message=userLogoutSuccess");
+}else{
+	response.sendRedirect("hotelHome.jsp?message=LogoutFailed");	
+}
+
 %>
 </body>
 </html>

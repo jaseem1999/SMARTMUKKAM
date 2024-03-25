@@ -354,7 +354,7 @@ String alert = (String) request.getParameter("message");
 				  		<td><%=UserDAO.getUserAddressTWO(rms.getUid()) %></td>
 				  		<td><%=UserDAO.getUserCity(rms.getUid()) %></td>
 				  		<td><%=UserDAO.getUserState(rms.getUid()) %></td>
-				  		<td></td>
+				  		<td><%=UserDAO.getUserPIN(rms.getUid()) %></td>
 				  		<td><%
 				      if(rms.getStatus() == null){
 			                out.print("<span  style='color : blue;'>Processing</span>");

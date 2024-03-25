@@ -162,6 +162,10 @@ String email = (String) session.getAttribute("emailVerification");
                 <input type="text" class="form-control" id="state" name="state" placeholder="Enter state" required="required">
                 <span class="error" id="stateErorr"></span>
             </div>
+            <div class="mb-3">
+                <label for="state" class="form-label">PIN</label>
+                <input type="number" class="form-control" id="pin" name="pin" placeholder="Enter pin" required="required">
+            </div>
         </div>
 		<input type="submit" class="btn btn-primary" value="Sign in">
     </div>

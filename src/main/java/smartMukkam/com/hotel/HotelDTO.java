@@ -92,6 +92,4 @@ public class HotelDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 }

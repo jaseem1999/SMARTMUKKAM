@@ -59,6 +59,38 @@ public class HotelDAO {
 	    }
 	    return li;
 	}
+	
+	//get all hotel details
+		public static List<HotelDTO> getAllHotelDetailsForAdmin() {
+		    ArrayList<HotelDTO> li = new ArrayList<>();
+		    Conn con = new Conn();
+		    Connection connection = con.connection;
+		    try {
+		        String sql = "SELECT h.hotelId, h.name, h.email, h.password, h.phone, h.status, h.active, hd.hotelName, hd.addressOne, hd.addressTwo, hd.city, hd.state, hd.pin FROM hotel h JOIN hotel_details hd ON h.hotelId = hd.hoid;";
+		        PreparedStatement stm = connection.prepareStatement(sql);
+		        ResultSet rs = stm.executeQuery();
+		        while (rs.next()) {
+		            HotelDTO h = new HotelDTO();
+		            h.setHotelId(rs.getInt(1));
+		            h.setOwnerName(rs.getString(2));
+		            h.setEmail(rs.getString(3));
+		            h.setPass(rs.getString(4));
+		            h.setPhone(rs.getLong(5));
+		            h.setStatus(rs.getString(6));
+		            h.setActive(rs.getString(7));
+		            h.setHotelName(rs.getString(8));
+		            h.setAddressOne(rs.getString(9));
+		            h.setAddressTwo(rs.getString(10));
+		            h.setCity(rs.getString(11));
+		            h.setState(rs.getString(12));
+		            h.setPin(rs.getInt(13));
+		            li.add(h);
+		        }
+		    } catch (Exception e) {
+		        System.out.println(e);
+		    }
+		    return li;
+		}
 
 	public static int login(String email, String pass) {
 		int i = 0;
@@ -170,7 +202,7 @@ public class HotelDAO {
 		try {
 			String update = "UPDATE hotel SET active='inactive' WHERE hotelId = ?;";
 			PreparedStatement stm3 = connection.prepareStatement(update);
-			stm3.setInt(hoid, 1);
+			stm3.setInt(1, hoid);
 			int rowsAffected = stm3.executeUpdate();
 	        if(rowsAffected > 0) {
 	        	i = 1;

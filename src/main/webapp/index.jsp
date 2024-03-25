@@ -296,7 +296,9 @@ String alert = (String) request.getParameter("message");
 						if(alert != null && alert.equals("LoginFailed")){
 							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Hotel Login Failed</div>");
 						}
-						
+						if(alert != null && alert.equals("useLoginBlocked")){
+							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Login Blocked from admin</div>");
+						}
 						
                         	
                         %>

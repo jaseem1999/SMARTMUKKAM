@@ -63,6 +63,7 @@ public class UserSignIn extends HttpServlet {
 	        String address2 = request.getParameter("address2");
 	        String city = request.getParameter("city");
 	        String state = request.getParameter("state");
+	        Integer pin = Integer.parseInt(request.getParameter("pin"));
 
 	       
 
@@ -95,7 +96,7 @@ public class UserSignIn extends HttpServlet {
 		    			
 		    			
 		    			try {
-		    				String insertQueryToAddress ="INSERT INTO userAddress (uid, image, surname, addressOne, addressTwo, city, state) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		    				String insertQueryToAddress ="INSERT INTO userAddress (uid, image, surname, addressOne, addressTwo, city, state, PIN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		    				PreparedStatement statementToAddress = connection.prepareStatement(insertQueryToAddress);
 		    				statementToAddress.setInt(1, uid);
 		    				statementToAddress.setBlob(2, pimg);
@@ -104,6 +105,7 @@ public class UserSignIn extends HttpServlet {
 		    				statementToAddress.setString(5, address2);
 		    				statementToAddress.setString(6, city);
 		    				statementToAddress.setString(7, state);
+		    				statementToAddress.setInt(8, pin);
 		    				int rowsInsertedAddress = statementToAddress.executeUpdate();
 		    				if(rowsInsertedAddress > 0) {
 		    					response.sendRedirect("index.jsp?message=userSigninSuccess");

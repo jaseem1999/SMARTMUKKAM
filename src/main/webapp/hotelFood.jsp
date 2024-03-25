@@ -348,7 +348,7 @@ String alert = (String) request.getParameter("message");
      							<td><%=UserDAO.getUserAddressTWO(o.getUid()) %></td>
      							<td><%=UserDAO.getUserCity(o.getUid()) %></td>
      							<td><%=UserDAO.getUserState(o.getUid()) %></td>
-     							<td></td>
+     							<td><%=UserDAO.getUserPIN(o.getUid()) %></td>
      							<td>
      							<%
      							 if(o.getStatus() == null){
