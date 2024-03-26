@@ -13,8 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-
+import smartMukkam.com.admin.ServicesDAO;
 import smartMukkam.connection.Conn;
 
 /**
@@ -72,6 +71,8 @@ public class MunicipalityLoginServlet extends HttpServlet {
             if(status > 0) {
             	String update = "UPDATE municipalityLogin SET active = 'active' WHERE munId = 1;";
             	
+            	String st = ServicesDAO.getMunicipalityStatus(email);
+            	
             	try {
             		java.sql.Statement statement = connection.createStatement();
         	        int rowsAffected = statement.executeUpdate(update);
@@ -81,10 +82,17 @@ public class MunicipalityLoginServlet extends HttpServlet {
 					System.out.println(e);
 				}
             	
-            	session.setAttribute("mid", mid);
-            	session.setAttribute("muncipalityEmail", email);
-            
-            	response.sendRedirect("municipality.jsp");
+            	if(st == null) {
+            		session.setAttribute("mid", mid);
+                	session.setAttribute("muncipalityEmail", email);
+                
+                	response.sendRedirect("municipality.jsp");
+            	}else {
+            		response.sendRedirect("municipalityLogin.jsp?message=municipalityLoginBlocked");
+				}
+            	
+            	
+            	
             }else {
             	response.sendRedirect("index.jsp?message=municipalityLoginFailed");
             }

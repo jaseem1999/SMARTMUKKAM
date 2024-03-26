@@ -49,6 +49,11 @@
 	if(alert != null && alert.equals("unautherizedAccess")){
 		out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>unautherizedAccess</div>");
 	}
+	if(alert != null && alert.equals("municipalityLoginBlocked")){
+		out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Admin blocked contact chairman or secretery</div>");
+	}
+	
+	
 	%>
 	<div class="container">
 	

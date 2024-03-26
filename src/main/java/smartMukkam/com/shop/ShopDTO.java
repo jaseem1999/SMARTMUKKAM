@@ -13,7 +13,15 @@ public class ShopDTO {
 	private String city;
 	private String state;
 	private String status;
+	private String active;
 	
+	
+	public String getActive() {
+		return active;
+	}
+	public void setActive(String active) {
+		this.active = active;
+	}
 	public long getPhone() {
 		return phone;
 	}
