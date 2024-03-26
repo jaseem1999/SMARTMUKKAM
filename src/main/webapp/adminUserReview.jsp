@@ -1,5 +1,5 @@
 <%@page import="smartMukkam.com.admin.ServicesDAO"%>
-<%@page import="smartMukkam.main.user.userData.UserCompleteDTO"%>
+<%@page import="smartMukkam.com.admin.UserFeedbackDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.admin.AdminDAO"%>
 <%@page import="smartMukkam.com.admin.AdminDetailsDTO"%>
@@ -92,7 +92,7 @@ String alert = (String) request.getParameter("message");
 		.fa-solid{
 			color: #bba8bff5;
 		}
-	
+		
 		
 
 </style>
@@ -130,13 +130,13 @@ String alert = (String) request.getParameter("message");
             </ul>
   
 	   	<ul class="list-group list-group-flush">
-		    <li class="list-group-item" style="color: #b66dff; background: #140f0f17;">
+		    <li class="list-group-item" >
 		        <a class="nav-link d-flex justify-content-between align-items-center" href="adminManageUser.jsp">
 		            Manage User
-		            <span><i class="fa-solid fa-user" style="color: #b66dff;"></i></span>
+		            <span><i class="fa-solid fa-user"></i></span>
 		        </a>
 		    </li>
-		    <li class="list-group-item">
+		    <li class="list-group-item" >
 		        <a class="nav-link d-flex justify-content-between align-items-center" href="adminManageHotel.jsp">
 		            Manage Hotels
 		            <span><i class="fa-solid fa-hotel"></i></span>
@@ -160,10 +160,10 @@ String alert = (String) request.getParameter("message");
 		            <span><i class="fa-solid fa-building-ngo"></i></span>
 		        </a>
 		    </li>
-		    <li class="list-group-item">
+		    <li class="list-group-item" style="color: #b66dff; background: #140f0f17;">
 		        <a class="nav-link d-flex justify-content-between align-items-center" href="adminUserReview.jsp">
 		            View Feedback User
-		            <span><i class="fa-solid fa-user"></i> <i class="fa-solid fa-comments"></i></span>
+		            <span><i class="fa-solid fa-user"  style="color: #b66dff;"></i> <i class="fa-solid fa-comments"  style="color: #b66dff;"></i></span>
 		        </a>
 		    </li>
 		    <li class="list-group-item">
@@ -244,7 +244,7 @@ String alert = (String) request.getParameter("message");
 			
 			<figure class="text-center" style="margin-bottom: 40px;">
 				  <blockquote class="blockquote">
-				    <p>It's Admin for manage users</p>
+				    <p>View user feedback</p>
 				  </blockquote>
 				  <figcaption class="blockquote-footer">
 				    <img alt="" src="images/keralaLogo.png" class="profile-image">
@@ -263,183 +263,65 @@ String alert = (String) request.getParameter("message");
 				  </figcaption>
 				</figure>
 		</div>
-		
-		<div class="container-sm">
-			Offline <i class="fa-solid fa-signal" style="color: red;"></i> Online <i class="fa-solid fa-signal" style="color: green;"></i>
-			<div style="height: 400px; width: auto; overflow: auto;" id="contentToRefresh">
+
+			<div class="container-sm">
 			
-			<table class="table table-striped table-hover">
+			<div style="height: 370px; width: auto; overflow: auto;">
+		
+
+				<table class="table table-striped table-hover">
 			    <thead>
 			        <tr >
+			        	
 			            <th scope="col" ><i class="fa-solid fa-user" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-user" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-envelope" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-lock" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-phone-volume" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-earth-americas" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-house" style="color: black;"></i></th>
-			            <th scope="col">First <i class="fa-solid fa-address-book" style="color: black;"></i></th>
-			            <th scope="col">Second <i class="fa-solid fa-address-book" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-city" style="color: black;"></i></th>
-			            <th scope="col">State </th>
-			            <th scope="col">PIN. no</th>
-			            <th scope="col"><i class="fa-solid fa-signal" style="color: black;"></i></th>
-			            <th scope="col"><i class="fa-solid fa-bars" style="color: black;"></i></th>
+			            <th scope="col">Feedback</th>
 			        </tr>
 			    </thead>
 			    <tbody>
-			        <% List<UserCompleteDTO> users = ServicesDAO.getAllUserForAdmin();
-			        for(UserCompleteDTO user : users) { %>
-			        <tr>
-			            <td>
-			            	<img alt="" src="userPhoto?id=<%=user.getUid()%>" class="userProfile">
-			            </td>
-			            <td><%= user.getName() %></td>
-			            <td><%= user.getEmail() %></td>
-			            <td><%= user.getPass() %></td>
-			            <td><%= user.getPhone() %></td>
-			            <td><img alt="" style="width: 30px" src="w2560/<%=user.getCountry() %>.png"></td>
-			            <td><%= user.getSurname() %></td>
-			            <td><%= user.getAddressOne() %></td>
-			            <td><%= user.getAddressTwo() %></td>
-			            <td><%= user.getCity() %></td>
-			            <td><%= user.getState() %></td>
-			            <td><%= user.getPin() %></td>
-			            <td>
-			            <%
-			            	if(user.getActive().equals("active")){
-			            		out.print("<i class='fa-solid fa-signal' style='color:green;'></i>");
-			            	}else{
-			            		out.print("<i class='fa-solid fa-signal' style='color:red;'></i>");
-			            	}
-			            %>
-			            </td>
-			            <td>
-			            	<div class="dropdown">
-				                <button class="btn  dropdown-toggle" style="background:<%
-				                	if(user.getStatus() == null){
-				                		out.print("green");
-				                	}else{
-				                		out.print("red");
-				                	}
-				                %>;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-				                   <i class="fa-solid fa-bars"></i>
-				                </button>
-				                <ul class="dropdown-menu">
-				                    <li><a href="#" class="dropdown-item blockLink" data-tid="<%=user.getUid()%>" type="button">Block</a></li>
-				                    <li><a href="#" class="dropdown-item unblockLink" data-tid="<%=user.getUid()%>" type="button">Unblock</a></li>
-				                </ul>
-           					 </div>
-			            
-			            </td>
-			        </tr>
-			        <% } %>
+			      <%
+				 List<UserFeedbackDTO> feedback = ServicesDAO.getAllUserFeedback();
+			      for(UserFeedbackDTO f : feedback){
+				  %>
+				    <tr>
+				    	<td><img alt="" src="userPhoto?id=<%=f.getUid()%>" class="userProfile"></td>
+				    	<td><%=f.getFeedback() %></td>
+				    </tr>
+				    
+				    <%} %>
 			    </tbody>
-			</table>
-			</div>
+			    </table>
+			 </div>
 		</div>
-		
-		
-		
+	
+		<figure class="text-center" style="margin-bottom: 10px; margin-top: 50px;">
+				  <blockquote class="blockquote">
+				    <p></p>
+				  </blockquote>
+				  <figcaption class="blockquote-footer">
+				    <img alt="" src="images/keralaLogo.png" class="profile-image">
+					<span class="tooltip">
+					<%
+						      
+					  if(munAdminActive.equals("active")){
+						   out.print("Municipality Admin is online");
+					  }else{
+						    out.print("Municipality Admin is offline");  
+						}
+				      %>
+					</span>
+			      <span class="availability-status online"></span>
+				     From Mukkam <cite title="Source Title">Municipality</cite>
+				  </figcaption>
+		</figure>
+
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<script type="text/javascript">
 
-$(document).ready(function() {
-    // Function to refresh the content of the specified element
-    window.refreshContent = function() {
-        $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
-            // Rebind event handlers after content refresh
-            bindEventHandlers();
-        });
-    }
-
-    // Click event to trigger the content refresh when the button is clicked
- 
-
-    // Initial binding of event handlers
-    bindEventHandlers();
-
-    // Function to bind event handlers
-    function bindEventHandlers() {
-        // Handle the click event on the "Accept" link
-        $(".blockLink").on("click", function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Get the appointment id from the data-tid attribute
-            var appointmentId = $(this).data("tid");
-
-            // Make an AJAX request to the server to handle the acceptance
-            $.ajax({
-                type: "GET",
-                url: "adminBlockUser.jsp",
-                data: { id: appointmentId },
-                success: function(response) {
-                    // Handle the success response (if needed)
-                    console.log("Appointment accepted successfully");
-
-                    // Show the success message
-                    
-
-                    // Reload the content within the div with id "contentToRefresh" after acceptance
-                    window.refreshContent();
-                },
-                error: function(xhr, status, error) {
-                    // Handle the error response (if needed)
-                    console.error("Error accepting appointment: " + error);
-
-                    // You can show an error message if needed
-                }
-            });
-        });
-
-        $(".unblockLink").on("click", function(event) {
-            event.preventDefault(); // Prevent the default behavior of the link
-
-            // Get the appointment id from the data-tid attribute
-            var appointmentId = $(this).data("tid");
-
-            // Make an AJAX request to the server to handle the acceptance
-            $.ajax({
-                type: "GET",
-                url: "adminUnblockUser.jsp",
-                data: { id: appointmentId },
-                success: function(response) {
-                    // Handle the success response (if needed)
-                    console.log("Appointment accepted successfully");
-
-                    // Show the success message
-                    
-
-                    // Reload the content within the div with id "contentToRefresh" after acceptance
-                    window.refreshContent();
-                },
-                error: function(xhr, status, error) {
-                    // Handle the error response (if needed)
-                    console.error("Error accepting appointment: " + error);
-
-                    // You can show an error message if needed
-                }
-            });
-        });
-        
-
-    }
-});
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    var alertElement = document.getElementById('alert');
-    if (alertElement) {
-        setTimeout(function() {
-            alertElement.style.display = 'none';
-        }, 2000); // 2000 milliseconds = 2 seconds
-    }
-});
-</script>
 </body>
 </html>

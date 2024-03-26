@@ -266,7 +266,7 @@ String alert = (String) request.getParameter("message");
 		</div>
 		<div class="container-sm">
 			Inactive <i class="fa-solid fa-mountain-sun" style="color: red;"></i> Active <i class="fa-solid fa-mountain-sun" style="color: green;"></i> Processing <i class="fa-solid fa-mountain-sun" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;" id="contentToRefresh">
+			<div style="height: 400px; width: auto; overflow: auto;" id="contentToRefresh">
 		
 
 				<table class="table table-striped table-hover">
@@ -305,8 +305,9 @@ String alert = (String) request.getParameter("message");
 					 	<td><%=t.getAddressOne() %></td>
 					 	<td><%=t.getAddressTwo() %></td>
 					 	<td><%=t.getCity() %></td>
-					 	<td><%=t.getPin() %></td>
+					 	
 					 	<td><%=t.getState() %></td>
+					 	<td><%=t.getPin() %></td>
 					 	<td>
 					 	<%
 				    		 	if(t.getActive() == null){
@@ -380,7 +381,7 @@ String alert = (String) request.getParameter("message");
 		</div>
 		<div class="container-sm">
 			Inactive <i class="fa-solid fa-ticket" style="color: red;"></i> Active <i class="fa-solid fa-ticket" style="color: green;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+			<div style="height: 400px; width: auto; overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">

@@ -414,6 +414,9 @@ public class ServicesDAO {
 		}
 		 return i;
 	 }
+	 
+	 
+	 
 	 public static String getMunicipalityStatus(String email) {
 			String status = null;
 			Conn con = new Conn();
@@ -432,7 +435,293 @@ public class ServicesDAO {
 			}
 			
 			return status;
+	}
+	
+	
+
+	 public static int insertUserFeedback(int uid, String feedback) {
+	     int i = 0;
+	     Conn con = new Conn();
+	     Connection connection = null;
+	     PreparedStatement preparedStatement = null;
+	     
+	     try {
+	         connection = con.connection;
+	         String query = "INSERT INTO userFeedback (uid, feedback) VALUES (?, ?)";
+	         preparedStatement = connection.prepareStatement(query);
+	         preparedStatement.setInt(1, uid);
+	         preparedStatement.setString(2, feedback);
+	         
+	         // Execute the query
+	         i = preparedStatement.executeUpdate();
+	     } catch (Exception e) {
+	         // Handle exception
+	         System.out.println(e);
+	     } finally {
+	         // Close resources in finally block
+	         try {
+	             if (preparedStatement != null) {
+	                 preparedStatement.close();
+	             }
+	             if (connection != null) {
+	                 connection.close();
+	             }
+	         } catch (Exception e) {
+	             System.out.println(e);
+	         }
+	     }
+	     
+	     return i;
+	 }
+
+	 public static List<UserFeedbackDTO> getAllUserFeedback(){
+		ArrayList<UserFeedbackDTO> li = new ArrayList<UserFeedbackDTO>();
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql ="select tid, uid, feedback, status from userFeedback order by tid desc;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				UserFeedbackDTO f = new UserFeedbackDTO();
+				f.setTid(rs.getInt("tid"));
+				f.setUid(rs.getInt("uid"));
+				f.setFeedback(rs.getString("feedback"));
+				f.setStatus(rs.getString("status"));
+				li.add(f);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
 		}
+		 return li;
+	 }
+	 
+	 public static int insertHotelFeedback(int hoid, String feedback) {
+	     int i = 0;
+	     Conn con = new Conn();
+	     Connection connection = null;
+	     PreparedStatement preparedStatement = null;
+	     
+	     try {
+	         connection = con.connection;
+	         String query = "INSERT INTO hotelFeedback (hoid, feedback) VALUES (?, ?)";
+	         preparedStatement = connection.prepareStatement(query);
+	         preparedStatement.setInt(1, hoid);
+	         preparedStatement.setString(2, feedback);
+	         
+	         // Execute the query
+	         i = preparedStatement.executeUpdate();
+	     } catch (Exception e) {
+	         // Handle exception
+	         System.out.println(e);
+	     } finally {
+	         // Close resources in finally block
+	         try {
+	             if (preparedStatement != null) {
+	                 preparedStatement.close();
+	             }
+	             if (connection != null) {
+	                 connection.close();
+	             }
+	         } catch (Exception e) {
+	             System.out.println(e);
+	         }
+	     }
+	     
+	     return i;
+	 }
+	 
+	 public static List<HotelFeedbackDTO> getAllHotelFeedback(){
+			ArrayList<HotelFeedbackDTO> li = new ArrayList<HotelFeedbackDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid, hoid, feedback, status from hotelFeedback order by tid desc;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					HotelFeedbackDTO h = new HotelFeedbackDTO();
+					h.setTid(rs.getInt("tid"));
+					h.setHoid(rs.getInt("hoid"));
+					h.setFeedback(rs.getString("feedback"));
+					h.setStatus(rs.getString("status"));
+					li.add(h);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			 return li;
+		 }
+	 
+	 public static int insertTouristFeedback(int toid, String feedback) {
+	     int i = 0;
+	     Conn con = new Conn();
+	     Connection connection = null;
+	     PreparedStatement preparedStatement = null;
+	     
+	     try {
+	         connection = con.connection;
+	         String query = "INSERT INTO touristFeedback (toid, feedback) VALUES (?, ?)";
+	         preparedStatement = connection.prepareStatement(query);
+	         preparedStatement.setInt(1, toid);
+	         preparedStatement.setString(2, feedback);
+	         
+	         // Execute the query
+	         i = preparedStatement.executeUpdate();
+	     } catch (Exception e) {
+	         // Handle exception
+	         System.out.println(e);
+	     } finally {
+	         // Close resources in finally block
+	         try {
+	             if (preparedStatement != null) {
+	                 preparedStatement.close();
+	             }
+	             if (connection != null) {
+	                 connection.close();
+	             }
+	         } catch (Exception e) {
+	             System.out.println(e);
+	         }
+	     }
+	     
+	     return i;
+	 }
+	 public static List<TouristFeedbackDTO> getAllTouristFeedback(){
+			ArrayList<TouristFeedbackDTO> li = new ArrayList<TouristFeedbackDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid, toid, feedback, status from touristFeedback order by tid desc;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					TouristFeedbackDTO h = new TouristFeedbackDTO();
+					h.setTid(rs.getInt("tid"));
+					h.setToid(rs.getInt("toid"));
+					h.setFeedback(rs.getString("feedback"));
+					h.setStatus(rs.getString("status"));
+					li.add(h);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			 return li;
+		 }
+	 public static int insertShopFeedback(int sid, String feedback) {
+	     int i = 0;
+	     Conn con = new Conn();
+	     Connection connection = null;
+	     PreparedStatement preparedStatement = null;
+	     
+	     try {
+	         connection = con.connection;
+	         String query = "INSERT INTO shopFeedback (sid, feedback) VALUES (?, ?)";
+	         preparedStatement = connection.prepareStatement(query);
+	         preparedStatement.setInt(1, sid);
+	         preparedStatement.setString(2, feedback);
+	         
+	         // Execute the query
+	         i = preparedStatement.executeUpdate();
+	     } catch (Exception e) {
+	         // Handle exception
+	         System.out.println(e);
+	     } finally {
+	         // Close resources in finally block
+	         try {
+	             if (preparedStatement != null) {
+	                 preparedStatement.close();
+	             }
+	             if (connection != null) {
+	                 connection.close();
+	             }
+	         } catch (Exception e) {
+	             System.out.println(e);
+	         }
+	     }
+	     
+	     return i;
+	 }
+	 public static List<ShopFeedbackDTO> getAllShopFeedback(){
+			ArrayList<ShopFeedbackDTO> li = new ArrayList<ShopFeedbackDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid, sid, feedback, status from shopFeedback order by tid desc;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					ShopFeedbackDTO h = new ShopFeedbackDTO();
+					h.setTid(rs.getInt("tid"));
+					h.setSid(rs.getInt("sid"));
+					h.setFeedback(rs.getString("feedback"));
+					h.setStatus(rs.getString("status"));
+					li.add(h);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			 return li;
+		 }
+	 public static int insertMunicipalityFeedback(String feedback) {
+	     int i = 0;
+	     Conn con = new Conn();
+	     Connection connection = null;
+	     PreparedStatement preparedStatement = null;
+	     
+	     try {
+	         connection = con.connection;
+	         String query = "INSERT INTO municipalityFeedback (feedback) VALUES (?)";
+	         preparedStatement = connection.prepareStatement(query);
+	         
+	         preparedStatement.setString(1, feedback);
+	         
+	         // Execute the query
+	         i = preparedStatement.executeUpdate();
+	     } catch (Exception e) {
+	         // Handle exception
+	         System.out.println(e);
+	     } finally {
+	         // Close resources in finally block
+	         try {
+	             if (preparedStatement != null) {
+	                 preparedStatement.close();
+	             }
+	             if (connection != null) {
+	                 connection.close();
+	             }
+	         } catch (Exception e) {
+	             System.out.println(e);
+	         }
+	     }
+	     
+	     return i;
+	 }
+	 public static List<MunicipalityFeedbackDTO> getAllMunicipalityFeedback(){
+			ArrayList<MunicipalityFeedbackDTO> li = new ArrayList<MunicipalityFeedbackDTO>();
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql ="select tid, feedback, status from municipalityFeedback order by tid desc;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					MunicipalityFeedbackDTO m = new MunicipalityFeedbackDTO();
+					m.setTid(rs.getInt("tid"));
+					m.setFeedback(rs.getString("feedback"));
+					m.setStatus(rs.getString("status"));
+					li.add(m);
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			 return li;
+		 }
 	 
 	 
 }

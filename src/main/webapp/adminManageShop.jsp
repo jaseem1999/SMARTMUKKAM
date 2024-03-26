@@ -268,7 +268,7 @@ String alert = (String) request.getParameter("message");
 		
 		<div class="container-sm">
 			Inactive <i class="fa-solid fa-shop" style="color: red;"></i> Active <i class="fa-solid fa-shop" style="color: green;"></i> Proccessing <i class="fa-solid fa-shop" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;" id="contentToRefresh">
+			<div style="height: 400px; width: auto; overflow: auto;" id="contentToRefresh">
 		
 
 				<table class="table table-striped table-hover">
@@ -385,7 +385,7 @@ String alert = (String) request.getParameter("message");
 		
 		<div class="container-sm">
 			Inactive <i class="fa-brands fa-product-hunt" style="color: red;"></i> Active <i class="fa-brands fa-product-hunt" style="color: green;"></i> Processing  <i class="fa-brands fa-product-hunt" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+			<div style="height: 400px; width: auto;  overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">
@@ -467,7 +467,7 @@ String alert = (String) request.getParameter("message");
 		
 		<div class="container-sm">
 			Inactive <i class="fa-brands fa-product-hunt" style="color: red;"></i> Active <i class="fa-brands fa-product-hunt" style="color: green;"></i> Processing  <i class="fa-brands fa-product-hunt" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+			<div style="height: 400px; width: auto;  overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">

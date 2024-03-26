@@ -102,6 +102,7 @@ String email = (String) session.getAttribute("muncipalityEmail");
 if(email == null){
 	response.sendRedirect("municipalityLogin.jsp?message=unautherizedAccess");
 }
+String alert = (String) request.getParameter("message");
 
 %>
 
@@ -182,6 +183,26 @@ if(email == null){
     		<div class="home">
     			<span>Feedback to admin</span>
     		</div>
+    		<%			if(alert != null && alert.equals("feedbackSuccess")){
+                        	out.print("<div id='alert' class='alert alert-success' style='color:black;' role='alert'>Feedback send Success</div>");
+                        }else if(alert != null && alert.equals("feedbackFailed")){
+                        	out.print("<div id='alert' class='alert alert-dainger' style='color:red;' role='alert'>Feedback send failed</div>");
+                        	
+                        }
+                        else{
+                        	
+                        }
+    		%>
+    		<form action="municipalityFeedbackServlet.jsp" method="post"  style="margin: 30px;">
+				  
+				  <div class="mb-3">
+				    <label for="feedback" class="form-label">Feedback</label>
+				    <input type="text" class="form-control" id="feedback" name="feedback" placeholder="Enter feedback">
+				  </div>
+				  
+		
+				  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
     	</div>
     
     </div>
@@ -203,6 +224,15 @@ if(email == null){
 
     <!-- Template Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-   
+   <script type="text/javascript">
+   document.addEventListener('DOMContentLoaded', function() {
+	    var alertElement = document.getElementById('alert');
+	    if (alertElement) {
+	        setTimeout(function() {
+	            alertElement.style.display = 'none';
+	        }, 2000); // 2000 milliseconds = 2 seconds
+	    }
+	});
+   </script>
 </body>
 </html>

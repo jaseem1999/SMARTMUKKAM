@@ -269,7 +269,7 @@ String alert = (String) request.getParameter("message");
 		</div>
 		<div class="container-sm">
 			Inactive <i class="fa-solid fa-hotel" style="color: red;"></i> Active <i class="fa-solid fa-hotel" style="color: green;"></i> Proccessing <i class="fa-solid fa-hotel" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;" id="contentToRefresh">
+			<div style="height: 400px; width: auto;overflow: auto;" id="contentToRefresh">
 		
 
 				<table class="table table-striped table-hover">
@@ -395,7 +395,7 @@ String alert = (String) request.getParameter("message");
 
 		<div class="container-sm">
 			Inactive <i class="fa-solid fa-bed" style="color: red;"></i> Active <i class="fa-solid fa-bed" style="color: green;"></i> Proccessing <i class="fa-solid fa-bed" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+			<div style="height: 400px; width: auto; overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">
@@ -473,7 +473,7 @@ String alert = (String) request.getParameter("message");
 		
 		<div class="container-sm">
 			Not available <i class="fa-solid fa-bowl-food" style="color: red;"></i> Available <i class="fa-solid fa-bowl-food" style="color: green;"></i> Preparing <i class="fa-solid fa-bowl-food" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+			<div style="height: 400px; width: auto; overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">
@@ -550,7 +550,7 @@ String alert = (String) request.getParameter("message");
 		
 		<div class="container-sm">
 			Not available <i class="fa-solid fa-taxi" style="color: red;"></i> Available <i class="fa-solid fa-taxi" style="color: green;"></i> Preparing <i class="fa-solid fa-taxi" style="color: blue;"></i>
-			<div style="height: 400px; width: auto; border: 1px solid black; overflow: auto;">
+			<div style="height: 400px; width: auto; overflow: auto;">
 		
 
 				<table class="table table-striped table-hover">
