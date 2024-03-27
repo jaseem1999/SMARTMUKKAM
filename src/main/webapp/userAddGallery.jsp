@@ -6,6 +6,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%
+Integer uid = (Integer) session.getAttribute("uid");
+String name = (String) session.getAttribute("name");
+String email = (String) session.getAttribute("email");
+String country = (String) session.getAttribute("country");
+Long number =(Long) session.getAttribute("phone");
+
+String alert = (String) request.getParameter("message");
+if (email == null){
+	response.sendRedirect("index.jsp?message=login");
+}
+%>
 <meta charset="ISO-8859-1">
 <title>View Gallery</title>
 <link href="fontawesome-free-6.5.1-web/css/fontawesome.css" rel="stylesheet" />
@@ -21,19 +33,9 @@
     		  border-radius: 50%;
 		}
 </style>
-</head>
-<%
-Integer uid = (Integer) session.getAttribute("uid");
-String name = (String) session.getAttribute("name");
-String email = (String) session.getAttribute("email");
-String country = (String) session.getAttribute("country");
-Long number =(Long) session.getAttribute("phone");
 
-if (email == null){
-	response.sendRedirect("index.jsp?message=login");
-}
-String alert = (String) request.getParameter("message");
-%>
+</head>
+
 <body>
 <div class="container">
 			<%
@@ -60,6 +62,7 @@ String alert = (String) request.getParameter("message");
 			<div class="row" style="margin-top: 30px;">
 			<%
 			List<GalleryDTO> gallery = UserDAO.getAllGalleryForUserSpecific(uid);
+			
 			for(GalleryDTO g : gallery){
 			%>
 				<div class="col">

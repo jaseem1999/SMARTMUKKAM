@@ -35,7 +35,7 @@
     
 <body>
 <%
-String email = (String) session.getAttribute("emailVerification");
+String email = (String) session.getAttribute("emailVerificationShop");
 %>
     <div class="container">
     	<form  onsubmit="return validateForm()" action="shopsign" method="post" enctype="multipart/form-data" class="card" style="margin-top: 70px; margin-bottom: 50px;">
@@ -45,7 +45,7 @@ String email = (String) session.getAttribute("emailVerification");
 
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input  type="email" class="form-control" id="email" name="email" placeholder="Enter Email" >
+                <input  type="hidden" class="form-control" id="email" name="email" value="<%=email%>" >
                 <span class="error" id="emailError"></span>
             </div>
 
@@ -124,6 +124,11 @@ String email = (String) session.getAttribute("emailVerification");
             <div class="mb-3">
                 <label for="state" class="form-label">State</label>
                 <input type="text" class="form-control" id="state" name="state" placeholder="Enter state" required="required">
+                <span class="error" id="stateErorr"></span>
+            </div>
+            <div class="mb-3">
+                <label for="pin" class="form-label">PIN</label>
+                <input type="number" class="form-control" id="pin" name="pin" placeholder="Enter pin" required="required">
                 <span class="error" id="stateErorr"></span>
             </div>
             

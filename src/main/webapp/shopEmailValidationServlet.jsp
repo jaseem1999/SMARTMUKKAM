@@ -15,6 +15,7 @@ if(i>0){
 	response.sendRedirect("shopValidateEmail.jsp?message=wait");
 }else{
 	response.sendRedirect("ShopSignin.jsp");
+	session.setAttribute("emailVerificationShop", email);
 }
 %>
 </body>

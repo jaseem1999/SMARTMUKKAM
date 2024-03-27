@@ -106,11 +106,19 @@ if (email == null){
                 <div class="col-lg-4 col-md-6 mb-4" style="">
                     <div class="destination-item position-relative overflow-hidden mb-2">
                         <img class="img-fluid" src="shopImage?id=<%=shop.getSid() %>" style="max-height: 150px; width: 100%" alt="">
+                        <%if(shop.getStatus() != null){ %>
                         <a class="destination-overlay text-white text-decoration-none" href="userShops.jsp?id=<%=shop.getSid()%>">
                             <h5 class="text-white"><%=shop.getShopName() %></h5>
                             <span><%=shop.getShopType() %> </span>
                             
                         </a>
+                        <%}else{ %>
+                        <a class="destination-overlay text-white text-decoration-none" href="#">
+                            <h5 class="text-white"><%=shop.getShopName() %></h5>
+                            <span style="color: red;">Under shop processing</span>
+                            
+                        </a>
+                        <%} %>
                     </div>
                 </div>
                 <%} %>

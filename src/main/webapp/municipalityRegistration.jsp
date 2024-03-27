@@ -222,6 +222,7 @@ if(email == null){
 					      <th scope="col">Address2</th>
 					      <th scope="col">City</th>
 					      <th scope="col">State</th>
+					      <th scope="col">PIN</th>
 					      <th scope="col">Status</th>
 					      <th scope="col">Menu</th>
 					    </tr>
@@ -243,6 +244,7 @@ if(email == null){
 					    		<td><%=shop.getAddressTwo() %></td>
 					    		<td><%=shop.getCity() %></td>
 					    		<td><%=shop.getState() %></td>
+					    		<td><%=shop.getPin() %></td>
 					    		<td><%
 					    		 	if(shop.getStatus() == null){
 						                out.print("<span  style='color : blue;'>Processing</span>");
@@ -287,6 +289,7 @@ if(email == null){
 					      <th scope="col">Address2</th>
 					      <th scope="col">City</th>
 					      <th scope="col">State</th>
+					      <th scope="col">PIN</th>
 					      <th scope="col">Status</th>
 					      <th scope="col">Menu</th>
 					    </tr>
@@ -308,6 +311,7 @@ if(email == null){
 					 	<td><%=t.getAddressTwo() %></td>
 					 	<td><%=t.getCity() %></td>
 					 	<td><%=t.getState() %></td>
+					 	<td><%=t.getPin() %></td>
 					 	<td><%
 					    		 	if(t.getStatus() == null){
 						                out.print("<span  style='color : blue;'>Processing</span>");

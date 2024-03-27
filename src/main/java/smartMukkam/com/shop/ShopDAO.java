@@ -155,6 +155,7 @@ public class ShopDAO {
 	            shop.setAddressTwo(rs.getString("addressTwo"));
 	            shop.setCity(rs.getString("city"));
 	            shop.setState(rs.getString("state"));
+	           
 
 	            li.add(shop);
 	        }    

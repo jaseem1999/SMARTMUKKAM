@@ -14,8 +14,15 @@ public class ShopDTO {
 	private String state;
 	private String status;
 	private String active;
+	private int pin;
 	
 	
+	public int getPin() {
+		return pin;
+	}
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
 	public String getActive() {
 		return active;
 	}

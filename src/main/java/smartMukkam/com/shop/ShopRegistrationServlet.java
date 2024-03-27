@@ -37,6 +37,7 @@ public class ShopRegistrationServlet extends HttpServlet {
         String address2 = request.getParameter("address2");
         String city = request.getParameter("city");
         String state = request.getParameter("state");
+        Integer pin = Integer.parseInt(request.getParameter("pin"));
 
         // JDBC variables
         Connection connection = null;
@@ -71,7 +72,7 @@ public class ShopRegistrationServlet extends HttpServlet {
             }
 
             // Insert data into the shopDetails table
-            String insertShopDetailsQuery = "INSERT INTO shopDetaild (sid, image, shopeName, addressOne, addressTwo, city, state) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String insertShopDetailsQuery = "INSERT INTO shopDetaild (sid, image, shopeName, addressOne, addressTwo, city, state, pin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             preparedStatement1 = connection.prepareStatement(insertShopDetailsQuery);
             preparedStatement1.setInt(1, shopId);
             preparedStatement1.setBlob(2, inpImg);
@@ -80,6 +81,7 @@ public class ShopRegistrationServlet extends HttpServlet {
             preparedStatement1.setString(5, address2);
             preparedStatement1.setString(6, city);
             preparedStatement1.setString(7, state);
+            preparedStatement1.setInt(8, pin);
 
             // Execute the insert statement for shopDetails
             preparedStatement1.executeUpdate();

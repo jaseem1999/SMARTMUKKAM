@@ -286,7 +286,7 @@ String alert = (String) request.getParameter("message");
 			            <th scope="col">Second <i class="fa-solid fa-address-book" style="color: black;"></i></th>
 			            <th scope="col"><i class="fa-solid fa-city" style="color: black;"></i></th>
 			            <th scope="col">State </th>
-			            <th scope="col">PIN. no</th>
+			            <th scope="col">PIN. No</th>
 			            <th scope="col"><i class="fa-solid fa-shop" style="color: black;"></i></th>
 			            <th scope="col"><i class="fa-solid fa-bars" style="color: black;"></i></th>
 			        </tr>
@@ -308,7 +308,8 @@ String alert = (String) request.getParameter("message");
 					    		<td><%=shop.getAddressTwo() %></td>
 					    		<td><%=shop.getCity() %></td>
 					    		<td><%=shop.getState() %></td>
-					    		<td></td>
+					    		<td><%=shop.getPin() %></td>
+					    	
 					    		<td><%
 
 				    		 	if(shop.getActive() == null){

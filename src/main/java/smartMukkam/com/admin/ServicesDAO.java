@@ -256,7 +256,7 @@ public class ServicesDAO {
 		    Connection connection = con.connection;
 
 		    try {
-		        String sql = "SELECT s.shopId, s.name, s.email, s.password, s.number, s.typeOfShop, s.status, s.active, sd.shopeName, sd.addressOne, sd.addressTwo, sd.city, sd.state FROM shop s JOIN shopDetaild sd ON s.shopId = sd.sid;";
+		        String sql = "SELECT s.shopId, s.name, s.email, s.password, s.number, s.typeOfShop, s.status, s.active, sd.shopeName, sd.addressOne, sd.addressTwo, sd.city, sd.state, sd.pin FROM shop s JOIN shopDetaild sd ON s.shopId = sd.sid;";
 		        PreparedStatement stm = connection.prepareStatement(sql);
 		        ResultSet rs = stm.executeQuery();
 
@@ -276,7 +276,7 @@ public class ServicesDAO {
 		            shop.setAddressTwo(rs.getString("addressTwo"));
 		            shop.setCity(rs.getString("city"));
 		            shop.setState(rs.getString("state"));
-
+		            shop.setPin(rs.getInt("pin"));
 		            li.add(shop);
 		        }    
 		    } catch (Exception e) {

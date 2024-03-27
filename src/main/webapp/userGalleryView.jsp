@@ -6,6 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%
+Integer uid = (Integer) session.getAttribute("uid");
+String name = (String) session.getAttribute("name");
+String email = (String) session.getAttribute("email");
+String country = (String) session.getAttribute("country");
+Long number =(Long) session.getAttribute("phone");
+
+String alert = (String) request.getParameter("message");
+%>
 <meta charset="ISO-8859-1">
 <title>View Gallery</title>
 <link href="fontawesome-free-6.5.1-web/css/fontawesome.css" rel="stylesheet" />
@@ -27,8 +36,9 @@
 	<div style="width: 100%; height: 30px; background: #a1cceb;  margin-top: 40px; text-align: center;">
 	    <span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Gallery</span>
 	</div>
+	<%if(email != null){ %>
 	<a style="margin-top: 20px;" href="userAddGallery.jsp" type="button" class="btn btn-outline-info">Add Gallery</a>
-	
+	<%} %>
 	<div class="row" style="margin-top: 30px;">
 	<%
 	List<GalleryDTO> gallery = UserDAO.getAllGalleryForUser();
