@@ -426,6 +426,24 @@
 
 
 
+<servlet>
+    <servlet-name>addUgalley</servlet-name>
+    <servlet-class>smartMukkam.main.user.userData.UserAddGalleryServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>addUgalley</servlet-name>
+    <url-pattern>/addUG</url-pattern>
+</servlet-mapping>
+
+<servlet>
+    <servlet-name>Ugalley</servlet-name>
+    <servlet-class>smartMukkam.main.user.userData.GetUserGallery</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Ugalley</servlet-name>
+    <url-pattern>/imUG</url-pattern>
+</servlet-mapping>
+
 
 
 

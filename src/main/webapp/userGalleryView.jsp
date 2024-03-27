@@ -1,0 +1,61 @@
+<%@page import="smartMukkam.main.user.userData.UserDAO"%>
+<%@page import="smartMukkam.main.user.userData.GalleryDTO"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>View Gallery</title>
+<link href="fontawesome-free-6.5.1-web/css/fontawesome.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/brands.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/solid.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/custom-icons.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/custom-icons.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<style type="text/css">
+	.userProfile{
+		      margin-top: 8px;
+    		  width: 40px;
+    		  border-radius: 50%;
+		}
+</style>
+</head>
+<body>
+<div class="container">
+	<div style="width: 100%; height: 30px; background: #a1cceb;  margin-top: 40px; text-align: center;">
+	    <span style="color: black;font-size: 15px; font-weight: bolder; text-transform: uppercase; margin: 10px; ">Gallery</span>
+	</div>
+	<a style="margin-top: 20px;" href="userAddGallery.jsp" type="button" class="btn btn-outline-info">Add Gallery</a>
+	
+	<div class="row" style="margin-top: 30px;">
+	<%
+	List<GalleryDTO> gallery = UserDAO.getAllGalleryForUser();
+	for(GalleryDTO g : gallery){
+	%>
+		<div class="col">
+			<div class="card" style="width: 13rem;">
+			  <img src="imUG?id=<%=g.getTid() %>" class="card-img-top" alt="...">
+			  <div class="card-body">
+			    <h5 class="card-title"><img alt="" src="userPhoto?id=<%=g.getUid()%>" class="userProfile"></h5>
+			    <p class="card-text"><%=g.getDescription() %></p>
+			
+			  </div>
+			</div>
+		</div>
+		<%} %>
+	</div>
+	
+</div>
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</body>
+</html>

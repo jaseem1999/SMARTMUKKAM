@@ -3,6 +3,8 @@ package smartMukkam.main.user.userData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import smartMukkam.connection.Conn;
 
@@ -238,6 +240,96 @@ public class UserDAO {
 			}
 		return i;
 	
+	}
+	
+	public static List<GalleryDTO> getAllGalleryForUser(){
+		ArrayList<GalleryDTO> li = new ArrayList<GalleryDTO>();
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql ="select tid, uid, description, status from uGallery;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				GalleryDTO g = new GalleryDTO();
+				g.setTid(rs.getInt("tid"));
+				g.setUid(rs.getInt("uid"));
+				g.setDescription(rs.getString("description"));
+				g.setStatus(rs.getString("status"));
+				if(g.getStatus() == null) {
+					li.add(g);
+				}
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return li;
+	}
+	
+	public static List<GalleryDTO> getAllGalleryForUserSpecific(int uid){
+		ArrayList<GalleryDTO> li = new ArrayList<GalleryDTO>();
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql ="select tid, uid, description, status from uGallery where uid = ?;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			stm.setInt(1, uid);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				GalleryDTO g = new GalleryDTO();
+				g.setTid(rs.getInt("tid"));
+				g.setUid(rs.getInt("uid"));
+				g.setDescription(rs.getString("description"));
+				g.setStatus(rs.getString("status"));
+				li.add(g);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return li;
+	}
+	public static int deleteGallery(int tid) {
+		int i = 0;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		String update = "UPDATE uGallery SET status ='delete' WHERE tid="+tid+";";				    	
+		try {
+    		java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(update);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		return i;
+	
+	}
+	public static List<GalleryDTO> getAllGalleryUserforAdmin(){
+		ArrayList<GalleryDTO> li = new ArrayList<GalleryDTO>();
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql ="select tid, uid, description, status from uGallery";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				GalleryDTO g = new GalleryDTO();
+				g.setTid(rs.getInt("tid"));
+				g.setUid(rs.getInt("uid"));
+				g.setDescription(rs.getString("description"));
+				g.setStatus(rs.getString("status"));
+				li.add(g);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return li;
 	}
 	
 }

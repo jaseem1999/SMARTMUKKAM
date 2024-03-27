@@ -1,5 +1,8 @@
-<%@page import="smartMukkam.com.admin.AdminDetailsDTO"%>
+<%@page import="smartMukkam.main.user.userData.UserDAO"%>
+<%@page import="smartMukkam.main.user.userData.GalleryDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.admin.AdminDAO"%>
+<%@page import="smartMukkam.com.admin.AdminDetailsDTO"%>
 <%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -96,6 +99,11 @@ String alert = (String) request.getParameter("message");
       		background-size: cover;
       		background-repeat: no-repeat;
       		height: 40vh;
+		}
+		.userProfile{
+		      margin-top: 8px;
+    		  width: 40px;
+    		  border-radius: 50%;
 		}
 		
 
@@ -258,7 +266,7 @@ String alert = (String) request.getParameter("message");
 			
 			<figure class="text-center" style="margin-bottom: 40px;">
 				  <blockquote class="blockquote">
-				    <p>It's gauidence for smartMukkam website platform admin.</p>
+				    <p>Manage user gallery.</p>
 				  </blockquote>
 				  <figcaption class="blockquote-footer">
 				    <img alt="" src="images/keralaLogo.png" class="profile-image">
@@ -276,56 +284,39 @@ String alert = (String) request.getParameter("message");
 				     From Mukkam <cite title="Source Title">Municipality</cite>
 				  </figcaption>
 				</figure>
-			
-			
-				<div class="row" >
-					<div class="col">
-						<p style="padding: 20px;font-size: 15px; font-weight: 500; margin-top: 40px;">		
-The administration of Smart Mukkam's online platform holds paramount importance, ensuring smooth operations and upholding the municipality's directives. As the steward of this digital realm, the administrator operates within a secure environment, safeguarding sensitive information such as passwords and emails. Upholding confidentiality ensures user trust and compliance with privacy regulations.
-						</p>
-						
-					</div>
-					<div class="col" id="colimg1">
-						
+				
+				<div class="row" style="margin-top: 30px;">
+			<%
+			List<GalleryDTO> gallery = UserDAO.getAllGalleryUserforAdmin();
+			for(GalleryDTO g : gallery){
+			%>
+				<div class="col">
+					<div class="card" style="width: 13rem;">
+					  <img src="imUG?id=<%=g.getTid() %>" class="card-img-top" alt="...">
+					  <div class="card-body">
+					    <h5 class="card-title"><img alt="" src="userPhoto?id=<%=g.getUid()%>" class="userProfile"></h5>
+					    <p class="card-text"><%=g.getDescription() %></p>
+					    <p class="card-text"><%
+					    if(g.getStatus() == null){
+					    	out.print("<span style='color:green'>actve</span>");
+					    }else{
+					    	out.print("<span style='color:red'>Deleted</span>");
+					    }
+					    %></p>
+					    <a href="adminUserGalleryDelete.jsp?tid=<%=g.getTid()%>" class="btn btn-danger">Delete</a>
+					  </div>
 					</div>
 				</div>
-				<div class="row" >
-					<div class="col" id="colimg2">
-					
-					</div>
-					<div class="col" style="height: 200px;">
-						<p style="padding: 20px;font-size: 15px; font-weight: 500; margin-top: 40px;">Guided by the municipality's vision, the administrator orchestrates strategic initiatives, aligning digital endeavors with civic objectives. This alignment fosters synergy between the online platform and municipal goals, driving community engagement and enhancing citizen services.</p>
-					</div>
-				</div>
-				<div class="row" >
-					<div class="col" style="">
-					<p style="padding: 20px;font-size: 15px; font-weight: 500; margin-top: 40px;">Endowed with comprehensive oversight, the administrator shoulders the responsibility for the entirety of Smart Mukkam's digital landscape. From the bustling marketplace of shops and hotels to the curated experiences for tourists, every facet of the website falls under the administrator's purview. This holistic approach ensures seamless coordination and optimal performance across all modules.</p>
-					</div>
-					<div class="col" id="colimg3"></div>
-				</div>
-				<div class="row" >
-					<div class="col" id="colimg4">
-					</div>
-					<div class="col">
-						<p style="padding: 20px;font-size: 15px; font-weight: 500; margin-top: 40px;">With a keen focus on user satisfaction and operational efficiency, the administrator exercises meticulous control over the website's functionality. Through proactive management and responsive governance, the administrator nurtures a vibrant digital ecosystem, enriching the Smart Mukkam experience for residents and visitors alike.</p>
-					</div>
-				</div>	
+				<%} %>
 			</div>
-
-
-
-
+				
+			</div>
+			
+			
+			
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    var alertElement = document.getElementById('alert');
-    if (alertElement) {
-        setTimeout(function() {
-            alertElement.style.display = 'none';
-        }, 2000); // 2000 milliseconds = 2 seconds
-    }
-});
-</script>
+
+
 </body>
 </html>
