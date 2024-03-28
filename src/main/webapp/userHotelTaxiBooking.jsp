@@ -78,6 +78,7 @@ if (email == null){
 		      <th scope="col">No. plate</th>
 		      <th scope="col">KM</th>
 		      <th scope="col">Fair</th>
+		      <th scope="col">Date</th>
 		      <th scope="col">Status</th>
 		      <th scope="col">Print</th>
 		    </tr>
@@ -94,6 +95,7 @@ if (email == null){
 			      <td><%=ServiceDAO.getTaxiPlate(t.getTxoid()) %></td>
 			      <td><%=t.getKm() %></td>
 			      <td><%=ServiceDAO.getTaxiParice(t.getTxoid()) * t.getKm() %></td>
+			      <td><%=t.getDate() %></td>
 			      <td>
 			      <%
 		            if(t.getStatus() == null) {

@@ -114,11 +114,23 @@ Mukkam, a town in Kerala, India, has different hotels for people to stay in. Som
                 <div class="col-lg-4 col-md-6 mb-4" style="">
                     <div class="destination-item position-relative overflow-hidden mb-2">
                         <img class="img-fluid" src="himg?id=<%=h.getHotelId()%>" style="max-height: 150px; width: 100%" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="userHotelPages.jsp?id=<%=h.getHotelId() %>">
-                            <h5 class="text-white"><%=h.getHotelName() %></h5>
-                            <span><%=h.getAddressOne() %> </span>
-                            
-                        </a>
+                        
+                        <% if ("accept".equals(h.getStatus())) { %>
+                            <a class="destination-overlay text-white text-decoration-none" href="userHotelPages.jsp?id=<%=h.getHotelId() %>">
+	                            <h5 class="text-white"><%=h.getHotelName() %></h5>
+	                            <span><%=h.getAddressOne() %> </span> 
+	                        </a>
+                        <% } else if ("reject".equals(h.getStatus())) { %>
+                            <a class="destination-overlay text-white text-decoration-none" href="#">
+	                            <h5 class="text-white"><%=h.getHotelName() %></h5>
+	                            <span>It's blocked</span> 
+	                        </a>
+                        <% } else { %>
+                            <a class="destination-overlay text-white text-decoration-none" href="#">
+                                <h5 class="text-white"><%= h.getHotelName() %></h5>
+                                <span>It's under processing</span>
+                            </a>
+                        <% } %>
                     </div>
                 </div>
                 <%} %>

@@ -302,6 +302,7 @@ String alert = (String) request.getParameter("message");
 				      <th scope="col">City</th>
 				      <th scope="col">State</th>
 				      <th scope="col">PIN</th>
+				       <th scope="col">Date</th>
 				      <th scope="col">Status</th>
 				      <th scope="col">Menu</th>
 				    </tr>
@@ -325,7 +326,8 @@ String alert = (String) request.getParameter("message");
 				  		<td><%=UserDAO.getUserAddressTWO(t.getUid()) %></td>
 				  		<td><%=UserDAO.getUserCity(t.getUid()) %></td>
 				  		<td><%=UserDAO.getUserState(t.getUid()) %></td>
-				  		<td></td>
+				  		<td><%=UserDAO.getUserPIN(t.getUid()) %></td>
+				  		<td><%=t.getDate() %></td>
 				  		<td>
 				  		<%
 				  		if(t.getStatus() == null){

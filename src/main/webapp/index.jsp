@@ -1,3 +1,4 @@
+<%@page import="smartMukkam.com.admin.ServicesDAO"%>
 <%@page import="smartMukkam.com.shop.ShopDAO"%>
 <%@page import="smartMukkam.com.shop.AdvertisementDTO"%>
 <%@page import="java.util.List"%>
@@ -322,8 +323,13 @@ String alert = (String) request.getParameter("message");
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
                         <a href="#" class="nav-item nav-link">About</a>
                         <a href="#services" class="nav-item nav-link">Services</a>
-                        
+                        <%
+                        if(ServicesDAO.getMunicipalityStatusForChecking() == null){
+                        %>
                         <a href="userMunicipalityHome.jsp" class="nav-item nav-link">Municipality</a>
+                        <%}else{ %>
+                        <a href="#" class="nav-item nav-link">Municipality</a>
+                        <%}%>
                         <%
              			if(email != null){
              				out.print("<a class='nav-item nav-link' href='useLogout.jsp'>Logout</a>");
@@ -413,10 +419,19 @@ String alert = (String) request.getParameter("message");
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="destination-item position-relative overflow-hidden mb-2">
                         <img class="img-fluid" src="images/mukkam-municipality.jpg" alt="">
+                        <%
+                        if(ServicesDAO.getMunicipalityStatusForChecking() == null){
+                        %>
                         <a class="destination-overlay text-white text-decoration-none" href="userMunicipalityHome.jsp">
                             <h5 class="text-white">Municipality</h5>
                             <span>33 Wards</span>
                         </a>
+                        <%}else{ %>
+                         <a class="destination-overlay text-white text-decoration-none" href="#">
+                            <h5 class="text-white">Municipality</h5>
+                            <span>33 Wards</span>
+                        </a>
+                        <%} %>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">

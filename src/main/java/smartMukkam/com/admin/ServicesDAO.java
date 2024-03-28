@@ -723,5 +723,24 @@ public class ServicesDAO {
 			 return li;
 		 }
 	 
+	 public static String getMunicipalityStatusForChecking() {
+			String status = null;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql = "select status from municipalityLogin where email='mukkammunicipality@govt.in';";
+				PreparedStatement stm =connection.prepareStatement(sql);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					status = rs.getString(1);
+				}
+			}catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			
+			return status;
+	}
+	 
 	 
 }

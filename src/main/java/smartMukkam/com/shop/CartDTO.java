@@ -6,7 +6,16 @@ public class CartDTO {
 	private int sid;
 	private int pid;
 	private int q;
+	private String date;
 	private String status;
+	
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getTid() {
 		return tid;
 	}

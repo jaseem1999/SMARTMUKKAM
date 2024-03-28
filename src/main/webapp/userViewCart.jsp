@@ -216,6 +216,7 @@ shopType = s.getShopType();
 					      <th scope="col">City</th>
 					      <th scope="col">State</th>
 					      <th scope="col">PIN</th>
+					      <th scope="col">Date of booking</th>
 					      <th scope="col">status</th>
 					    </tr>
 					  </thead>
@@ -236,6 +237,7 @@ shopType = s.getShopType();
 					      <td><%=UserDAO.getUserCity(c.getUid()) %></td>
 					      <td><%=UserDAO.getUserState(c.getUid()) %></td>
 					      <td><%=UserDAO.getUserPIN(c.getUid()) %></td>
+					      <td><%=c.getDate() %></td>
 					      <td>
 					      <%
 					     	 if(c.getStatus() == null){

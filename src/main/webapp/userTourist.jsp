@@ -137,40 +137,46 @@ if (email == null){
 	</div>
 </div>
 <div class="container" style="background: #000000ad; height: auto;">
-<div class="container-fluid py-5">
+    <div class="container-fluid py-5">
         <div class="container pt-5 pb-3" id="services">
             <div class="text-center mb-3 pb-3">
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Book the tickets</h6>
                 <h1 style="color: white;">Tourist spots</h1>
             </div>
             <div class="row">
-	
-			<%
-            	List<TouristDTO> tourists = TouristDAO.getAllTouristDetails();
-            	for(TouristDTO t : tourists){
-            	%>
+                <%
+                    List<TouristDTO> tourists = TouristDAO.getAllTouristDetails();
+                    for(TouristDTO t : tourists) {
+                %>
                 <div class="col-lg-4 col-md-6 mb-4" style="">
                     <div class="destination-item position-relative overflow-hidden mb-2">
-                        <img class="img-fluid" src="timg?id=<%=t.getTouristId() %>" style="max-height: 150px; width: 100%" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="userTouristPages.jsp?id=<%=t.getTouristId() %>">
-                            <h5 class="text-white"><%=t.getTouristPlace() %></h5>
-                            <span><%=t.getAddressOne() %> </span>
-                            
-                        </a>
+                        <img class="img-fluid" src="timg?id=<%= t.getTouristId() %>" style="max-height: 150px; width: 100%" alt="">
+                        <% if ("accept".equals(t.getStatus())) { %>
+                            <a class="destination-overlay text-white text-decoration-none" href="userTouristPages.jsp?id=<%= t.getTouristId() %>">
+                                <h5 class="text-white"><%= t.getTouristPlace() %></h5>
+                                <span><%= t.getAddressOne() %> </span>
+                            </a>
+                        <% } else if ("reject".equals(t.getStatus())) { %>
+                            <a class="destination-overlay text-white text-decoration-none" href="#">
+                                <h5 class="text-white"><%= t.getTouristPlace() %></h5>
+                                <span>It's blocked </span>
+                            </a>
+                        <% } else { %>
+                            <a class="destination-overlay text-white text-decoration-none" href="#">
+                                <h5 class="text-white"><%= t.getTouristPlace() %></h5>
+                                <span>It's under processing</span>
+                            </a>
+                        <% } %>
                     </div>
                 </div>
-                <%} %>
-                </div>
-                </div>
-                </div>
-	
-		
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7824.35305136936!2d75.98956738996188!3d11.321804705448093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba641801beef9e9%3A0xb2830e78854a4e17!2sMukkam%2C%20Kerala!5e0!3m2!1sen!2sin!4v1710076627596!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-	
+                <% } %>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
+<div class="container" style="background: #000000ad; height: auto;">
+	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7824.35305136936!2d75.98956738996188!3d11.321804705448093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba641801beef9e9%3A0xb2830e78854a4e17!2sMukkam%2C%20Kerala!5e0!3m2!1sen!2sin!4v1710076627596!5m2!1sen!2sin" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
 
 
 

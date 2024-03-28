@@ -279,7 +279,7 @@ public class ShopDAO {
 		Conn con = new Conn();
         Connection connection = con.connection;
 		try {
-			 String sql = "SELECT tid,uid,sid,pid,quantity,status from cart where sid ="+sid+";";
+			 String sql = "SELECT tid,uid,sid,pid,quantity,booking_timestamp,status from cart where sid ="+sid+";";
 		     PreparedStatement stm = connection.prepareStatement(sql);
 		     ResultSet rs = stm.executeQuery();
 		     while(rs.next()) {
@@ -289,7 +289,8 @@ public class ShopDAO {
 		    	 cd.setSid(rs.getInt(3));
 		    	 cd.setPid(rs.getInt(4));
 		    	 cd.setQ(rs.getInt(5));
-		    	 cd.setStatus(rs.getString(6));
+		    	 cd.setDate(rs.getString(6));
+		    	 cd.setStatus(rs.getString(7));
 		    	 
 		    	 li.add(cd);
 		     }
@@ -456,7 +457,7 @@ public class ShopDAO {
 		Conn con = new Conn();
         Connection connection = con.connection;
 		try {
-			 String sql = "SELECT tid,uid,sid,pid,quantity,status from cart where sid ="+sid+" and uid="+uid+";";
+			 String sql = "SELECT tid,uid,sid,pid,quantity,booking_timestamp,status from cart where sid ="+sid+" and uid="+uid+";";
 		     PreparedStatement stm = connection.prepareStatement(sql);
 		     ResultSet rs = stm.executeQuery();
 		     while(rs.next()) {
@@ -466,7 +467,8 @@ public class ShopDAO {
 		    	 cd.setSid(rs.getInt(3));
 		    	 cd.setPid(rs.getInt(4));
 		    	 cd.setQ(rs.getInt(5));
-		    	 cd.setStatus(rs.getString(6));
+		    	 cd.setDate(rs.getString(6));
+		    	 cd.setStatus(rs.getString(7));
 		    	 
 		    	 li.add(cd);
 		     }
