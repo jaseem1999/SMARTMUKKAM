@@ -159,7 +159,7 @@ String alert = (String) request.getParameter("message");
 			
 			<input style=" margin-top: 10px;"  type="submit" class="btn btn-success" value="Login"/>
 			<a style="margin-top: 10px;"  href="UserEmailValidation.jsp" class="btn btn-primary" >Sign up</a>
-			<P style="margin-top: 10px;"><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
+			<P style="margin-top: 10px;"><a href="userForgetPassword.jsp" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
 		</form>
       </div>
       <div class="modal-footer">
@@ -188,7 +188,7 @@ String alert = (String) request.getParameter("message");
 			
 			<input style=" margin-top: 10px;"  type="submit" class="btn btn-success" value="Login"/>
 			<a style="margin-top: 10px;"  href="shopValidateEmail.jsp" class="btn btn-primary" >Sign up</a>
-			<P style="margin-top: 10px;"><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
+			<P style="margin-top: 10px;"><a href="shopForgetPassword.jsp" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
 		</form>
       </div>
       <div class="modal-footer">
@@ -218,7 +218,7 @@ String alert = (String) request.getParameter("message");
 			
 			<input style=" margin-top: 10px;"  type="submit" class="btn btn-success" value="Login"/>
 			<a style="margin-top: 10px;"  href="touristValidateEmail.jsp" class="btn btn-primary" >Sign up</a>
-			<P style="margin-top: 10px;"><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
+			<P style="margin-top: 10px;"><a href="touristForgetPassword.jsp" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
 		</form>
       </div>
       <div class="modal-footer">
@@ -247,7 +247,7 @@ String alert = (String) request.getParameter("message");
 			
 			<input style=" margin-top: 10px;"  type="submit" class="btn btn-success" value="Login"/>
 			<a style="margin-top: 10px;"  href="hotelValidateEmail.jsp" class="btn btn-primary" >Sign up</a>
-			<P style="margin-top: 10px;"><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
+			<P style="margin-top: 10px;"><a href="hotelForgetPassword.jsp" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Forget password</a></p>
 		</form>
       </div>
       <div class="modal-footer">
@@ -306,7 +306,12 @@ String alert = (String) request.getParameter("message");
 						if(alert != null && alert.equals("feedbackFailed")){
 							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Feedback send failed</div>");
 						}
-						
+						if(alert != null && alert.equals("resetDone")){
+							out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Please Login</div>");
+						}
+						if(alert != null && alert.equals("resetFailed")){
+							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Password reset failed</div>");
+						}
 						
 						
                         %>
@@ -485,6 +490,7 @@ String alert = (String) request.getParameter("message");
             AdvertisementDTO ads = pro.get(i);
         %>
             <div class="carousel-item <%= i == 0 ? "active" : "" %>">
+             	<a href="<%=ads.getLink() %>">
                 <img src="imAds?id=<%=ads.getTid()%>" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 style="color: #08ff46;font-size: 40px; font-weight: 700;"><%=ads.getProduct() %></h5>
@@ -493,8 +499,9 @@ String alert = (String) request.getParameter("message");
                    <div style="width: 500px; height: 60px; border: 1px solid white; margin: auto; background: #ffffffd4;">
                      <p style="color: Green; font-size: 30px; font-weight: bolder; margin: 5px;"> Now : <%=ads.getPrice() - ads.getDicscount() %></p>
                      </div>
-                    <a href="<%=ads.getLink() %>" style="margin-top: 10px;" class="btn btn-danger">Go To check</a>
+                   
                 </div>
+                </a>
             </div>
         <% } %>
     </div>

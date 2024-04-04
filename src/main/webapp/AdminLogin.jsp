@@ -21,6 +21,11 @@ String alert = (String) request.getParameter("message");
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="fontawesome-free-6.5.1-web/css/fontawesome.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/brands.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/solid.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/custom-icons.css" rel="stylesheet" />
+  <link href="fontawesome-free-6.5.1-web/css/custom-icons.css" rel="stylesheet" />
 
 <!-- Libraries Stylesheet -->
 <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -72,7 +77,7 @@ body {
 				    <span class="input-group-text"><i class="fa fa-unlock-alt" aria-hidden="true"></i></span>
 				    <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter Password" aria-describedby="emailHelp">
 				</div>
-			  <button type="submit" class="btn btn-outline-success">Login</button>
+			  <button type="submit" class="btn btn-outline-success">Login <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
 			  <a href="index.jsp" class="btn btn-outline-primary">Back</a>
 			</form>
 	    </div>

@@ -3,6 +3,7 @@ package smartMukkam.main.user.userData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -331,5 +332,54 @@ public class UserDAO {
 		}
 		return li;
 	}
+	
+	public static String getUserEmailForValidation(String email) {
+		String mail = null;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql = "select email from User where email=?;";
+			
+			PreparedStatement stm =connection.prepareStatement(sql);
+			stm.setString(1, email);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				mail = rs.getString(1);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		
+		return mail;
+	}
+	public static int userResetPassword(String email, String pass) {
+	    int i = 0;
+	    Conn con = new Conn();
+	    Connection connection = con.connection;
+	    String update = "UPDATE User SET password= ? WHERE email= ? ;";                    
+	    try {
+	        PreparedStatement statement = connection.prepareStatement(update);
+	        statement.setString(1, pass);
+	        statement.setString(2, email);
+	        int rowsAffected = statement.executeUpdate(); // No need to pass update here
+	        if(rowsAffected > 0) {
+	            i = 1;
+	        }
+	        statement.close();
+	    } catch (SQLException e) { // Catch SQLException
+	        e.printStackTrace(); // Printing stack trace for debugging
+	    } finally { // Ensure resources are properly closed
+	        try {
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return i;
+	}
+
 	
 }

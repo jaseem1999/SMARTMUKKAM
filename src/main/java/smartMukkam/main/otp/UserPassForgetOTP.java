@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class OtpGenerate {
-    public static int sendToEmailOTP(String email, HttpServletRequest request, HttpServletResponse response, HttpSession sessn) {
+public class UserPassForgetOTP {
+	public static int sendToEmailOTP(String email, HttpServletRequest request, HttpServletResponse response, HttpSession sessn) {
         int done = 0;
         RequestDispatcher dispatcher = null;
         int otpvalue = 0;
@@ -47,7 +47,7 @@ public class OtpGenerate {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));// change accordingly
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-                message.setSubject("Smart Mukkam");
+                message.setSubject("Smart Mukkam for forget Password");
                 message.setText("your OTP is: " + otpvalue);
                 // send message
                 Transport.send(message);
@@ -57,11 +57,11 @@ public class OtpGenerate {
                 throw new RuntimeException(e);
             }
 
-            dispatcher = request.getRequestDispatcher("UserEmailValidation.jsp?message=success");
+            dispatcher = request.getRequestDispatcher("userPasswordForgetOtP.jsp");
             request.setAttribute("message", "OTP is sent to your email id");
             HttpSession mySession = request.getSession();
-            mySession.setAttribute("otpforVerification", otpvalue);
-            mySession.setAttribute("emailVerification", email);
+            mySession.setAttribute("otpforVerificationUser", otpvalue);
+            mySession.setAttribute("emailVerificationUser", email);
 
             try {
                 dispatcher.forward(request, response);

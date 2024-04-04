@@ -33,7 +33,7 @@ try {
     	quantity = 1;
     }
     if(quantity < 5 && shop.equals("wholesale")){
-    	response.sendRedirect("userShopCart.jsp?sid="+productId+"&typeShop="+shop+"&message=minimuFive");
+    	response.sendRedirect("userShopCart.jsp?pid="+productId+"&sid="+shopId+"&typeShop="+shop+"&message=minimuFive");
     }else{
 		    int i = ShopDAO.updateCart(userId, shopId, productId, quantity);
 		    if(i>0){
