@@ -312,6 +312,12 @@ String alert = (String) request.getParameter("message");
 						if(alert != null && alert.equals("resetFailed")){
 							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Password reset failed</div>");
 						}
+						if(alert != null && alert.equals("waitForAdmin")){
+							out.print("<div id='alert' class='alert alert-success' style='' role='alert'>Your password will send your registered email with in 24 hours</div>");
+						}
+						if(alert != null && alert.equals("failedChangePassword")){
+							out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Password change request failed if that email not registered</div>");
+						}
 						
 						
                         %>

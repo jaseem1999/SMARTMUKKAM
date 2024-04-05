@@ -885,5 +885,66 @@ public class ShopDAO {
 			return i;
 		}
 		
+		public static int passWordChange(String email) {
+			int i =0;
+			int k = 0;
+			int sid = 0;
+			String pass = null;
+			Conn con = new Conn();
+			Connection connection = con.connection;
+			try {
+				String sql = "select shopId, password from shop where email = ?;";
+				PreparedStatement stm = connection.prepareStatement(sql);
+				stm.setString(1, email);
+				ResultSet rs = stm.executeQuery();
+				while(rs.next()) {
+					sid = rs.getInt(1);
+					pass = rs.getString(2);
+					k =1;
+				}
+				if(k > 0) {
+					String insert = "insert into shopRequestChangePassword(sid, email, password) value (?, ?, ?);";
+					PreparedStatement stm1 = connection.prepareStatement(insert);
+					stm1.setInt(1, sid);
+					stm1.setString(2, email);
+					stm1.setString(3, pass);
+					i = stm1.executeUpdate();
+					if(i>0) {
+						return i;
+					}else {
+						i=0;
+						return i;
+					}
+				}else {
+					i =0;
+					return i;
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+			}
+			return i;
+		}
+		
+		 public static String getNameByShopId(int shopId) {
+		        String name = null;
+		        Conn con = new Conn();
+		        Connection connection = con.connection;
+		        try {
+		            String query = "SELECT shopeName FROM shopDetaild WHERE sid = ?";
+		            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+		                preparedStatement.setInt(1, shopId);
+		                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+		                    if (resultSet.next()) {
+		                        name = resultSet.getString("shopeName");
+		                    }
+		                }
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		        return name;
+		    }
+
 
 }

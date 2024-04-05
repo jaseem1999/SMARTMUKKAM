@@ -36,15 +36,21 @@
 <body>
 <%
 String email = (String) session.getAttribute("emailVerification");
+String alert = (String) request.getParameter("message");
 %>
     <div class="container">
+    
     	<form  onsubmit="return validateForm()" action="userSignup" method="post" enctype="multipart/form-data" class="card" style="margin-top: 70px; margin-bottom: 50px;">
    			 <div class="row" style="margin: 10px;">
-
+<%
+    if(alert != null && alert.equals("userSigninFailed")){
+		out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Already registered</div>");
+	}
+    %>
         <div class="col">
 
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label">Email address :: <%=email %></label>
                 <input value=<%=email %> type="hidden" class="form-control" id="email" name="email" >
                 <span class="error" id="emailError"></span>
             </div>

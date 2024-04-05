@@ -1,3 +1,5 @@
+<%@page import="smartMukkam.com.shop.ShopDAO"%>
+<%@page import="smartMukkam.com.shop.ShopChangePassDTO"%>
 <%@page import="smartMukkam.com.shop.AdvertisementDTO"%>
 <%@page import="smartMukkam.com.shop.ProductDTO"%>
 <%@page import="smartMukkam.com.admin.ServicesDAO"%>
@@ -363,6 +365,89 @@ String alert = (String) request.getParameter("message");
 			
 			<figure class="text-center" style="margin-bottom: 40px;">
 				  <blockquote class="blockquote">
+				    <p>Forget Password request</p>
+				  </blockquote>
+				  <figcaption class="blockquote-footer">
+				    <img alt="" src="images/keralaLogo.png" class="profile-image">
+					<span class="tooltip">
+					<%
+						      
+					  if(munAdminActive.equals("active")){
+						   out.print("Municipality Admin is online");
+					  }else{
+						    out.print("Municipality Admin is offline");  
+						}
+				      %>
+					</span>
+			      <span class="availability-status online"></span>
+				     From Mukkam <cite title="Source Title">Municipality</cite>
+				  </figcaption>
+				</figure>
+		</div>
+		
+		
+		<div class="container-sm">
+			
+			<div style="height: 400px; width: auto;  overflow: auto;">
+		
+
+				<table class="table table-striped table-hover">
+			    <thead>
+			        <tr>
+			            <th scope="col" ><i class="fa-solid fa-shop" style="color: black;"></i></th>
+			            <th scope="col" >Name <i class="fa-solid fa-shop" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-envelope" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-lock" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-bars" style="color: black;"></i></th>
+			        </tr>
+			    <tbody>
+					<%
+					List<ShopChangePassDTO> shopsChangePass = ServicesDAO.getShopRequestChangePass();
+					for(ShopChangePassDTO pass : shopsChangePass){
+					%>
+					<tr>
+						<td><img src="shopImage?id=<%=pass.getSid()%>" style="width: 40px; border: 1px solid; border-radius: 5px;" alt="" ></td>
+					    <td><%=ShopDAO.getNameByShopId(pass.getSid()) %></td>
+					    <td><%=pass.getEmail() %></td>
+					    <td><%=pass.getPass() %></td>
+					    <td>
+					    			<div class="dropdown">
+					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+					                style="background:<%
+				                	if(pass.getStatus() == null){
+				                		out.print("blue");
+				                	}else if(pass.getStatus().equals("accept")){
+				                		out.print("green");
+				                	}
+				                	else if(pass.getStatus().equals("reject")){
+				                		out.print("red");
+				                	}else{
+				                		
+				                	}
+				                %>;"
+					              >
+					                    <i class="fa-solid fa-bars" style="color: black;"></i>
+					                </button>
+					                <ul class="dropdown-menu">
+					                    <li><a href="#" class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=ShopDAO.getNameByShopId(pass.getSid())%>')">Send email</a></li>
+
+					                </ul>
+		           					 </div>
+					    		</td>
+					</tr>
+			   		<%} %>
+			    <tbody>
+			    </tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		
+		<div class="container-sm" style="margin-top: 40px;">
+			
+			<figure class="text-center" style="margin-bottom: 40px;">
+				  <blockquote class="blockquote">
 				    <p>It's Admin view product</p>
 				  </blockquote>
 				  <figcaption class="blockquote-footer">
@@ -635,6 +720,22 @@ $(document).ready(function() {
         
     }
 });
+
+function sendEmail(email, password, shopName) {
+
+    var subject = "Request to reset password for " + shopName;
+    var body =
+               "Shop Name: " + shopName + "\n" +
+               "Shop Email: " + email + "\n" +
+               "Shop Password: " + password;
+
+    // You can send this data to a server-side script using AJAX
+    // Here's an example using jQuery
+    const recipientEmail = email; // Use the entered email address as recipient
+    window.location.href = 'mailto:' + recipientEmail + '?subject=Forget%20Password%20for%20shop&body=' + encodeURIComponent(body);
+     
+}
+
 
 </script>
 </body>

@@ -14,6 +14,7 @@ import smartMukkam.com.hotel.TaxiDTO;
 import smartMukkam.com.municipality.login.MunicipalityLoginDTO;
 import smartMukkam.com.shop.AdvertisementDTO;
 import smartMukkam.com.shop.ProductDTO;
+import smartMukkam.com.shop.ShopChangePassDTO;
 import smartMukkam.com.shop.ShopDTO;
 import smartMukkam.com.tourist.TicketDTO;
 import smartMukkam.com.tourist.TouristDTO;
@@ -741,6 +742,31 @@ public class ServicesDAO {
 			
 			return status;
 	}
+	 
+	 public static List<ShopChangePassDTO> getShopRequestChangePass(){
+		 ArrayList<ShopChangePassDTO> li = new ArrayList<ShopChangePassDTO>();
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql ="select tid, sid, email, password, status from shopRequestChangePassword;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				ShopChangePassDTO s = new ShopChangePassDTO();
+				s.setTid(rs.getInt(1));
+				s.setSid(rs.getInt(2));
+				s.setEmail(rs.getString(3));
+				s.setPass(rs.getString(4));
+				s.setStatus(rs.getString(5));
+				li.add(s);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 
+		 return li;
+	 }
 	 
 	 
 }
