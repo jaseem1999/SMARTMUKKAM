@@ -1,3 +1,6 @@
+<%@page import="smartMukkam.com.municipality.ServicesDTO"%>
+<%@page import="smartMukkam.com.municipality.HistoryDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.municipality.login.MunicipalityAdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -283,6 +286,19 @@ if (email == null){
     	<div class="homeFull" style="margin: 10px;">
     		<div class="home">
     			<span>Home</span>
+    			<div style="margin: 20px;">
+    				
+    				<%List<HistoryDTO> history = ServicesDTO.getAllHistory();
+    				for(HistoryDTO h : history){
+    				%>
+    				<P><%=h.getHistory() %></P>
+    				<hr>
+    				Chairman : <%=h.getChairman() %>
+    				Secretary : <%=h.getSecretary() %>
+    				
+    				<%} %>
+    				
+    			</div>
     		</div>
     	</div>
     

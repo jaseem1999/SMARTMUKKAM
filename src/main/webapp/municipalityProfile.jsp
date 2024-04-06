@@ -287,9 +287,7 @@ String alert = (String) request.getParameter("message");
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityRegistration.jsp">Registrations</a>
 			  </li>
-			  <li class="list-group-item">
-			  	<a class="nav-link" href="municipalityNotification.jsp">Notifications</a>
-			  </li>
+			  
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipality.jsp">Home</a>
 			  </li>
@@ -302,9 +300,7 @@ String alert = (String) request.getParameter("message");
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityGallery.jsp">Gallery</a>
 			  </li>
-			  <li class="list-group-item">
-			  	<a class="nav-link" href="municipalityRequest.jsp">Request</a>
-			  </li>
+			  
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityFeedback.jsp">Feedback</a>
 			  </li>

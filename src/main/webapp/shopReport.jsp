@@ -176,7 +176,7 @@ if(shopType == null){
 			  	<a class="nav-link" href="shopHome.jsp"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
 			  </li>
 			  <li class="list-group-item">
-			  	<a class="nav-link" href="shopGallery"><i class="fa fa-camera" aria-hidden="true"></i> Gallery</a>
+			  	<a class="nav-link" href="shopGallery.jsp"><i class="fa fa-camera" aria-hidden="true"></i> Gallery</a>
 			  	</li>
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="shopProductReview.jsp"><i class="fa fa-comments" aria-hidden="true"></i> Review</a>

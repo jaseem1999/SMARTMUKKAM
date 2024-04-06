@@ -253,4 +253,45 @@ public class HotelDAO {
 		return name;
 	}
 	
+	public static int passWordChange(String email) {
+		int i =0;
+		int k = 0;
+		int hoid = 0;
+		String pass = null;
+		Conn con = new Conn();
+		Connection connection = con.connection;
+		try {
+			String sql = "select hotelId, password from hotel where email = ?;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			stm.setString(1, email);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				hoid = rs.getInt(1);
+				pass = rs.getString(2);
+				k =1;
+			}
+			if(k > 0) {
+				String insert = "insert into hotelRequestChangePassword(hoid, email, password) value (?, ?, ?);";
+				PreparedStatement stm1 = connection.prepareStatement(insert);
+				stm1.setInt(1, hoid);
+				stm1.setString(2, email);
+				stm1.setString(3, pass);
+				i = stm1.executeUpdate();
+				if(i>0) {
+					return i;
+				}else {
+					i=0;
+					return i;
+				}
+			}else {
+				i =0;
+				return i;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		return i;
+	}
+	
 }

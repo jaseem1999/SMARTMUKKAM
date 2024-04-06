@@ -16,14 +16,14 @@
 <body>
 <div class="container">
 	<div class="card" style="margin-top: 200px; position: relative; left: 25%; width: 600px;">
-		<form style="margin: 20px;">
+		<form action="touristForgetPasswordServlet.jsp" method="post" style="margin: 20px;">
 		  <div class="input-group mb-3" style="margin-top: 10px;">
 			<span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
 		    <input type="email" class="form-control" id="email" name="email" placeholder="Email address" aria-describedby="emailHelp">
 		</div>
 		<div id="emailHelp" class="form-text" style="color: white;">We'll never share your email with anyone else.</div>
 
-		  <button type="submit" class="btn btn-outline-success">Send get OTP <i class="fa-solid fa-key"></i></button>
+		  <button type="submit" class="btn btn-outline-success">Request get password <i class="fa-solid fa-key"></i></button>
 		  <a class="btn btn-outline-primary" href="index.jsp" >Home <i class="fa-solid fa-backward-step"></i></a>
 		</form>
 	</div>

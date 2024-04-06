@@ -1,3 +1,6 @@
+<%@page import="smartMukkam.com.municipality.ServicesDTO"%>
+<%@page import="smartMukkam.com.municipality.HistoryDTO"%>
+<%@page import="java.util.List"%>
 <%@page import="smartMukkam.com.admin.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -154,9 +157,6 @@ if(email == null){
 			  	<a class="nav-link" href="municipalityRegistration.jsp">Registrations</a>
 			  </li>
 			  <li class="list-group-item">
-			  	<a class="nav-link" href="municipalityNotification.jsp">Notifications</a>
-			  </li>
-			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityProfile.jsp">Profile</a>
 			  </li>
 			  <li class="list-group-item">
@@ -169,9 +169,6 @@ if(email == null){
 			  	<a class="nav-link" href="municipalityGallery.jsp">Gallery</a>
 			  </li>
 			  <li class="list-group-item">
-			  	<a class="nav-link" href="municipalityRequest.jsp">Request</a>
-			  </li>
-			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityFeedback.jsp">Feedback</a>
 			  </li>
 			</ul>
@@ -181,6 +178,19 @@ if(email == null){
     	<div class="homeFull" style="margin: 50px;">
     		<div class="home">
     			<span>Home</span>
+    			<div style="margin: 20px;">
+    				
+    				<%List<HistoryDTO> history = ServicesDTO.getAllHistory();
+    				for(HistoryDTO h : history){
+    				%>
+    				<P><%=h.getHistory() %></P>
+    				<hr>
+    				Chairman : <%=h.getChairman() %>
+    				Secretary : <%=h.getSecretary() %>
+    				
+    				<%} %>
+    				
+    			</div>
     		</div>
     	</div>
     

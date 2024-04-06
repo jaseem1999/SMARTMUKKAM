@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import smartMukkam.com.hotel.FoodDTO;
+import smartMukkam.com.hotel.HotelResetPassword;
 import smartMukkam.com.hotel.RoomDTO;
 import smartMukkam.com.hotel.TaxiDTO;
 import smartMukkam.com.municipality.login.MunicipalityLoginDTO;
@@ -17,6 +18,7 @@ import smartMukkam.com.shop.ProductDTO;
 import smartMukkam.com.shop.ShopChangePassDTO;
 import smartMukkam.com.shop.ShopDTO;
 import smartMukkam.com.tourist.TicketDTO;
+import smartMukkam.com.tourist.TouristChangeDTO;
 import smartMukkam.com.tourist.TouristDTO;
 import smartMukkam.connection.Conn;
 import smartMukkam.main.user.userData.UserCompleteDTO;
@@ -766,6 +768,176 @@ public class ServicesDAO {
 		}
 		 
 		 return li;
+	 }
+	 
+	 public static int updateShopResetPasswordAccept(int id) {
+		 int i = 0;
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql = "update shopRequestChangePassword set status='accept' where tid="+id+";";
+			java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 return i;
+	 }
+	 
+	 public static int updateShopResetPasswordReject(int id) {
+		 int i = 0;
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql = "update shopRequestChangePassword set status='reject' where tid="+id+";";
+			java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 return i;
+	 }
+	 
+	 
+	 public static List<HotelResetPassword> getHotelRequestChangePass(){
+		 ArrayList<HotelResetPassword> li = new ArrayList<HotelResetPassword>();
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql ="select tid, hoid, email, password, status from hotelRequestChangePassword;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				HotelResetPassword s = new HotelResetPassword();
+				s.setTid(rs.getInt(1));
+				s.setHoid(rs.getInt(2));
+				s.setEmail(rs.getString(3));
+				s.setPass(rs.getString(4));
+				s.setStatus(rs.getString(5));
+				li.add(s);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 
+		 return li;
+	 }
+	 
+	 public static int updateHotelResetPasswordAccept(int id) {
+		 int i = 0;
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql = "update hotelRequestChangePassword set status='accept' where tid="+id+";";
+			java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 return i;
+	 }
+	 
+	 public static int updateHotelResetPasswordReject(int id) {
+		 int i = 0;
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql = "update hotelRequestChangePassword set status='reject' where tid="+id+";";
+			java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 return i;
+	 }
+	 
+	 public static List<TouristChangeDTO> getTouristRequestChangePass(){
+		 ArrayList<TouristChangeDTO> li = new ArrayList<TouristChangeDTO>();
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql ="select tid, toid, email, password, status from touristRequestChangePassword;";
+			PreparedStatement stm = connection.prepareStatement(sql);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				TouristChangeDTO s = new TouristChangeDTO();
+				s.setTid(rs.getInt(1));
+				s.setToid(rs.getInt(2));
+				s.setEmail(rs.getString(3));
+				s.setPass(rs.getString(4));
+				s.setStatus(rs.getString(5));
+				li.add(s);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 
+		 return li;
+	 }
+	 public static int updateTouristResetPasswordAccept(int id) {
+		 int i = 0;
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql = "update touristRequestChangePassword set status='accept' where tid="+id+";";
+			java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 return i;
+	 }
+	 
+	 public static int updateTouristResetPasswordReject(int id) {
+		 int i = 0;
+		 Conn con = new Conn();
+		 Connection connection = con.connection;
+		 try {
+			String sql = "update touristRequestChangePassword set status='reject' where tid="+id+";";
+			java.sql.Statement statement = connection.createStatement();
+	        int rowsAffected = statement.executeUpdate(sql);
+	        if(rowsAffected > 0) {
+	        	i = 1;
+	        	return i;
+	        }
+	        statement.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		 return i;
 	 }
 	 
 	 

@@ -388,9 +388,9 @@ String alert = (String) request.getParameter("message");
 		
 		<div class="container-sm">
 			
-			<div style="height: 400px; width: auto;  overflow: auto;">
+			<div style="height: 400px; width: auto;  overflow: auto;" id="contentToRefreshTwo">
 		
-
+				Reject <i class="fa-solid fa-bars" style="color: red;"></i> Accept <i class="fa-solid fa-bars" style="color: green;"></i> Proccessing <i class="fa-solid fa-bars" style="color: blue;"></i>
 				<table class="table table-striped table-hover">
 			    <thead>
 			        <tr>
@@ -430,7 +430,8 @@ String alert = (String) request.getParameter("message");
 					                </button>
 					                <ul class="dropdown-menu">
 					                    <li><a href="#" class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=ShopDAO.getNameByShopId(pass.getSid())%>')">Send email</a></li>
-
+										<li><a href="#" class="dropdown-item acceptLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Reject</a></li>
 					                </ul>
 		           					 </div>
 					    		</td>
@@ -720,6 +721,96 @@ $(document).ready(function() {
         
     }
 });
+
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContentTwo = function() {
+        $('#contentToRefreshTwo').load(location.href + ' #contentToRefreshTwo', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlersTwo();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+    $('#refreshButton').on('click', function() {
+        window.refreshContentTwo();
+    });
+
+    // Initial binding of event handlers
+    bindEventHandlersTwo();
+
+    // Function to bind event handlers
+    function bindEventHandlersTwo() {
+        // Handle the click event on the "Accept" link
+        $(".acceptLinkPassword").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "shopResetPasswordAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                    // Show the success message
+                    $("#registrationAcceptSuccessAlert").show().delay(3000).fadeOut();
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContentTwo();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+        // Handle the click event on the "Reject" link
+        $(".rejectLinkPassword").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the rejection
+            $.ajax({
+                type: "GET",
+                url: "shopResetPasswordReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration rejected successfully");
+
+                    // Show the rejection success message
+                    $("#registrationRejectSuccessAlert").show().delay(3000).fadeOut();
+
+                    // Reload the content within the div with id "contentToRefresh" after rejection
+                    window.refreshContentTwo();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error rejecting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+       
+        
+    }
+});
+
+
 
 function sendEmail(email, password, shopName) {
 

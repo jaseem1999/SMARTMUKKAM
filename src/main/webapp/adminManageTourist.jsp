@@ -1,3 +1,5 @@
+<%@page import="smartMukkam.com.tourist.TouristDAO"%>
+<%@page import="smartMukkam.com.tourist.TouristChangeDTO"%>
 <%@page import="smartMukkam.com.tourist.TicketDTO"%>
 <%@page import="smartMukkam.com.admin.ServicesDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDTO"%>
@@ -360,6 +362,90 @@ String alert = (String) request.getParameter("message");
 			
 			<figure class="text-center" style="margin-bottom: 40px;">
 				  <blockquote class="blockquote">
+				    <p>Forget Password request</p>
+				  </blockquote>
+				  <figcaption class="blockquote-footer">
+				    <img alt="" src="images/keralaLogo.png" class="profile-image">
+					<span class="tooltip">
+					<%
+						      
+					  if(munAdminActive.equals("active")){
+						   out.print("Municipality Admin is online");
+					  }else{
+						    out.print("Municipality Admin is offline");  
+						}
+				      %>
+					</span>
+			      <span class="availability-status online"></span>
+				     From Mukkam <cite title="Source Title">Municipality</cite>
+				  </figcaption>
+				</figure>
+		</div>
+		
+		
+		<div class="container-sm">
+			
+			<div style="height: 400px; width: auto;  overflow: auto;" id="contentToRefreshTwo">
+		
+				Reject <i class="fa-solid fa-bars" style="color: red;"></i> Accept <i class="fa-solid fa-bars" style="color: green;"></i> Proccessing <i class="fa-solid fa-bars" style="color: blue;"></i>
+				<table class="table table-striped table-hover">
+			    <thead>
+			        <tr>
+			            <th scope="col" ><i class="fa-solid fa-hotel" style="color: black;"></i></th>
+			            <th scope="col" >Name <i class="fa-solid fa-hotel" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-envelope" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-lock" style="color: black;"></i></th>
+			            <th scope="col"><i class="fa-solid fa-bars" style="color: black;"></i></th>
+			        </tr>
+			    <tbody>
+					<%
+					List<TouristChangeDTO> ChangePass = ServicesDAO.getTouristRequestChangePass();
+					for(TouristChangeDTO pass : ChangePass){
+					%>
+					<tr>
+						<td><img src="timg?id=<%=pass.getToid()%>" style="width: 40px; border: 1px solid; border-radius: 5px;" alt="" ></td>
+					    <td><%=TouristDAO.getNameByTourist(pass.getToid()) %></td>
+					    <td><%=pass.getEmail() %></td>
+					    <td><%=pass.getPass() %></td>
+					    <td>
+					    			<div class="dropdown">
+					                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+					                style="background:<%
+				                	if(pass.getStatus() == null){
+				                		out.print("blue");
+				                	}else if(pass.getStatus().equals("accept")){
+				                		out.print("green");
+				                	}
+				                	else if(pass.getStatus().equals("reject")){
+				                		out.print("red");
+				                	}else{
+				                		
+				                	}
+				                %>;"
+					              >
+					                    <i class="fa-solid fa-bars" style="color: black;"></i>
+					                </button>
+					                <ul class="dropdown-menu">
+					                    <li><a href="#" class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=TouristDAO.getNameByTourist(pass.getToid())%>')">Send email</a></li>
+										<li><a href="#" class="dropdown-item acceptLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Accept</a></li>
+					                    <li><a href="#" class="dropdown-item rejectLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Reject</a></li>
+					                </ul>
+		           					 </div>
+					    		</td>
+					</tr>
+			   		<%} %>
+			    <tbody>
+			    </tbody>
+				</table>
+			</div>
+		</div>
+		
+		
+		
+		<div class="container-sm" style="margin-top: 40px;">
+			
+			<figure class="text-center" style="margin-bottom: 40px;">
+				  <blockquote class="blockquote">
 				    <p>It's Admin view tickets</p>
 				  </blockquote>
 				  <figcaption class="blockquote-footer">
@@ -539,7 +625,110 @@ $(document).ready(function() {
                 
     }
 });
-   
+
+
+$(document).ready(function() {
+    // Function to refresh the content of the specified element
+    window.refreshContentTwo = function() {
+        $('#contentToRefreshTwo').load(location.href + ' #contentToRefreshTwo', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlersTwo();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+    $('#refreshButton').on('click', function() {
+        window.refreshContentTwo();
+    });
+
+    // Initial binding of event handlers
+    bindEventHandlersTwo();
+
+    // Function to bind event handlers
+    function bindEventHandlersTwo() {
+        // Handle the click event on the "Accept" link
+        $(".acceptLinkPassword").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the acceptance
+            $.ajax({
+                type: "GET",
+                url: "touristResetPasswordAccept.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration accepted successfully");
+
+                    // Show the success message
+                    $("#registrationAcceptSuccessAlert").show().delay(3000).fadeOut();
+
+                    // Reload the content within the div with id "contentToRefresh" after acceptance
+                    window.refreshContentTwo();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error accepting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+        // Handle the click event on the "Reject" link
+        $(".rejectLinkPassword").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the rejection
+            $.ajax({
+                type: "GET",
+                url: "touristResetPasswordReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Registration rejected successfully");
+
+                    // Show the rejection success message
+                    $("#registrationRejectSuccessAlert").show().delay(3000).fadeOut();
+
+                    // Reload the content within the div with id "contentToRefresh" after rejection
+                    window.refreshContentTwo();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error rejecting Registration: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+
+       
+        
+    }
+});
+
+
+
+function sendEmail(email, password, Name) {
+
+    var subject = "Request to reset password for " + Name;
+    var body =
+               "Tourist place Name: " + Name + "\n" +
+               "Tourist Email: " + email + "\n" +
+               "Tourist Password: " + password;
+
+    // You can send this data to a server-side script using AJAX
+    // Here's an example using jQuery
+    const recipientEmail = email; // Use the entered email address as recipient
+    window.location.href = 'mailto:' + recipientEmail + '?subject=Forget%20Password%20for%20hotel&body=' + encodeURIComponent(body);
+     
+}
 
 </script>
 </body>
