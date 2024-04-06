@@ -305,25 +305,35 @@ String alert = (String) request.getParameter("message");
                         	
                     %>
     			<form action="uProject" method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  <div class="mb-3">
-				    
-				    <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="project" class="form-label">Project name</label>
-				    <input type="text" class="form-control" id="project" name="project" placeholder="Enter Project name">
-				  </div>
-				  <div class="mb-3">
-				    <label for="idea" class="form-label">Idea</label>
-				    <input type="text" class="form-control" id="idea" name="idea" placeholder="Enter what is the Idea">
-				  </div>
-				  <div class="mb-3">
-				    <label for="report" class="form-label">Upload Report(.pdf)</label>
-				    <input type="file" class="form-control" id="report" name="report">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+				    <div class="mb-3">
+				        <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
+				    </div>
+				    <div class="mb-3">
+				        <label for="project" class="form-label">Project name</label>
+				        <input type="text" class="form-control" id="project" name="project" placeholder="Enter Project name">
+				    </div>
+				    <div class="mb-3">
+				        <label for="idea" class="form-label">Idea</label>
+				        <input type="text" class="form-control" id="idea" name="idea" placeholder="Enter what is the Idea">
+				    </div>
+				    <div class="mb-3">
+				        <label for="committee" class="form-label">Select Committee</label>
+				        <select class="form-control" id="committee" name="committee">
+				            <option value="Finance Standing Committee">Finance Standing Committee</option>
+				            <option value="Development Standing Committee">Development Standing Committee</option>
+				            <option value="Welfare Standing Committee">Welfare Standing Committee</option>
+				            <option value="Health Standing Committee">Health Standing Committee</option>
+				            <option value="Public Works Standing Committee">Public Works Standing Committee</option>
+				            <option value="Education, Arts & Sports Standing Committee">Education, Arts & Sports Standing Committee</option>
+				        </select>
+				    </div>
+				    <div class="mb-3">
+				        <label for="report" class="form-label">Upload Report(.pdf)</label>
+				        <input type="file" class="form-control" id="report" name="report">
+				    </div>
+				    <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
+
     		</div>
     	</div>
     	
@@ -342,6 +352,7 @@ String alert = (String) request.getParameter("message");
 					      <th scope="col">Project</th>
 					      <th scope="col">Idea</th>
 					      <th scope="col">PDF</th>
+					     <th scope="col">Committee</th>
 					      <th scope="col">Status</th>
 					      
 					    </tr>
@@ -366,6 +377,7 @@ String alert = (String) request.getParameter("message");
 				        <td><%=pro.getProject() %></td>
 				        <td><%=pro.getIdea() %></td>
 				        <td><a href="userProjectPDF.jsp?tid=<%=pro.getTid()%>" class="">view</a></td>
+				        <td><%=pro.getCommittee() %></td>
 				        <td>
 				    	
 				        <%

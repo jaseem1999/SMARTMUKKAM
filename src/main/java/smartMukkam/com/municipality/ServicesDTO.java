@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
@@ -13,29 +16,47 @@ import smartMukkam.com.shop.ShopDTO;
 import smartMukkam.connection.Conn;
 
 public class ServicesDTO {
-	public static int appointmentSubmit(int uid, String officer, String reason) {
+	public static int appointmentSubmit(int uid, String officer, String reason, String date) {
 		int i = 0;
 		Conn con = new Conn();
 		Connection connection  = con.connection;
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
 		try {
-			String insertQuery = "INSERT INTO appointmets (uid, officer, reason) VALUES (?, ?, ?)";
-        	PreparedStatement statement = connection.prepareStatement(insertQuery);
-        	statement.setInt(1, uid);
-        	statement.setString(2, officer);
-        	statement.setString(3, reason);
-        	
-        	int rowsInserted = statement.executeUpdate();
-        	
-        	if(rowsInserted > 0) {
-        		i =1; 
+		    Date currentDate = new Date();  // Get current system date
+		    Date appointmentDate = sdf.parse(date);  // Parse the date parameter from the request
+		    
+		    // Compare the appointment date with the current date
+		    if (appointmentDate.before(currentDate)) {
+		    	i =0; 
         		return i;
-        	}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.println(e);
+		    } else {
+		    	try {
+					String insertQuery = "INSERT INTO appointmets (uid, officer, reason, date) VALUES (?, ?, ?, ?)";
+		        	PreparedStatement statement = connection.prepareStatement(insertQuery);
+		        	statement.setInt(1, uid);
+		        	statement.setString(2, officer);
+		        	statement.setString(3, reason);
+		        	statement.setString(4, date);
+		        	
+		        	int rowsInserted = statement.executeUpdate();
+		        	
+		        	if(rowsInserted > 0) {
+		        		i =1; 
+		        		return i;
+		        	}
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					System.out.println(e);
+				}
+		    }
+		} catch (ParseException e) {
+		    // Handle parsing exception
+		    e.printStackTrace();
 		}
+		
+		
 		
 		return i;
 	}
@@ -45,7 +66,7 @@ public class ServicesDTO {
 		Conn con = new Conn();
 		Connection connection = con.connection;
 		try {
-			String sql = "select tid,uid,officer,reason,status from appointmets;";
+			String sql = "select tid,uid,officer,reason,date,status from appointmets;";
 			PreparedStatement stm =connection.prepareStatement(sql);
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
@@ -54,7 +75,8 @@ public class ServicesDTO {
 				app.setUid(rs.getInt(2));
 				app.setOfficer(rs.getString(3));
 				app.setReason(rs.getString(4));
-				app.setStatus(rs.getString(5));
+				app.setDate(rs.getString(5));
+				app.setStatus(rs.getString(6));
 				li.add(app);
 			}
 		}catch (Exception e) {
@@ -135,7 +157,7 @@ public class ServicesDTO {
 			Conn con = new Conn();
 			Connection connection = con.connection;
 			try {
-				String sql = "select tid,uid,officer,reason,status from appointmets where uid="+uid+";";
+				String sql = "select tid,uid,officer,reason,date,status from appointmets where uid="+uid+";";
 				PreparedStatement stm =connection.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery();
 				while(rs.next()) {
@@ -144,7 +166,8 @@ public class ServicesDTO {
 					app.setUid(rs.getInt(2));
 					app.setOfficer(rs.getString(3));
 					app.setReason(rs.getString(4));
-					app.setStatus(rs.getString(5));
+					app.setDate(rs.getString(5));
+					app.setStatus(rs.getString(6));
 					li.add(app);
 				}
 			}catch (Exception e) {
@@ -160,7 +183,7 @@ public class ServicesDTO {
 			Conn con = new Conn();
 			Connection connection = con.connection;
 			try {
-				String sql = "select tid,uid,project,idea,status from projects;";
+				String sql = "select tid,uid,project,idea,committee,status from projects;";
 				PreparedStatement stm =connection.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery();
 				while(rs.next()) {
@@ -169,7 +192,8 @@ public class ServicesDTO {
 					prj.setUid(rs.getInt(2));
 					prj.setProject(rs.getString(3));
 					prj.setIdea(rs.getString(4));
-					prj.setStatus(rs.getString(5));
+					prj.setCommittee(rs.getString(5));
+					prj.setStatus(rs.getString(6));
 					li.add(prj);
 				}
 			} catch (Exception e) {
@@ -185,7 +209,7 @@ public class ServicesDTO {
 			Conn con = new Conn();
 			Connection connection = con.connection;
 			try {
-				String sql = "select tid,uid,project,idea,status from projects where uid="+uid+";";
+				String sql = "select tid,uid,project,idea,committee,status from projects where uid="+uid+";";
 				PreparedStatement stm =connection.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery();
 				while(rs.next()) {
@@ -194,7 +218,8 @@ public class ServicesDTO {
 					prj.setUid(rs.getInt(2));
 					prj.setProject(rs.getString(3));
 					prj.setIdea(rs.getString(4));
-					prj.setStatus(rs.getString(5));
+					prj.setCommittee(rs.getString(5));
+					prj.setStatus(rs.getString(6));
 					li.add(prj);
 				}
 			} catch (Exception e) {

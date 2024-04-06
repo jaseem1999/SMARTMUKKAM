@@ -304,21 +304,24 @@ String alert = (String) request.getParameter("message");
                         	
                         %>
     			<form action="appointmentServelet.jsp" method="get" style="margin: 30px;">
-				  <div class="mb-3">
-				    
-				    <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="officer" class="form-label">Officer Designation</label>
-				    <input type="text" class="form-control" id="officer" name="officer" placeholder="Enter officer designation">
-				  </div>
-				  <div class="mb-3">
-				    <label for="reason" class="form-label">Reason</label>
-				    <input type="text" class="form-control" id="reason" name="reason" placeholder="Enter what is the Reason">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+				    <div class="mb-3">
+				        <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
+				    </div>
+				    <div class="mb-3">
+				        <label for="officer" class="form-label">Officer Designation</label>
+				        <input type="text" class="form-control" id="officer" name="officer" placeholder="Enter officer designation">
+				    </div>
+				    <div class="mb-3">
+				        <label for="reason" class="form-label">Reason</label>
+				        <input type="text" class="form-control" id="reason" name="reason" placeholder="Enter what is the Reason">
+				    </div>
+				    <div class="mb-3">
+				        <label for="date" class="form-label">Date</label>
+				        <input type="date" class="form-control" id="date" name="date">
+				    </div>
+				    <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
+    			
     		</div>
     	</div>
     	<div class="homeFull" style="margin: 10px;">
@@ -335,6 +338,7 @@ String alert = (String) request.getParameter("message");
 					      <th scope="col">Phone</th>
 					      <th scope="col">Officer</th>
 					      <th scope="col">Reason</th>
+					      <th scope="col">Date</th>
 					      <th scope="col">Status</th>
 					      
 					    </tr>
@@ -357,7 +361,8 @@ String alert = (String) request.getParameter("message");
         <td><%=UserDAO.getUserPhone(appo.getUid()) %></td>
         <td><%=appo.getOfficer() %></td>
         <td><%=appo.getReason() %></td>
-        <td  >
+        <td><%=appo.getDate() %></td>
+        <td>
     	<div id="">
         <%
             if(appo.getStatus() == null){

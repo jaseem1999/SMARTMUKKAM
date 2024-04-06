@@ -201,6 +201,7 @@ if(email == null){
 					      <th scope="col">Phone</th>
 					      <th scope="col">Officer</th>
 					      <th scope="col">Reason</th>
+					      <th scope="col">Date</th>
 					      <th scope="col">Status</th>
 					      <th scope="col"></th>
 					    </tr>
@@ -223,6 +224,7 @@ if(email == null){
         <td><%=UserDAO.getUserPhone(appo.getUid()) %></td>
         <td><%=appo.getOfficer() %></td>
         <td><%=appo.getReason() %></td>
+        <td><%=appo.getDate() %></td>
         <td  >
     	<div id="">
         <%

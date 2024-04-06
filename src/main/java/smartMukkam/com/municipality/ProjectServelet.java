@@ -53,18 +53,20 @@ public class ProjectServelet extends HttpServlet {
             Integer uid = Integer.parseInt(request.getParameter("uid"));
             String project = request.getParameter("project");
             String idea = request.getParameter("idea");
+            String committee = request.getParameter("committee");
             
             // Get the PDF file
             Part part = request.getPart("report");
             InputStream pdfInputStream = part.getInputStream();
 
             // Insert data into the database
-            String insertQuery = "INSERT INTO projects (uid, project, idea, pdf, status) VALUES (?, ?, ?, ?, null)";
+            String insertQuery = "INSERT INTO projects (uid, project, idea, pdf, committee,status) VALUES (?, ?, ?, ?, ?, null)";
             preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setInt(1, uid);
             preparedStatement.setString(2, project);
             preparedStatement.setString(3, idea);
             preparedStatement.setBlob(4, pdfInputStream);
+            preparedStatement.setString(5, committee);
 
             int rowsAffected = preparedStatement.executeUpdate();
 

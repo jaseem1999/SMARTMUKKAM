@@ -178,7 +178,7 @@ if(email == null){
 			    	
     </div>
     <div class="col-sm-10">
-    	<div class="homeFull" style="margin: 50px;">
+    	<div class="homeFull" style="margin: 50px; overflow: auto;" >
     		<div class="home">
     			<span>Project submission</span>
     		</div>
@@ -199,6 +199,7 @@ if(email == null){
 			      <th scope="col">Project</th>
 			      <th scope="col">Idea</th>
 			      <th scope="col">PDP</th>
+			      <th scope="col">Committee</th>
 			      <th scope="col">Status</th>
 			      <th scope="col">-</th>
 			    </tr>
@@ -216,6 +217,7 @@ if(email == null){
 			      <td><%=pro.getProject() %></td>
 			      <td><%=pro.getIdea() %></td>
 			      <td><a href="sample.jsp?tid=<%=pro.getTid()%>" class=" badge-primary">view</a></td>
+			      <td><%=pro.getCommittee() %></td>
 			      <td>
 			      <%
 			      if(pro.getStatus() == null){

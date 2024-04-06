@@ -5,7 +5,16 @@ public class AppointmentDTO {
 	private int uid;
 	private String officer;
 	private String reason;
+	private String date;
 	private String status;
+	
+	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getTid() {
 		return tid;
 	}

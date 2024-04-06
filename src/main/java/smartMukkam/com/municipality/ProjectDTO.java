@@ -6,6 +6,14 @@ public class ProjectDTO {
 	private String project;
 	private String idea;
 	private String status;
+	private String committee;
+	
+	public String getCommittee() {
+		return committee;
+	}
+	public void setCommittee(String committee) {
+		this.committee = committee;
+	}
 	public int getTid() {
 		return tid;
 	}
