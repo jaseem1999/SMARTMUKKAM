@@ -234,7 +234,7 @@ if (email == null){
                     	<img src="images/png-transparent-government-of-india-logo-gold.png" style="margin: auto; width: 40px; height: 40px;" >
       					<img src="images/logo-en-LSGD.png" alt="Bootstrap" style="margin: auto; width: 200px;  height:40px; margin-left: 20px;" >
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
-                        <a href="#" class="nav-item nav-link">About</a>
+                        <a href="userMunicipalityHome.jsp" class="nav-item nav-link">About</a>
                        
                         
                       

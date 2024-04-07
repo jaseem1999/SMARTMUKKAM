@@ -235,7 +235,7 @@ String alert = (String) request.getParameter("message");
                     	<img src="images/png-transparent-government-of-india-logo-gold.png" style="margin: auto; width: 40px; height: 40px;" >
       					<img src="images/logo-en-LSGD.png" alt="Bootstrap" style="margin: auto; width: 200px;  height:40px; margin-left: 20px;" >
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
-                        <a href="#" class="nav-item nav-link">About</a>
+                        <a href="userMunicipalityHome.jsp" class="nav-item nav-link">About</a>
                        
                         
                       
@@ -313,6 +313,18 @@ String alert = (String) request.getParameter("message");
 				    <label for="complaint" class="form-label">complaint</label>
 				    <input type="text" class="form-control" id="complaint" name="complaint" placeholder="Enter what is the complaint">
 				  </div>
+				   <div class="mb-3">
+				        <label for="committee" class="form-label">Select Committee</label>
+				        <select class="form-control" id="committee" name="committee">
+				            <option value="Finance Standing Committee">Finance Standing Committee</option>
+				            <option value="Development Standing Committee">Development Standing Committee</option>
+				            <option value="Welfare Standing Committee">Welfare Standing Committee</option>
+				            <option value="Health Standing Committee">Health Standing Committee</option>
+				            <option value="Public Works Standing Committee">Public Works Standing Committee</option>
+				            <option value="Education, Arts & Sports Standing Committee">Education, Arts & Sports Standing Committee</option>
+				            <option value="Other">Other</option>
+				        </select>
+				    </div>
 				  <div class="mb-3">
 				    <label for="report" class="form-label">Upload Hard Copy(.pdf)</label>
 				    <input type="file" class="form-control" id="report" name="report">
@@ -330,12 +342,12 @@ String alert = (String) request.getParameter("message");
  					<thead>
 					    <tr>
 					      <th scope="col">User</th>
-					      <th scope="col">Name</th>
-					      <th scope="col">Email</th>
-					      <th scope="col">Phone</th>
+					      
 					      <th scope="col">Officer</th>
 					      <th scope="col">Complaint</th>
 					      <th scope="col">PDF</th>
+					      <th scope="col">Committee</th>
+					      <th scope="col">Date</th>
 					      <th scope="col">Status</th>
 					      
 					    </tr>
@@ -347,12 +359,11 @@ String alert = (String) request.getParameter("message");
 					    	%>
 					    	<tr>
 				       			<td><img alt="" style="width: 40px; border: 1px solid; border-radius: 50%" src="userPhoto?id=<%=com.getUid()%>"></td>
-				       			<td><%=UserDAO.getUserName(com.getUid())%></td>
-				        		<td><%=UserDAO.getUserEmail(com.getUid())%></td>
-				        		<td><%=UserDAO.getUserPhone(com.getUid()) %></td>
 				        		<td><%=com.getOfficer() %></td>
 				        		<td><%=com.getComplaint() %></td>
 				        		<td><a href="userComplaintyPDF.jsp?tid=<%=com.getTid()%>" class="">view</a></td>
+				        		<td><%=com.getCommittee() %></td>
+				        		<td><%=com.getDate() %></td>
 				        		<td>
 				        			<%
 							            if(com.getStatus() == null){

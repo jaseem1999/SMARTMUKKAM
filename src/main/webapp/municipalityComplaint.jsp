@@ -182,7 +182,7 @@ if(email == null){
 			    	
     </div>
     <div class="col-sm-10">
-    	<div class="homeFull" style="margin: 50px;">
+    	<div class="homeFull" style="margin: 50px; overflow: auto;">
     		<div class="home">
     			<span>Complaints portal</span>
     		</div>
@@ -202,7 +202,9 @@ if(email == null){
 			      <th scope="col">Phone</th>
 			      <th scope="col">officer</th>
 			      <th scope="col">Complaint</th>
+			      <th scope="col">Committee</th>
 			      <th scope="col">PDP</th>
+			      <th scope="col">Date</th>
 			      <th scope="col">Status</th>
 			      <th scope="col">-</th>
 			    </tr>
@@ -219,7 +221,9 @@ if(email == null){
 			      <td><%=UserDAO.getUserPhone(com.getUid()) %></td>
 			      <td><%=com.getOfficer() %></td>
 			      <td><%=com.getComplaint() %></td>
+			      <td><%=com.getCommittee() %></td>
 			      <td><a href="viewPDFComplaint.jsp?tid=<%=com.getTid()%>" class=" badge-primary">view</a></td>
+			      <td><%=com.getDate() %></td>
 			      <td>
 			      <%
 			      if(com.getStatus() == null){

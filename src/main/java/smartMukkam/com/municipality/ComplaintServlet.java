@@ -47,18 +47,20 @@ public class ComplaintServlet extends HttpServlet {
             Integer uid = Integer.parseInt(request.getParameter("uid"));
             String officer = request.getParameter("officer");
             String complaint = request.getParameter("complaint");
+            String committee = request.getParameter("committee");
 
             // Get the PDF file
             Part part = request.getPart("report");
             InputStream pdfInputStream = part.getInputStream();
 
             // Insert data into the database
-            String insertQuery = "INSERT INTO complaint (uid, officer, compint, pdf, status) VALUES (?, ?, ?, ?, null)";
+            String insertQuery = "INSERT INTO complaint (uid, officer, compint, pdf, committee ,status) VALUES (?, ?, ?, ?, ?, null)";
             preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setInt(1, uid);
             preparedStatement.setString(2, officer);
             preparedStatement.setString(3, complaint);
             preparedStatement.setBlob(4, pdfInputStream);
+            preparedStatement.setString(5, committee);
 
             int rowsAffected = preparedStatement.executeUpdate();
 

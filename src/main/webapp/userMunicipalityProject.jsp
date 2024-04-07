@@ -239,7 +239,7 @@ String alert = (String) request.getParameter("message");
                     	<img src="images/png-transparent-government-of-india-logo-gold.png" style="margin: auto; width: 40px; height: 40px;" >
       					<img src="images/logo-en-LSGD.png" alt="Bootstrap" style="margin: auto; width: 200px;  height:40px; margin-left: 20px;" >
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
-                        <a href="#" class="nav-item nav-link">About</a>
+                        <a href="userMunicipalityHome.jsp" class="nav-item nav-link">About</a>
                        
                         
                       
@@ -346,9 +346,7 @@ String alert = (String) request.getParameter("message");
  					<thead>
 					    <tr>
 					      <th scope="col">User</th>
-					      <th scope="col">Name</th>
-					      <th scope="col">Email</th>
-					      <th scope="col">Phone</th>
+					      
 					      <th scope="col">Project</th>
 					      <th scope="col">Idea</th>
 					      <th scope="col">PDF</th>
@@ -371,9 +369,7 @@ String alert = (String) request.getParameter("message");
 								%>
 				    <tr>
 				        <td><img alt="" style="width: 40px; border: 1px solid; border-radius: 50%" src="userPhoto?id=<%=pro.getUid()%>"></td>
-				        <td><%=UserDAO.getUserName(pro.getUid())%></td>
-				        <td><%=UserDAO.getUserEmail(pro.getUid())%></td>
-				        <td><%=UserDAO.getUserPhone(pro.getUid()) %></td>
+				        
 				        <td><%=pro.getProject() %></td>
 				        <td><%=pro.getIdea() %></td>
 				        <td><a href="userProjectPDF.jsp?tid=<%=pro.getTid()%>" class="">view</a></td>

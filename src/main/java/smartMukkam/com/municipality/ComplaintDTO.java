@@ -6,6 +6,22 @@ public class ComplaintDTO {
 	private String officer;
 	private String complaint;
 	private String status;
+	private String committee;
+	private String date;
+	
+	
+	public String getCommittee() {
+		return committee;
+	}
+	public void setCommittee(String committee) {
+		this.committee = committee;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public int getTid() {
 		return tid;
 	}

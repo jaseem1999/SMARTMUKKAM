@@ -278,7 +278,7 @@ public class ServicesDTO {
 			Conn con = new Conn();
 			Connection connection = con.connection;
 			try {
-				String sql = "select tid,uid,officer,compint,status from complaint;";
+				String sql = "select tid,uid,officer,compint,committee,booking_timestamp ,status from complaint;";
 				PreparedStatement stm =connection.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery();
 				while(rs.next()) {
@@ -287,7 +287,9 @@ public class ServicesDTO {
 					comp.setUid(rs.getInt(2));
 					comp.setOfficer(rs.getString(3));
 					comp.setComplaint(rs.getString(4));
-					comp.setStatus(rs.getString(5));
+					comp.setCommittee(rs.getString(5));
+					comp.setDate(rs.getString(6));
+					comp.setStatus(rs.getString(7));
 					li.add(comp);
 				}
 			} catch (Exception e) {
@@ -302,7 +304,7 @@ public class ServicesDTO {
 					Conn con = new Conn();
 					Connection connection = con.connection;
 					try {
-						String sql = "select tid,uid,officer,compint,status from complaint where uid="+uid+";";
+						String sql = "select tid,uid,officer,compint,committee,booking_timestamp, status from complaint where uid="+uid+";";
 						PreparedStatement stm =connection.prepareStatement(sql);
 						ResultSet rs = stm.executeQuery();
 						while(rs.next()) {
@@ -311,7 +313,9 @@ public class ServicesDTO {
 							comp.setUid(rs.getInt(2));
 							comp.setOfficer(rs.getString(3));
 							comp.setComplaint(rs.getString(4));
-							comp.setStatus(rs.getString(5));
+							comp.setCommittee(rs.getString(5));
+							comp.setDate(rs.getString(6));
+							comp.setStatus(rs.getString(7));
 							li.add(comp);
 						}
 					} catch (Exception e) {
