@@ -68,15 +68,16 @@ if (email == null){
             </div>
             
             <div class="container">
-            	<form action="userHotelReviewServlet.jsp" method="get">
-				<input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
-				<input type="hidden" value="<%=hoid %>" class="form-control" id="hoid" name="hoid" aria-describedby="commentHelp">
-			 	<div class="mb-3">
-			   	<label for="comment" class="form-label">Review</label>
-			    <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
-			    </div>
-			  <button type="submit" class="btn btn-primary">Review</button>
-			</form>
+            	<form action="userHotelReviewServlet.jsp" method="get" onsubmit="return validateForm()">
+				    <input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
+				    <input type="hidden" value="<%=hoid %>" class="form-control" id="hoid" name="hoid" aria-describedby="commentHelp">
+				    <div class="mb-3">
+				        <label for="comment" class="form-label">Review</label>
+				        <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
+				        <span id="commentError" style="color: red;"></span>
+				    </div>
+				    <button type="submit" class="btn btn-primary">Review</button>
+				</form>
 			
 			
 			
@@ -117,6 +118,20 @@ if (email == null){
 			
 			
             </div>
+            
+            
+       <script>
+	    function validateForm() {
+	        var comment = document.getElementById("comment").value.trim();
+	
+	        if (comment === "") {
+	            document.getElementById("commentError").innerText = "Please add a review.";
+	            return false; // Prevent form submission
+	        }
+	
+	        return true; // Allow form submission
+	    }
+		</script>
 
 </body>
 </html>

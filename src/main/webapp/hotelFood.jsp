@@ -186,39 +186,43 @@ String alert = (String) request.getParameter("message");
 	        }
 			%>
 	    		
-	    		<form action="adFood"  method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  <div class="mb-3">
-				    
-				    <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="food" class="form-label">Food name</label>
-				    <input type="text" class="form-control" id="food" name="food" placeholder="Enter food name">
-				  </div>
+	    		<form action="adFood" method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
 				    <div class="mb-3">
-				    <label for="no" class="form-label">Quandity</label>
-				    <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of quandity">
-				  </div>
-				  <div class="mb-3">
-				    <label for="description" class="form-label">Description</label>
-				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-				  </div>
-				  <div class="mb-3">
-				    <label for="price" class="form-label">Price</label>
-				    <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
-				  </div>
-				  <div class="mb-3">
-				    <label for="discount" class="form-label">Discount</label>
-				    <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload food image</label>
-				    <input type="file" class="form-control" id="image" name="image">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+				        <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
+				    </div>
+				    <div class="mb-3">
+				        <label for="food" class="form-label">Food name</label>
+				        <input type="text" class="form-control" id="food" name="food" placeholder="Enter food name">
+				        <span id="foodError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="no" class="form-label">Quantity</label>
+				        <input type="number" class="form-control" id="no" name="no" placeholder="Enter quantity">
+				        <span id="quantityError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="description" class="form-label">Description</label>
+				        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+				        <span id="descriptionError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="price" class="form-label">Price</label>
+				        <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
+				        <span id="priceError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="discount" class="form-label">Discount</label>
+				        <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
+				        <span id="discountError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="image" class="form-label">Upload food image</label>
+				        <input type="file" class="form-control" id="image" name="image">
+				        <span id="imageError" style="color: red;"></span>
+				    </div>
+				
+				    <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
-		
 	    	</div>
 	    	
 	    	<div class="modal fade" id="descriptionModal" tabindex="-1" aria-labelledby="descriptionModalLabel" aria-hidden="true">
@@ -676,6 +680,67 @@ $(document).ready(function() {
 
     }
 });
+
+function validateForm() {
+    var food = document.getElementById("food").value.trim();
+    var quantity = document.getElementById("no").value.trim();
+    var description = document.getElementById("description").value.trim();
+    var price = document.getElementById("price").value.trim();
+    var discount = document.getElementById("discount").value.trim();
+    var image = document.getElementById("image").value.trim();
+
+    var isValid = true;
+
+    if (food === "") {
+        document.getElementById("foodError").innerText = "Please enter food name.";
+        isValid = false;
+    } else {
+        document.getElementById("foodError").innerText = "";
+    }
+
+    if (quantity === "") {
+        document.getElementById("quantityError").innerText = "Please enter quantity.";
+        isValid = false;
+    } else {
+        document.getElementById("quantityError").innerText = "";
+    }
+
+    if (description === "") {
+        document.getElementById("descriptionError").innerText = "Please enter description.";
+        isValid = false;
+    } else {
+        document.getElementById("descriptionError").innerText = "";
+    }
+
+    if (price === "") {
+        document.getElementById("priceError").innerText = "Please enter price.";
+        isValid = false;
+    } else {
+        document.getElementById("priceError").innerText = "";
+    }
+
+    if (discount === "") {
+        document.getElementById("discountError").innerText = "Please enter discount.";
+        isValid = false;
+    } else {
+        document.getElementById("discountError").innerText = "";
+    }
+
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload a food image.";
+        isValid = false;
+    } else {
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        if (!allowedExtensions.exec(image)) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            isValid = false;
+        } else {
+            document.getElementById("imageError").innerText = "";
+        }
+    }
+
+    return isValid;
+}
 
 
 

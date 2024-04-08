@@ -179,19 +179,20 @@ String alert = (String) request.getParameter("message");
 				out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Ticket added Failed</div>");
 	        }
 			%>
-			<form action="tGallery" method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  
-				  <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid">
-				  <div class="mb-3">
-				    <label for="description" class="form-label">Description</label>
-				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload Image</label>
-				    <input type="file" class="form-control" id="image" name="image">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+			<form id="tGalleryForm" action="tGallery" method="post" enctype="multipart/form-data" style="margin: 30px;">
+			    <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid">
+			    <div class="mb-3">
+			        <label for="description" class="form-label">Description</label>
+			        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+			        <span id="descriptionError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="image" class="form-label">Upload Image</label>
+			        <input type="file" class="form-control" id="image" name="image">
+			        <span id="imageError" style="color: red;"></span>
+			    </div>
+			
+			    <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
 		</div>	
 		</div>
@@ -316,6 +317,39 @@ $(document).ready(function() {
     }
 });
 
+
+document.getElementById("tGalleryForm").addEventListener("submit", function(event) {
+    var description = document.getElementById("description").value.trim();
+    var image = document.getElementById("image").value.trim();
+
+    // Reset error messages
+    document.getElementById("descriptionError").innerText = "";
+    document.getElementById("imageError").innerText = "";
+
+    // Check if description is empty
+    if (description === "") {
+        document.getElementById("descriptionError").innerText = "Please enter a description.";
+        event.preventDefault();
+    }
+
+    // Check if the file input has a value
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload an image.";
+        event.preventDefault();
+    } else {
+        // Get the file extension
+        var fileExtension = image.split('.').pop().toLowerCase();
+
+        // Define allowed image file extensions
+        var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+
+        // Check if the file extension is in the allowed list
+        if (allowedExtensions.indexOf(fileExtension) === -1) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            event.preventDefault();
+        }
+    }
+});
 
 </script>
 

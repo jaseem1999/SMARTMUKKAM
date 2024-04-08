@@ -770,7 +770,7 @@ public class TouristDAO {
 			Connection connection = con.connection;
 			
 			try {
-				String sql = "SELECT tid, uid, toid, ticketId, review, comment, status " +"FROM reviewTouristTable " +"WHERE ticketId = " + ticketId + " ORDER BY tid DESC;";
+				String sql = "SELECT tid, uid, toid, ticketId, review, comment, status FROM reviewTouristTable WHERE ticketId = " + ticketId + " ORDER BY tid DESC;";
 
 		        PreparedStatement stm = connection.prepareStatement(sql);
 		        ResultSet rs = stm.executeQuery();

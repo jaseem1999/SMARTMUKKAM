@@ -193,16 +193,14 @@ String alert = (String) request.getParameter("message");
                         	
                         }
     		%>
-    		<form action="municipalityFeedbackServlet.jsp" method="post"  style="margin: 30px;">
-				  
-				  <div class="mb-3">
-				    <label for="feedback" class="form-label">Feedback</label>
-				    <input type="text" class="form-control" id="feedback" name="feedback" placeholder="Enter feedback">
-				  </div>
-				  
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+    		<form action="municipalityFeedbackServlet.jsp" method="post" onsubmit="return validateForm()" style="margin: 30px;">
+			    <div class="mb-3">
+			        <label for="feedback" class="form-label">Feedback</label>
+			        <input type="text" class="form-control" id="feedback" name="feedback" placeholder="Enter feedback">
+			    </div>
+			    <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
+
     	</div>
     
     </div>
@@ -233,6 +231,18 @@ String alert = (String) request.getParameter("message");
 	        }, 2000); // 2000 milliseconds = 2 seconds
 	    }
 	});
+
+   function validateForm() {
+	    var feedback = document.getElementById("feedback").value.trim();
+
+	    if (feedback === null || feedback === "") {
+	        alert("Please enter feedback.");
+	        return false;
+	    }
+
+	    return true;
+	}
+	
    </script>
 </body>
 </html>

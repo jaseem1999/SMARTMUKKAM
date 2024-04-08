@@ -184,20 +184,20 @@ String alert = (String) request.getParameter("message");
                         <div id="success"></div>
                         
 						    <form action="hotelFeedbackServlet.jsp" method="post" id="contactForm" novalidate="novalidate">
-						        <div class="control-group">
-						            <input type="hidden" class="form-control p-4" id="hoid" value="<%=hoid%>" name="hoid" placeholder="Subject"
-						                required="required" data-validation-required-message="Please enter a subject" />
-						            <p class="help-block text-danger"></p>
-						        </div>
-						        <div class="control-group">
-						            <textarea class="form-control py-3 px-4" rows="5" id="message" name="feedback" placeholder="Feedback"
-						                required="required" data-validation-required-message="Please enter your Feedback"></textarea>
-						            <p class="help-block text-danger"></p>
-						        </div>
-						        <div class="text-center">
-						            <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">Send feedback</button>
-						        </div>
-						    </form>
+							    <div class="control-group">
+							        <input type="hidden" class="form-control p-4" id="hoid" value="<%=hoid%>" name="hoid" placeholder="Subject"
+							            required="required" data-validation-required-message="Please enter a subject" />
+							        <p class="help-block text-danger" id="hoidError"></p>
+							    </div>
+							    <div class="control-group">
+							        <textarea class="form-control py-3 px-4" rows="5" id="message" name="feedback" placeholder="Feedback"
+							            required="required" data-validation-required-message="Please enter your Feedback"></textarea>
+							        <p class="help-block text-danger" id="messageError"></p>
+							    </div>
+							    <div class="text-center">
+							        <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton" onclick="return validateForm()">Send feedback</button>
+							    </div>
+							</form>
 				
                         
                     </div>
@@ -234,6 +234,27 @@ String alert = (String) request.getParameter("message");
 	    }
 	});
 
+    function validateForm() {
+        var hoid = document.getElementById("hoid").value.trim();
+        var message = document.getElementById("message").value.trim();
+        var isValid = true;
+
+        if (hoid === "") {
+            document.getElementById("hoidError").innerText = "Please enter a subject.";
+            isValid = false;
+        } else {
+            document.getElementById("hoidError").innerText = "";
+        }
+
+        if (message === "") {
+            document.getElementById("messageError").innerText = "Please enter your feedback.";
+            isValid = false;
+        } else {
+            document.getElementById("messageError").innerText = "";
+        }
+
+        return isValid;
+    }
     
     </script>
 </body>

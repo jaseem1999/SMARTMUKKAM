@@ -303,21 +303,45 @@ String alert = (String) request.getParameter("message");
                         }
                         	
                         %>
-    			<form action="appointmentServelet.jsp" method="get" style="margin: 30px;">
+    			<form action="appointmentServelet.jsp" method="get" style="margin: 30px;" onsubmit="return validateForm()">
 				    <div class="mb-3">
 				        <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
+				        <span id="uidError" style="color:red"></span>
 				    </div>
-				    <div class="mb-3">
-				        <label for="officer" class="form-label">Officer Designation</label>
-				        <input type="text" class="form-control" id="officer" name="officer" placeholder="Enter officer designation">
-				    </div>
+				    
+				     <div class="mb-3">
+					    <label for="officer" class="form-label">Officer Designation</label>
+					    <select class="form-control" id="officer" name="officer">
+					        <option value="">Select Committee</option>
+					        <option value="Chairman">Chairman (Elected)</option>
+					        <option value="Vice Chairperson">Vice Chairperson (Elected)</option>
+					        <option value="secretary">Secretary</option>
+					        <option value="Addl Chief Engineer">Addl Chief Engineer LSGD</option>
+					        <option value="Executive Engineer">Executive Engineerr LSGD</option>
+					        <option value="Asst Executive Engineer">Asst Exicutive Engineer LSGD</option>
+					        <option value="Asst Engineer">Asst Engineer LSGD</option>
+					        <option value="Superintendent">Superintendent</option>
+					        <option value="Revenue Inspector">Revenue Inspector</option>
+					        <option value="Health Inspector">Health Inspector</option>
+					        <option value="Public information officer">Public information officer(PIO state)</option>
+					        <option value="Finance Standing Committee Chairman">Finance Standing Committee Chairman (Elected)</option>
+					        <option value="Development Standing Committee Chairman">Development Standing Committee Chairman (Elected)</option>
+					        <option value="Welfare Standing Committee Chairman">Welfare Standing Committee Chairman (Elected)</option>
+					        <option value="Health Standing Committee Chairman">Health Standing Committee Chairman (Elected)</option>
+					        <option value="Public Works Standing Committee Chairman">Public Works Standing Committee Chairman (Elected)</option>
+					        <option value="Education, Arts & Sports Standing Committee Chairman">Education, Arts & Sports Standing Committee Chairman (Elected)</option>
+					    </select>
+					    <span id="officerError" style="color:red"></span>
+					</div>
 				    <div class="mb-3">
 				        <label for="reason" class="form-label">Reason</label>
 				        <input type="text" class="form-control" id="reason" name="reason" placeholder="Enter what is the Reason">
+				        <span id="reasonError" style="color:red"></span>
 				    </div>
 				    <div class="mb-3">
 				        <label for="date" class="form-label">Date</label>
 				        <input type="date" class="form-control" id="date" name="date">
+				        <span id="dateError" style="color:red"></span>
 				    </div>
 				    <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
@@ -417,6 +441,44 @@ String alert = (String) request.getParameter("message");
 	    }
 	});
 
+    function validateForm() {
+        var uid = document.getElementById("uid").value.trim();
+        var officer = document.getElementById("officer").value.trim();
+        var reason = document.getElementById("reason").value.trim();
+        var date = document.getElementById("date").value.trim();
+
+        var isValid = true;
+
+        if (uid === "") {
+            document.getElementById("uidError").innerText = "Please enter UID.";
+            isValid = false;
+        } else {
+            document.getElementById("uidError").innerText = "";
+        }
+
+        if (officer === "") {
+            document.getElementById("officerError").innerText = "Please enter officer designation.";
+            isValid = false;
+        } else {
+            document.getElementById("officerError").innerText = "";
+        }
+
+        if (reason === "") {
+            document.getElementById("reasonError").innerText = "Please enter reason.";
+            isValid = false;
+        } else {
+            document.getElementById("reasonError").innerText = "";
+        }
+
+        if (date === "") {
+            document.getElementById("dateError").innerText = "Please select date.";
+            isValid = false;
+        } else {
+            document.getElementById("dateError").innerText = "";
+        }
+
+        return isValid;
+    }
     
     </script>
 </body>

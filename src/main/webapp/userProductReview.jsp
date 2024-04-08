@@ -209,16 +209,17 @@ shopType = s.getShopType();
 		
 	</div>
 	<hr style="border-top: 2px solid ;">
-<form action="userProductReviewServlet.jsp" method="get">
-	<input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
-	<input type="hidden" value="<%=tid %>" class="form-control" id="sid" name="sid" aria-describedby="commentHelp">
-	<input type="hidden" value="<%=pid %>" class="form-control" id="pid" name="pid" aria-describedby="commentHelp">
- 	<div class="mb-3">
-   	<label for="comment" class="form-label">Review</label>
-    <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
+<form action="userProductReviewServlet.jsp" method="get" onsubmit="return validateForm()">
+    <input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
+    <input type="hidden" value="<%=tid %>" class="form-control" id="sid" name="sid" aria-describedby="commentHelp">
+    <input type="hidden" value="<%=pid %>" class="form-control" id="pid" name="pid" aria-describedby="commentHelp">
+    <div class="mb-3">
+        <label for="comment" class="form-label">Review</label>
+        <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
     </div>
-  <button type="submit" class="btn btn-primary">Review</button>
+    <button type="submit" class="btn btn-primary">Review</button>
 </form>
+
 	
 	<ul class="list-group" style="margin-top: 20px">
 	<%
@@ -263,5 +264,19 @@ shopType = s.getShopType();
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+function validateForm() {
+    var comment = document.getElementById("comment").value.trim();
+
+    if (comment === null || comment === "") {
+        alert("Please enter a review.");
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
 </body>
 </html>

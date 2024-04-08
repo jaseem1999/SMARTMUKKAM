@@ -226,15 +226,17 @@ String alert = (String) request.getParameter("message");
                         }
     		%>
     		
-    		<form action="gimShop" method="post" enctype="multipart/form-data" style="margin: 30px;">
+    		<form action="gimShop" method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
 				  <input type="hidden" value="<%=sid%>" class="form-control" id="sid" name="sid" aria-describedby="sid">
 				  <div class="mb-3">
 				    <label for="description" class="form-label">Description</label>
 				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+				    <span id="descriptionError" style="color: red;"></span>
 				  </div>
 				  <div class="mb-3">
 				    <label for="image" class="form-label">Upload Image</label>
 				    <input type="file" class="form-control" id="image" name="image">
+				    <span id="imageError" style="color: red;"></span>
 				  </div>
 		
 				  <button type="submit" class="btn btn-primary">Submit</button>
@@ -312,6 +314,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+function validateForm() {
+	
+    var description = document.getElementById("description").value.trim();
+    var image = document.getElementById("image").value.trim(); // Get the file name
+    var isValid = true;
+    if (description === "") {
+        document.getElementById("descriptionError").innerText = "Please enter description.";
+        isValid = false;
+    } else {
+        document.getElementById("descriptionError").innerText = "";
+    }
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload an image file.";
+        isValid = false;
+    } else {
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        if (!allowedExtensions.exec(image)) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            isValid = false;
+        } else {
+            document.getElementById("imageError").innerText = "";
+        }
+    }
+
+    return isValid;
+
+}
 
 </script>
 </body>

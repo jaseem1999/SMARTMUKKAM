@@ -304,32 +304,38 @@ String alert = (String) request.getParameter("message");
                         }
                         	
                     %>
-    			<form action="uProject" method="post" enctype="multipart/form-data" style="margin: 30px;">
+    			<form action="uProject" method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
 				    <div class="mb-3">
 				        <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
+				        <span id="uidError" style="color:red"></span>
 				    </div>
 				    <div class="mb-3">
 				        <label for="project" class="form-label">Project name</label>
 				        <input type="text" class="form-control" id="project" name="project" placeholder="Enter Project name">
+				        <span id="projectError" style="color:red"></span>
 				    </div>
 				    <div class="mb-3">
 				        <label for="idea" class="form-label">Idea</label>
 				        <input type="text" class="form-control" id="idea" name="idea" placeholder="Enter what is the Idea">
+				        <span id="ideaError" style="color:red"></span>
 				    </div>
 				    <div class="mb-3">
-				        <label for="committee" class="form-label">Select Committee</label>
-				        <select class="form-control" id="committee" name="committee">
-				            <option value="Finance Standing Committee">Finance Standing Committee</option>
-				            <option value="Development Standing Committee">Development Standing Committee</option>
-				            <option value="Welfare Standing Committee">Welfare Standing Committee</option>
-				            <option value="Health Standing Committee">Health Standing Committee</option>
-				            <option value="Public Works Standing Committee">Public Works Standing Committee</option>
-				            <option value="Education, Arts & Sports Standing Committee">Education, Arts & Sports Standing Committee</option>
-				        </select>
-				    </div>
+					    <label for="committee" class="form-label">Select Committee</label>
+					    <select class="form-control" id="committee" name="committee">
+					        <option value="">Select Committee</option>
+					        <option value="Finance Standing Committee">Finance Standing Committee</option>
+					        <option value="Development Standing Committee">Development Standing Committee</option>
+					        <option value="Welfare Standing Committee">Welfare Standing Committee</option>
+					        <option value="Health Standing Committee">Health Standing Committee</option>
+					        <option value="Public Works Standing Committee">Public Works Standing Committee</option>
+					        <option value="Education, Arts & Sports Standing Committee">Education, Arts & Sports Standing Committee</option>
+					    </select>
+					    <span id="committeeError" style="color:red"></span>
+					</div>
 				    <div class="mb-3">
 				        <label for="report" class="form-label">Upload Report(.pdf)</label>
 				        <input type="file" class="form-control" id="report" name="report">
+				        <span id="fileError" style="color:red"></span>
 				    </div>
 				    <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
@@ -426,6 +432,62 @@ String alert = (String) request.getParameter("message");
 	        }, 2000); // 2000 milliseconds = 2 seconds
 	    }
 	});
+
+
+    function validateForm() {
+        var uid = document.getElementById("uid").value.trim();
+        var project = document.getElementById("project").value.trim();
+        var idea = document.getElementById("idea").value.trim();
+        var committee = document.getElementById("committee").value.trim();
+        var report = document.getElementById("report").value.trim();
+
+        var isValid = true;
+
+        if (uid === "") {
+            document.getElementById("uidError").innerText = "Please enter UID.";
+            isValid = false;
+        } else {
+            document.getElementById("uidError").innerText = "";
+        }
+
+        if (project === "") {
+            document.getElementById("projectError").innerText = "Please enter project name.";
+            isValid = false;
+        } else {
+            document.getElementById("projectError").innerText = "";
+        }
+
+        if (idea === "") {
+            document.getElementById("ideaError").innerText = "Please enter idea.";
+            isValid = false;
+        } else {
+            document.getElementById("ideaError").innerText = "";
+        }
+
+        if (committee === "") {
+            document.getElementById("committeeError").innerText = "Please select a committee.";
+            isValid = false;
+        } else {
+            document.getElementById("committeeError").innerText = "";
+        }
+
+        // Check if a file is uploaded and its extension is PDF
+        if (report === "") {
+            document.getElementById("fileError").innerText = "Please upload a PDF file.";
+            isValid = false;
+        } else {
+            var allowedExtensions = /(\.pdf)$/i;
+            if (!allowedExtensions.exec(report)) {
+                document.getElementById("fileError").innerText = "Uploaded file must be a PDF.";
+                isValid = false;
+            } else {
+                document.getElementById("fileError").innerText = "";
+            }
+        }
+
+        return isValid;
+    }
+
 
     
     </script>

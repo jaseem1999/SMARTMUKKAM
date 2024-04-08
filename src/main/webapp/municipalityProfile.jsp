@@ -123,29 +123,30 @@ String alert = (String) request.getParameter("message");
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        	<form action="mprofile"  method="post" enctype="multipart/form-data">
-			  <div class="mb-3">
-			    <label for="history" class="form-label">Enter History</label>
-			    <textarea class="form-control"  id="history" name="history" rows="4" cols="60"></textarea>
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="secretary" class="form-label">Enter Secretary name</label>
-			    <input type="text" class="form-control"  id="secretary" name="secretary" >
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="president" class="form-label">Enter Chairman name</label>
-			    <input type="text" class="form-control" " id="president" name="president">
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="image" class="form-label">Upload image</label>
-			    <input type="file" class="form-control" id="image" name="image" aria-describedby="emailHelp">
-			  </div>
-			  
-			  <button type="submit" class="btn btn-primary">Submit</button>
+        	<form action="mprofile"  method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+			    <div class="mb-3">
+			        <label for="history" class="form-label">Enter History</label>
+			        <textarea class="form-control"  id="history" name="history" rows="4" cols="60"></textarea>
+			        <span id="historyError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="secretary" class="form-label">Enter Secretary name</label>
+			        <input type="text" class="form-control"  id="secretary" name="secretary" >
+			        <span id="secretaryError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="president" class="form-label">Enter Chairman name</label>
+			        <input type="text" class="form-control" id="president" name="president">
+			        <span id="presidentError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="image" class="form-label">Upload image</label>
+			        <input type="file" class="form-control" id="image" name="image" aria-describedby="emailHelp">
+			        <span id="fileError" style="color: red;"></span>
+			    </div>
+			    <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -164,14 +165,14 @@ String alert = (String) request.getParameter("message");
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        	<form action="gprofile"  method="post" enctype="multipart/form-data">
-        	
-        	  <div class="mb-3">
-				    <label for="ward" class="form-label">Ward</label>
-				    <select class="form-select" id="ward" name="ward">
-				        <option value="NADUKIL" selected>Ward 1</option>
-				        <option value="THECHYAD">Ward 2</option>
-				        <option value="KALLURUTTY SOUTH">Ward 3</option>
+        	<form action="gprofile"  method="post" enctype="multipart/form-data" onsubmit="return validateFormTwo()">
+			    <div class="mb-3">
+			        <label for="ward" class="form-label">Ward</label>
+			        <select class="form-select" id="ward" name="ward">
+			            <option value="" disabled selected>Select Ward</option>
+			            <option value="NADUKIL">Ward 1</option>
+			            <option value="THECHYAD">Ward 2</option>
+			             <option value="KALLURUTTY SOUTH">Ward 3</option>
 				        <option value="KALLURUTTY NORTH">Ward 4</option>
 				        <option value="THOTTATHIN KADAVU">Ward 5</option>
 				        <option value="NELLIKAPOYIL">Ward 6</option>
@@ -202,37 +203,37 @@ String alert = (String) request.getParameter("message");
 				        <option value="MUNDUPARA">Ward 31</option>
 				        <option value="POOLAPOYIL">Ward 32</option>
 				        <option value="KATHIYODE">Ward 33</option>
-				    </select>
-				</div>
-        	  
-			  
-			  <div class="mb-3">
-			    <label for="name" class="form-label">Enter name</label>
-			    <input type="text" class="form-control"  id="name" name="name" >
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="position" class="form-label">Enter position</label>
-			    <input type="text" class="form-control" " id="position" name="position">
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="party" class="form-label">Enter party</label>
-			    <input type="text" class="form-control" " id="party" name="party">
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="message" class="form-label">Enter Message</label>
-			    <textarea class="form-control"  id="message" name="message" rows="4" cols="60"></textarea>
-	
-			  </div>
-			  <div class="mb-3">
-			    <label for="image" class="form-label">Upload profile</label>
-			    <input type="file" class="form-control" id="image" name="image" aria-describedby="emailHelp">
-			  </div>
-			  
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			        </select>
+			        <span id="wardError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="name" class="form-label">Enter name</label>
+			        <input type="text" class="form-control"  id="name" name="name" >
+			        <span id="nameError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="position" class="form-label">Enter position</label>
+			        <input type="text" class="form-control" id="position" name="position">
+			        <span id="positionError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="party" class="form-label">Enter party</label>
+			        <input type="text" class="form-control" id="party" name="party">
+			        <span id="partyError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="message" class="form-label">Enter Message</label>
+			        <textarea class="form-control"  id="message" name="message" rows="4" cols="60"></textarea>
+			        <span id="messageError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="image" class="form-label">Upload profile</label>
+			        <input type="file" class="form-control" id="images" name="image" aria-describedby="emailHelp">
+			        <span id="imageError" style="color: red;"></span>
+			    </div>
+			    <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
+        	
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -433,6 +434,113 @@ String alert = (String) request.getParameter("message");
 	    }
 	});
 
+    function validateForm() {
+        var history = document.getElementById("history").value.trim();
+        var secretary = document.getElementById("secretary").value.trim();
+        var president = document.getElementById("president").value.trim();
+        var image = document.getElementById("image").value.trim();
+
+        var isValid = true;
+
+        if (history === "") {
+            document.getElementById("historyError").innerText = "Please enter history.";
+            isValid = false;
+        } else {
+            document.getElementById("historyError").innerText = "";
+        }
+
+        if (secretary === "") {
+            document.getElementById("secretaryError").innerText = "Please enter Secretary name.";
+            isValid = false;
+        } else {
+            document.getElementById("secretaryError").innerText = "";
+        }
+
+        if (president === "") {
+            document.getElementById("presidentError").innerText = "Please enter Chairman name.";
+            isValid = false;
+        } else {
+            document.getElementById("presidentError").innerText = "";
+        }
+
+        if (image === "") {
+            document.getElementById("fileError").innerText = "Please upload an image file.";
+            isValid = false;
+        } else {
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (!allowedExtensions.exec(image)) {
+                document.getElementById("fileError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+                isValid = false;
+            } else {
+                document.getElementById("fileError").innerText = "";
+            }
+        }
+
+        return isValid;
+    }
+
+    function validateFormTwo() {
+        var ward = document.getElementById("ward").value.trim();
+        var name = document.getElementById("name").value.trim();
+        var position = document.getElementById("position").value.trim();
+        var party = document.getElementById("party").value.trim();
+        var message = document.getElementById("message").value.trim();
+        var images = document.getElementById("images").value.trim();
+
+        var isValid = true;
+
+        if (ward === "") {
+            document.getElementById("wardError").innerText = "Please select a ward.";
+            isValid = false;
+        } else {
+            document.getElementById("wardError").innerText = "";
+        }
+
+        if (name === "") {
+            document.getElementById("nameError").innerText = "Please enter name.";
+            isValid = false;
+        } else {
+            document.getElementById("nameError").innerText = "";
+        }
+
+        if (position === "") {
+            document.getElementById("positionError").innerText = "Please enter position.";
+            isValid = false;
+        } else {
+            document.getElementById("positionError").innerText = "";
+        }
+
+        if (party === "") {
+            document.getElementById("partyError").innerText = "Please enter party.";
+            isValid = false;
+        } else {
+            document.getElementById("partyError").innerText = "";
+        }
+
+        if (message === "") {
+            document.getElementById("messageError").innerText = "Please enter message.";
+            isValid = false;
+        } else {
+            document.getElementById("messageError").innerText = "";
+        }
+
+        if (!images) {
+            document.getElementById("imageError").innerText = "Please upload an image file.";
+            isValid = false;
+        } else {
+            var allowedExtensions = `/(\.jpg|\.jpeg|\.png|\.gif)$/i`;
+            if (!allowedExtensions.exec(images.name)) {
+                document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+                isValid = false;
+            } else {
+                document.getElementById("imageError").innerText = "";
+                isValid = true;
+            }
+        }
+
+        return isValid;
+    }
+       
     
     </script>
 </body>

@@ -534,21 +534,19 @@ String alert = (String) request.getParameter("message");
                     <div class="contact-form bg-white" style="padding: 30px;">
                         <div id="success"></div>
                         <% if (email != null) { %>
-						    <form action="userFeedback.jsp" method="post" id="contactForm" novalidate="novalidate">
-						        <div class="control-group">
-						            <input type="hidden" class="form-control p-4" id="uid" value="<%=uid%>" name="uid" placeholder="Subject"
-						                required="required" data-validation-required-message="Please enter a subject" />
-						            <p class="help-block text-danger"></p>
-						        </div>
-						        <div class="control-group">
-						            <textarea class="form-control py-3 px-4" rows="5" id="message" name="feedback" placeholder="Feedback"
-						                required="required" data-validation-required-message="Please enter your Feedback"></textarea>
-						            <p class="help-block text-danger"></p>
-						        </div>
-						        <div class="text-center">
-						            <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">Send Message</button>
-						        </div>
-						    </form>
+						<form action="userFeedback.jsp" method="post" id="contactForm" onsubmit="return validateForm()" novalidate="novalidate">
+						    <div class="control-group">
+						        <input type="hidden" class="form-control p-4" id="uid" value="<%=uid%>" name="uid" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject" />
+						        <p class="help-block text-danger"></p>
+						    </div>
+						    <div class="control-group">
+						        <textarea class="form-control py-3 px-4" rows="5" id="message" name="feedback" placeholder="Feedback" required="required" data-validation-required-message="Please enter your Feedback"></textarea>
+						        <p class="help-block text-danger"></p>
+						    </div>
+						    <div class="text-center">
+						        <button class="btn btn-primary py-3 px-4" type="submit" id="sendMessageButton">Send Message</button>
+						    </div>
+						</form>
 					<% } %>
                         
                     </div>
@@ -582,6 +580,19 @@ String alert = (String) request.getParameter("message");
 	        }, 2000); // 2000 milliseconds = 2 seconds
 	    }
 	});
+
+
+    function validateForm() {
+        var uid = document.getElementById("uid").value.trim();
+        var feedback = document.getElementById("message").value.trim();
+
+        if (uid === "" || feedback === "") {
+            alert("Please fill out all the fields.");
+            return false;
+        }
+
+        return true;
+    }
 
     
     </script>

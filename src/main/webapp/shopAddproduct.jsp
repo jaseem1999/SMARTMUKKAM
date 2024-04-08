@@ -222,30 +222,36 @@ String alert = (String) request.getParameter("message");
 						
                         	
                         %>
-    		<form action="pAdd"  method="post" enctype="multipart/form-data" style="margin: 30px;">
+    		<form action="pAdd"  method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
 				  <div class="mb-3">
 				    
 				    <input type="hidden" value="<%=sid%>" class="form-control" id="sid" name="sid" aria-describedby="sid">
+				    <span id="uidError" style="color: red;"></span>
 				   </div>
 				  <div class="mb-3">
 				    <label for="product" class="form-label">Product</label>
 				    <input type="text" class="form-control" id="product" name="product" placeholder="Enter product">
+				    <span id="productError" style="color: red;"></span>
 				  </div>
 				  <div class="mb-3">
 				    <label for="description" class="form-label">Description</label>
 				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+				    <span id="descriptionError" style="color: red;"></span>
 				  </div>
 				  <div class="mb-3">
 				    <label for="price" class="form-label">Price</label>
 				    <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
+				    <span id="priceError" style="color: red;"></span>
 				  </div>
 				  <div class="mb-3">
 				    <label for="discount" class="form-label">Discount</label>
 				    <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
+				    <span id="discountError" style="color: red;"></span>
 				  </div>
 				  <div class="mb-3">
 				    <label for="image" class="form-label">Upload product image</label>
 				    <input type="file" class="form-control" id="image" name="image">
+				    <span id="imageError" style="color: red;"></span>
 				  </div>
 		
 				  <button type="submit" class="btn btn-primary">Submit</button>
@@ -439,6 +445,63 @@ $(document).ready(function() {
     });
 
 
+function validateForm() {
+    var product = document.getElementById("product").value.trim();
+    var description = document.getElementById("description").value.trim();
+    var price = document.getElementById("price").value.trim();
+    var discount = document.getElementById("discount").value.trim();
+    var image = document.getElementById("image").value.trim(); // Get the file name
+
+    var isValid = true;
+
+    // Validate product
+    if (product === "") {
+        document.getElementById("productError").innerText = "Please enter product.";
+        isValid = false;
+    } else {
+        document.getElementById("productError").innerText = "";
+    }
+
+    // Validate description
+    if (description === "") {
+        document.getElementById("descriptionError").innerText = "Please enter description.";
+        isValid = false;
+    } else {
+        document.getElementById("descriptionError").innerText = "";
+    }
+
+    // Validate price
+    if (price === "") {
+        document.getElementById("priceError").innerText = "Please enter price.";
+        isValid = false;
+    } else {
+        document.getElementById("priceError").innerText = "";
+    }
+
+    // Validate discount
+    if (discount === "") {
+        document.getElementById("discountError").innerText = "Please enter discount.";
+        isValid = false;
+    } else {
+        document.getElementById("discountError").innerText = "";
+    }
+
+    // Validate image
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload an image file.";
+        isValid = false;
+    } else {
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        if (!allowedExtensions.exec(image)) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            isValid = false;
+        } else {
+            document.getElementById("imageError").innerText = "";
+        }
+    }
+
+    return isValid;
+}
     
     </script>
 

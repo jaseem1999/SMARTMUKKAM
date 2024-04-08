@@ -174,28 +174,32 @@ String alert = (String) request.getParameter("message");
 			out.print("<div id='alert' class='alert alert-danger' style='color:red;' role='alert'>Ticket added Failed</div>");
         }
 		%>
-		<form action="toTick"  method="post" enctype="multipart/form-data" style="margin: 10px;">
-				  <div class="mb-3">
-				    <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid" aria-describedby="uid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="ticket" class="form-label">Ticket name</label>
-				    <input type="text" class="form-control" id="ticket" name="ticket" placeholder="Enter ticket name" required="required">
-				  </div>
-				  <div class="mb-3">
-				    <label for="no" class="form-label">Number of ticket available</label>
-				    <input type="text" class="form-control" id="no" name="no" placeholder="Enter number of tickets slots" required="required">
-				  </div>
-				  <div class="mb-3">
-				    <label for="price" class="form-label">Price</label>
-				    <input type="number" style="color: black;" class="form-control" id="price" name="price" placeholder="Enter price" required="required">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload Image</label>
-				    <input type="file" class="form-control" id="image" name="image" required="required">
-				  </div>
+		<form action="toTick" method="post" enctype="multipart/form-data" style="margin: 10px;" id="toTickForm" novalidate>
+		    <div class="mb-3">
+		        <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid" aria-describedby="uid">
+		    </div>
+		    <div class="mb-3">
+		        <label for="ticket" class="form-label">Ticket name</label>
+		        <input type="text" class="form-control" id="ticket" name="ticket" placeholder="Enter ticket name" required>
+		        <p class="text-danger" id="ticketError"></p>
+		    </div>
+		    <div class="mb-3">
+		        <label for="no" class="form-label">Number of ticket available</label>
+		        <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of tickets slots" required>
+		        <p class="text-danger" id="noError"></p>
+		    </div>
+		    <div class="mb-3">
+		        <label for="price" class="form-label">Price</label>
+		        <input type="number" style="color: black;" class="form-control" id="price" name="price" placeholder="Enter price" required>
+		        <p class="text-danger" id="priceError"></p>
+		    </div>
+		    <div class="mb-3">
+		        <label for="image" class="form-label">Upload Image</label>
+		        <input type="file" class="form-control" id="image" name="image" required>
+		        <p class="text-danger" id="imageError"></p>
+		    </div>
 		
-				  <button type="submit" class="btn btn-primary">Submit</button>	
+		    <button type="submit" class="btn btn-primary">Submit</button>    
 		</form>
 		</div>
 		
@@ -516,6 +520,53 @@ $(document).ready(function() {
     }
 });
 
+document.getElementById("toTickForm").addEventListener("submit", function(event) {
+    var ticket = document.getElementById("ticket").value.trim();
+    var no = document.getElementById("no").value.trim();
+    var price = document.getElementById("price").value.trim();
+    var image = document.getElementById("image").value.trim();
+
+    if (ticket === "") {
+        document.getElementById("ticketError").innerText = "Please enter the ticket name.";
+        event.preventDefault();
+    } else {
+        document.getElementById("ticketError").innerText = "";
+    }
+
+    if (no === "") {
+        document.getElementById("noError").innerText = "Please enter the number of tickets available.";
+        event.preventDefault();
+    } else {
+        document.getElementById("noError").innerText = "";
+    }
+
+    if (price === "") {
+        document.getElementById("priceError").innerText = "Please enter the price.";
+        event.preventDefault();
+    } else {
+        document.getElementById("priceError").innerText = "";
+    }
+
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload an image.";
+        event.preventDefault();
+    } else {
+        // Get the file extension
+        var fileExtension = image.split('.').pop().toLowerCase();
+
+        // Define allowed image file extensions
+        var allowedExtensions = ["jpg", "jpeg", "png", "gif"];
+
+        // Check if the file extension is in the allowed list
+        if (allowedExtensions.indexOf(fileExtension) === -1) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            event.preventDefault();
+        } else {
+            document.getElementById("imageError").innerText = "";
+        }
+    }
+
+});
 
 
 </script>

@@ -188,37 +188,42 @@ String alert = (String) request.getParameter("message");
 	        }
 			%>
 	    		
-	    		<form action="adRoom"  method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  <div class="mb-3">
-				    
-				    <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="room" class="form-label">Room</label>
-				    <input type="text" class="form-control" id="room" name="room" placeholder="Enter room name">
-				  </div>
+	    		<form action="adRoom" method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
 				    <div class="mb-3">
-				    <label for="no" class="form-label">No. rooms</label>
-				    <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of rooms">
-				  </div>
-				  <div class="mb-3">
-				    <label for="description" class="form-label">Description</label>
-				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-				  </div>
-				  <div class="mb-3">
-				    <label for="price" class="form-label">Price</label>
-				    <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
-				  </div>
-				  <div class="mb-3">
-				    <label for="discount" class="form-label">Discount</label>
-				    <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload room image</label>
-				    <input type="file" class="form-control" id="image" name="image">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+				        <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
+				    </div>
+				    <div class="mb-3">
+				        <label for="room" class="form-label">Room</label>
+				        <input type="text" class="form-control" id="room" name="room" placeholder="Enter room name">
+				        <span id="roomError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="no" class="form-label">No. rooms</label>
+				        <input type="number" class="form-control" id="no" name="no" placeholder="Enter number of rooms">
+				        <span id="noError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="description" class="form-label">Description</label>
+				        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+				        <span id="descriptionError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="price" class="form-label">Price</label>
+				        <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
+				        <span id="priceError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="discount" class="form-label">Discount</label>
+				        <input type="text" class="form-control" id="discount" name="discount" placeholder="Enter discount">
+				        <span id="discountError" style="color: red;"></span>
+				    </div>
+				    <div class="mb-3">
+				        <label for="image" class="form-label">Upload room image</label>
+				        <input type="file" class="form-control" id="image" name="image">
+				        <span id="imageError" style="color: red;"></span>
+				    </div>
+				
+				    <button type="submit" class="btn btn-primary">Submit</button>
 				</form>
 		
 	    	</div>
@@ -605,6 +610,68 @@ $(document).ready(function() {
 
     }
 });
+
+
+function validateForm() {
+    var room = document.getElementById("room").value.trim();
+    var no = document.getElementById("no").value.trim();
+    var description = document.getElementById("description").value.trim();
+    var price = document.getElementById("price").value.trim();
+    var discount = document.getElementById("discount").value.trim();
+    var image = document.getElementById("image").value.trim();
+
+    var isValid = true;
+
+    if (room === "") {
+        document.getElementById("roomError").innerText = "Please enter room name.";
+        isValid = false;
+    } else {
+        document.getElementById("roomError").innerText = "";
+    }
+
+    if (no === "") {
+        document.getElementById("noError").innerText = "Please enter number of rooms.";
+        isValid = false;
+    } else {
+        document.getElementById("noError").innerText = "";
+    }
+
+    if (description === "") {
+        document.getElementById("descriptionError").innerText = "Please enter description.";
+        isValid = false;
+    } else {
+        document.getElementById("descriptionError").innerText = "";
+    }
+
+    if (price === "") {
+        document.getElementById("priceError").innerText = "Please enter price.";
+        isValid = false;
+    } else {
+        document.getElementById("priceError").innerText = "";
+    }
+
+    if (discount === "") {
+        document.getElementById("discountError").innerText = "Please enter discount.";
+        isValid = false;
+    } else {
+        document.getElementById("discountError").innerText = "";
+    }
+
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload a room image.";
+        isValid = false;
+    } else {
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        if (!allowedExtensions.exec(image)) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            isValid = false;
+        } else {
+            document.getElementById("imageError").innerText = "";
+        }
+    }
+
+    return isValid;
+}
 
 
 

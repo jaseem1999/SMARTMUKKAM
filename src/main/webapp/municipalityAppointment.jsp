@@ -176,7 +176,7 @@ if(email == null){
 			    	
     </div>
     <div class="col-sm-10">
-    	<div class="homeFull" style="margin: 50px;">
+    	<div class="homeFull" style="margin: 50px; overflow: auto;">
     		<div class="home" style="height: 50px;">
     			<span>Appointments</span>
     			<button type="button" class="btn btn-primary" style="margin: 7px;" id="refreshButton">Refresh</button>

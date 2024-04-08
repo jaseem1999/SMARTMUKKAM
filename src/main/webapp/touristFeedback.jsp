@@ -171,17 +171,16 @@ String alert = (String) request.getParameter("message");
 		out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Feedback send failed</div>");
 	}
 	%>
-	<form action="touristFeedbackServlet.jsp" method="post" style="margin: 30px;">
-				  
-				  <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid">
-				  <div class="mb-3">
-				    <label for="feedback" class="form-label">Feedback</label>
-				    <input type="text" class="form-control" id="feedback" name="feedback" placeholder="Enter feedback">
-				  </div>
-				  
-		
-				  <button type="submit" class="btn btn-primary">Feedback</button>
-			</form>
+	<form id="touristFeedbackForm" action="touristFeedbackServlet.jsp" method="post" style="margin: 30px;">
+	    <input type="hidden" value="<%=toId%>" class="form-control" id="toid" name="toid">
+	    <div class="mb-3">
+	        <label for="feedback" class="form-label">Feedback</label>
+	        <input type="text" class="form-control" id="feedback" name="feedback" placeholder="Enter feedback">
+	        <span id="feedbackError" style="color: red;"></span>
+	    </div>
+	
+	    <button type="submit" class="btn btn-primary">Feedback</button>
+	</form>
 
 
 
@@ -211,6 +210,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000); // 2000 milliseconds = 2 seconds
     }
 });
+
+document.getElementById("touristFeedbackForm").addEventListener("submit", function(event) {
+    var feedback = document.getElementById("feedback").value.trim();
+
+    // Reset error message
+    document.getElementById("feedbackError").innerText = "";
+
+    // Check if feedback is empty
+    if (feedback === "") {
+        document.getElementById("feedbackError").innerText = "Please enter feedback.";
+        event.preventDefault(); // Prevent form submission
+    }
+});
+
 </script>
 </div>
 </div>

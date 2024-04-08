@@ -17,13 +17,14 @@ String email = (String) session.getAttribute("email");
 String country = (String) session.getAttribute("country");
 Long number =(Long) session.getAttribute("phone");
 
-if (email == null){
-	response.sendRedirect("index.jsp?message=login");
-}
+
 
 Integer toid = Integer.parseInt(request.getParameter("toid"));
 Integer ticketId = Integer.parseInt(request.getParameter("ticketId"));
 String alert = (String) request.getParameter("message");
+if (email == null && ticketId==0){
+	response.sendRedirect("index.jsp?message=login");
+}
 %>
 
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -212,15 +213,16 @@ String alert = (String) request.getParameter("message");
 					<% } %>
 			</div>
 			<div class="container" style="margin-top: 30px;">
-			<form action="userTouristReviewServlet.jsp" method="get">
-				<input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
-				<input type="hidden" value="<%=toid %>" class="form-control" id="sid" name="toid" aria-describedby="commentHelp">
-				<input type="hidden" value="<%=ticketId %>" class="form-control" id="pid" name="ticketId" aria-describedby="commentHelp">
-			 	<div class="mb-3">
-			   	<label for="comment" class="form-label">Review</label>
-			    <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
+			<form action="userTouristReviewServlet.jsp" method="get" id="reviewForm" novalidate>
+			    <input type="hidden" value="<%=uid %>" class="form-control" id="uid" name="uid" aria-describedby="commentHelp">
+			    <input type="hidden" value="<%=toid %>" class="form-control" id="toid" name="toid" aria-describedby="commentHelp">
+			    <input type="hidden" value="<%=ticketId %>" class="form-control" id="ticketId" name="ticketId" aria-describedby="commentHelp">
+			    <div class="mb-3">
+			        <label for="comment" class="form-label">Review</label>
+			        <input type="text" class="form-control" id="comment" name="comment" aria-describedby="commentHelp" placeholder="Add review">
+			        <p class="text-danger" id="commentError"></p>
 			    </div>
-			  <button type="submit" class="btn btn-primary">Review</button>
+			    <button type="submit" class="btn btn-primary">Review</button>
 			</form>
 			
 	<ul class="list-group" style="margin-top: 20px">
@@ -264,6 +266,19 @@ String alert = (String) request.getParameter("message");
    
 <!-- Include jQuery library -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script type="text/javascript">
+document.getElementById("reviewForm").addEventListener("submit", function(event) {
+    var comment = document.getElementById("comment").value.trim();
+
+    if (comment === "") {
+        document.getElementById("commentError").innerText = "Please enter your review.";
+        event.preventDefault(); // Prevent form submission
+    } else {
+        document.getElementById("commentError").innerText = "";
+    }
+});
+</script>
 
 </body>
 </html>

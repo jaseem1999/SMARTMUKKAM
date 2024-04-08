@@ -213,7 +213,7 @@ String alert = (String) request.getParameter("message");
 				out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Feedback send failed</div>");
 			}
 			%>
-			<form action="shopFeedbackServlet.jsp" method="post" style="margin: 30px;">
+			<form action="shopFeedbackServlet.jsp" method="post" style="margin: 30px;" onsubmit="return validateForm()">
 				  <input type="hidden" value="<%=sid%>" class="form-control" id="sid" name="sid" aria-describedby="sid">
 				  <div class="mb-3">
 				    <label for="feedback" class="form-label">Feedback</label>
@@ -251,7 +251,16 @@ String alert = (String) request.getParameter("message");
 	    }
 	});
 
-    
+    function validateForm() {
+	    var feedback = document.getElementById("feedback").value.trim();
+
+	    if (feedback === null || feedback === "") {
+	        alert("Please enter feedback.");
+	        return false;
+	    }
+
+	    return true;
+	}
     </script>
 </body>
 </html>

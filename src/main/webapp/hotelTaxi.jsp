@@ -183,35 +183,38 @@ String alert = (String) request.getParameter("message");
 	        }
 			%>
 	    		
-	    		<form action="adTaxi"  method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  <div class="mb-3">
-				    
-				    <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="taxi" class="form-label">Driver name</label>
-				    <input type="text" class="form-control" id="taxi" name="taxi" placeholder="Enter taxi driver name">
-				  </div>
-				  
-				  <div class="mb-3">
-				    <label for="vehicle" class="form-label">Vehicle name</label>
-				    <input type="text" class="form-control" id="vehicle" name="vehicle" placeholder="Enter vehicle">
-				  </div>
-				  <div class="mb-3">
-				    <label for="plate" class="form-label">No. Plate</label>
-				    <input type="text" class="form-control" id="plate" name="plate" placeholder="Enter plate">
-				  </div>
-				  <div class="mb-3">
-				    <label for="price" class="form-label">Price per KM</label>
-				    <input type="text" class="form-control" id="price" name="price" placeholder="Enter price">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload Vehicle image</label>
-				    <input type="file" class="form-control" id="image" name="image">
-				  </div>
+	    <form action="adTaxi" method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
+		    <div class="mb-3">
+		        <input type="hidden" value="<%=hoid%>" class="form-control" id="hoid" name="hoid" aria-describedby="sid">
+		    </div>
+		    <div class="mb-3">
+		        <label for="taxi" class="form-label">Driver name</label>
+		        <input type="text" class="form-control" id="taxi" name="taxi" placeholder="Enter taxi driver name">
+		        <span id="taxiError" style="color: red;"></span>
+		    </div>
+		    <div class="mb-3">
+		        <label for="vehicle" class="form-label">Vehicle name</label>
+		        <input type="text" class="form-control" id="vehicle" name="vehicle" placeholder="Enter vehicle name">
+		        <span id="vehicleError" style="color: red;"></span>
+		    </div>
+		    <div class="mb-3">
+		        <label for="plate" class="form-label">License Plate</label>
+		        <input type="text" class="form-control" id="plate" name="plate" placeholder="Enter license plate number">
+		        <span id="plateError" style="color: red;"></span>
+		    </div>
+		    <div class="mb-3">
+		        <label for="price" class="form-label">Price per KM</label>
+		        <input type="text" class="form-control" id="price" name="price" placeholder="Enter price per kilometer">
+		        <span id="priceError" style="color: red;"></span>
+		    </div>
+		    <div class="mb-3">
+		        <label for="image" class="form-label">Upload Vehicle image</label>
+		        <input type="file" class="form-control" id="image" name="image">
+		        <span id="imageError" style="color: red;"></span>
+		    </div>
 		
-				  <button type="submit" class="btn btn-primary">Submit</button>
-				</form>
+		    <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
 		
 	    	</div>
 	    	
@@ -575,7 +578,58 @@ $(document).ready(function() {
 
 
 
+function validateForm() {
+    var taxi = document.getElementById("taxi").value.trim();
+    var vehicle = document.getElementById("vehicle").value.trim();
+    var plate = document.getElementById("plate").value.trim();
+    var price = document.getElementById("price").value.trim();
+    var image = document.getElementById("image").value.trim();
 
+    var isValid = true;
+
+    if (taxi === "") {
+        document.getElementById("taxiError").innerText = "Please enter driver name.";
+        isValid = false;
+    } else {
+        document.getElementById("taxiError").innerText = "";
+    }
+
+    if (vehicle === "") {
+        document.getElementById("vehicleError").innerText = "Please enter vehicle name.";
+        isValid = false;
+    } else {
+        document.getElementById("vehicleError").innerText = "";
+    }
+
+    if (plate === "") {
+        document.getElementById("plateError").innerText = "Please enter license plate number.";
+        isValid = false;
+    } else {
+        document.getElementById("plateError").innerText = "";
+    }
+
+    if (price === "") {
+        document.getElementById("priceError").innerText = "Please enter price per kilometer.";
+        isValid = false;
+    } else {
+        document.getElementById("priceError").innerText = "";
+    }
+
+    if (image === "") {
+        document.getElementById("imageError").innerText = "Please upload a vehicle image.";
+        isValid = false;
+    } else {
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+        if (!allowedExtensions.exec(image)) {
+            document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+            isValid = false;
+        } else {
+            document.getElementById("imageError").innerText = "";
+        }
+    }
+
+    return isValid;
+}
 
 
 </script>

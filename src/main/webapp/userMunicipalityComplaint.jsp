@@ -300,38 +300,43 @@ String alert = (String) request.getParameter("message");
                         	
                         %>
     		
-    		<form action="complaint"  method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  <div class="mb-3">
-				    
-				    <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
-				   </div>
-				  <div class="mb-3">
-				    <label for="officer" class="form-label">Officer Designation</label>
-				    <input type="text" class="form-control" id="officer" name="officer" placeholder="Enter officer designation">
-				  </div>
-				  <div class="mb-3">
-				    <label for="complaint" class="form-label">complaint</label>
-				    <input type="text" class="form-control" id="complaint" name="complaint" placeholder="Enter what is the complaint">
-				  </div>
-				   <div class="mb-3">
-				        <label for="committee" class="form-label">Select Committee</label>
-				        <select class="form-control" id="committee" name="committee">
-				            <option value="Finance Standing Committee">Finance Standing Committee</option>
-				            <option value="Development Standing Committee">Development Standing Committee</option>
-				            <option value="Welfare Standing Committee">Welfare Standing Committee</option>
-				            <option value="Health Standing Committee">Health Standing Committee</option>
-				            <option value="Public Works Standing Committee">Public Works Standing Committee</option>
-				            <option value="Education, Arts & Sports Standing Committee">Education, Arts & Sports Standing Committee</option>
-				            <option value="Other">Other</option>
-				        </select>
-				    </div>
-				  <div class="mb-3">
-				    <label for="report" class="form-label">Upload Hard Copy(.pdf)</label>
-				    <input type="file" class="form-control" id="report" name="report">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
-				</form>
+    		<form action="complaint"  method="post" enctype="multipart/form-data" style="margin: 30px;" onsubmit="return validateForm()">
+			    <div class="mb-3">
+			        <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="uid">
+			        <span id="uidError" style="color:red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="officer" class="form-label">Officer Designation</label>
+			        <input type="text" class="form-control" id="officer" name="officer" placeholder="Enter officer designation">
+			        <span id="officerError" style="color:red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="complaint" class="form-label">Complaint</label>
+			        <input type="text" class="form-control" id="complaint" name="complaint" placeholder="Enter what is the complaint">
+			        <span id="complaintError" style="color:red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="committee" class="form-label">Select Committee</label>
+			        <select class="form-control" id="committee" name="committee">
+			            <option value="">Select Committee</option>
+			            <option value="Finance Standing Committee">Finance Standing Committee</option>
+			            <option value="Development Standing Committee">Development Standing Committee</option>
+			            <option value="Welfare Standing Committee">Welfare Standing Committee</option>
+			            <option value="Health Standing Committee">Health Standing Committee</option>
+			            <option value="Public Works Standing Committee">Public Works Standing Committee</option>
+			            <option value="Education, Arts & Sports Standing Committee">Education, Arts & Sports Standing Committee</option>
+			            <option value="Other">Other</option>
+			        </select>
+			        <span id="committeeError" style="color:red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="report" class="form-label">Upload Hard Copy(.pdf)</label>
+			        <input type="file" class="form-control" id="report" name="report">
+			        <span id="fileError" style="color:red;"></span>
+			    </div>
+			    <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+			    		
     	</div>
     	<div class="homeFull" style="margin: 10px;">
     		<div class="home">
@@ -413,6 +418,59 @@ String alert = (String) request.getParameter("message");
 	        }, 2000); // 2000 milliseconds = 2 seconds
 	    }
 	});
+
+    function validateForm() {
+        var uid = document.getElementById("uid").value.trim();
+        var officer = document.getElementById("officer").value.trim();
+        var complaint = document.getElementById("complaint").value.trim();
+        var committee = document.getElementById("committee").value.trim();
+        var report = document.getElementById("report").value.trim();
+
+        var isValid = true;
+
+        if (uid === "") {
+            document.getElementById("uidError").innerText = "Please enter UID.";
+            isValid = false;
+        } else {
+            document.getElementById("uidError").innerText = "";
+        }
+
+        if (officer === "") {
+            document.getElementById("officerError").innerText = "Please enter officer designation.";
+            isValid = false;
+        } else {
+            document.getElementById("officerError").innerText = "";
+        }
+
+        if (complaint === "") {
+            document.getElementById("complaintError").innerText = "Please enter complaint.";
+            isValid = false;
+        } else {
+            document.getElementById("complaintError").innerText = "";
+        }
+
+        if (committee === "") {
+            document.getElementById("committeeError").innerText = "Please select a committee.";
+            isValid = false;
+        } else {
+            document.getElementById("committeeError").innerText = "";
+        }
+
+        if (report === "") {
+            document.getElementById("fileError").innerText = "Please upload a PDF file.";
+            isValid = false;
+        } else {
+            var allowedExtensions = /(\.pdf)$/i;
+            if (!allowedExtensions.exec(report)) {
+                document.getElementById("fileError").innerText = "Uploaded file must be a PDF.";
+                isValid = false;
+            } else {
+                document.getElementById("fileError").innerText = "";
+            }
+        }
+
+        return isValid;
+    }
 
     
     </script>
