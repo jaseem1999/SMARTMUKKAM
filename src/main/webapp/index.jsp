@@ -46,34 +46,9 @@ String alert = (String) request.getParameter("message");
 
 	<div class="container-fluid bg-light pt-3 d-none d-lg-block">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-                    <div class="d-inline-flex align-items-center">
-                        <p><i class="fa fa-envelope mr-2"></i>ajkkalappatt@gmail.com</p>
-                        <p class="text-body px-3">|</p>
-                        <p><i class="fa fa-phone-alt mr-2"></i>+91 9847877534</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 text-center text-lg-right">
-                    <div class="d-inline-flex align-items-center">
-                        <a class="text-primary px-3" href="">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a class="text-primary px-3" href="">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a class="text-primary px-3" href="">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a class="text-primary px-3" href="">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a class="text-primary pl-3" href="">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="d-inline-flex align-items-center">
+            <div class="row" style="position: relative; left: 160px;">
+               
+                <div class="d-inline-flex align-items-center" >
 			                <%
 					  if (email != null){
 					  		
@@ -328,11 +303,13 @@ String alert = (String) request.getParameter("message");
                 <a href="" class="navbar-brand">
                     <h1 class="m-0 text-primary"><span class="text-dark">SMART</span>MUKKAM</h1>
                 </a>
-               
+               <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
                         <a href="index.jsp" class="nav-item nav-link active">Home</a>
-                        <a href="#" class="nav-item nav-link">About</a>
+                        <a href="about.jsp" class="nav-item nav-link">About</a>
                         <a href="#services" class="nav-item nav-link">Services</a>
                         <%
                         if(ServicesDAO.getMunicipalityStatusForChecking() == null){
@@ -450,7 +427,7 @@ String alert = (String) request.getParameter("message");
                         <img class="img-fluid" src="images/shop.jpg" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="userShop.jsp">
                             <h5 class="text-white">Shops</h5>
-                            <span>0 Registered Shops</span>
+                           
                         </a>
                     </div>
                 </div>
@@ -459,7 +436,7 @@ String alert = (String) request.getParameter("message");
                         <img class="img-fluid" src="images/tourist.png" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="userTourist.jsp">
                             <h5 class="text-white">Tourist</h5>
-                            <span>0 Registered Tourist place</span>
+                           
                         </a>
                     </div>
                 </div>
@@ -468,7 +445,7 @@ String alert = (String) request.getParameter("message");
                         <img class="img-fluid" src="images/hotel.jpg" alt="">
                         <a class="destination-overlay text-white text-decoration-none" href="userHotelMainPage.jsp">
                             <h5 class="text-white">Hotels</h5>
-                            <span>0 Registered Hotels</span>
+                          
                         </a>
                     </div>
                 </div>

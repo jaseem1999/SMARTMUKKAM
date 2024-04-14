@@ -1,11 +1,13 @@
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <%@page import="smartMukkam.com.tourist.ReviewDTO"%>
 <%@page import="smartMukkam.com.tourist.TicketDTO"%>
 <%@page import="smartMukkam.com.tourist.TouristDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="smartMukkam.main.user.userData.UserDAO"%>
 <%@page import="smartMukkam.com.tourist.TouristDTO"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>

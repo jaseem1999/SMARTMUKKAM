@@ -147,7 +147,7 @@ if(email == null){
     </a>
   </div>
 </nav>
-<div class="container-fluid" id="contentToRefresh">
+<div class="container-fluid" >
 <div class="row">
     <div class="col-sm-2">
 			<ul class="list-group list-group-flush" style="">
@@ -189,6 +189,7 @@ if(email == null){
 			<div id="projectRejectSuccessAlert" class="alert alert-success" style="color: green; display: none;" role="alert">
 			    Project reject successfully
 			</div>
+			<div id="contentToRefresh">
     		<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
@@ -246,7 +247,7 @@ if(email == null){
 			    <%} %>
 			   </tbody>
 			  </table>
-    		
+    		</div>
     	</div>
     
     </div>

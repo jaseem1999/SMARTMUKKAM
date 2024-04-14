@@ -1,17 +1,14 @@
 package smartMukkam.com.tourist;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-
-import smartMukkam.com.shop.ReviewDTO;
 import smartMukkam.connection.Conn;
 
 public class TouristDAO {

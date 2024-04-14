@@ -147,7 +147,7 @@ if(email == null){
     </a>
   </div>
 </nav>
-<div class="container-fluid" id="contentToRefresh">
+<div class="container-fluid">
 <div class="row">
     <div class="col-sm-2">
 			<ul class="list-group list-group-flush" style="">
@@ -157,9 +157,7 @@ if(email == null){
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityRegistration.jsp">Registrations</a>
 			  </li>
-			  <li class="list-group-item">
-			  	<a class="nav-link" href="municipalityNotification.jsp">Notifications</a>
-			  </li>
+			
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityProfile.jsp">Profile</a>
 			  </li>
@@ -172,9 +170,7 @@ if(email == null){
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityGallery.jsp">Gallery</a>
 			  </li>
-			  <li class="list-group-item">
-			  	<a class="nav-link" href="municipalityRequest.jsp">Request</a>
-			  </li>
+			  
 			  <li class="list-group-item">
 			  	<a class="nav-link" href="municipalityFeedback.jsp">Feedback</a>
 			  </li>
@@ -193,6 +189,7 @@ if(email == null){
 			<div id="complaintRejectSuccessAlert" class="alert alert-success" style="color: green; display: none;" role="alert">
 			    Complaint reject successfully
 			</div>
+			<div  id="contentToRefresh">
     		<table class="table">
 			  <thead class="thead-dark">
 			    <tr>
@@ -252,7 +249,7 @@ if(email == null){
 			    <%} %>
 			   </tbody>
 			  </table>
-    		
+    		  </div>
     	</div>
     
     </div>

@@ -259,6 +259,8 @@ public class UserDAO {
 				g.setStatus(rs.getString("status"));
 				if(g.getStatus() == null) {
 					li.add(g);
+				}else {
+					
 				}
 			}
 		} catch (Exception e) {

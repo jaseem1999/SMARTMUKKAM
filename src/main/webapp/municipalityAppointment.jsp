@@ -145,7 +145,7 @@ if(email == null){
 
   </div>
 </nav>
-<div class="container-fluid" id="contentToRefresh">
+<div class="container-fluid" >
 <div class="row">
     <div class="col-sm-2">
 			<ul class="list-group list-group-flush" style="">
@@ -191,8 +191,8 @@ if(email == null){
 			    Appointment reject successfully
 			</div>
 			
-			<div id="tid">
-    			<table id="appointmentTable" class="table table-striped" style="margin: 10px; width: 97%;">
+			<div id="contentToRefresh">
+    			<table id="appointmentTable" class="table table-striped" style="margin: 10px; width: 97%;" >
  					<thead>
 					    <tr>
 					      <th scope="col">User</th>
