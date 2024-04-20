@@ -316,6 +316,7 @@ String alert = (String) request.getParameter("message");
 					        <option value="Health Standing Committee Chairman">Health Standing Committee Chairman (Elected)</option>
 					        <option value="Public Works Standing Committee Chairman">Public Works Standing Committee Chairman (Elected)</option>
 					        <option value="Education, Arts & Sports Standing Committee Chairman">Education, Arts & Sports Standing Committee Chairman (Elected)</option>
+					        <option value="other">Other (It will decide the municipality administration.)</option>
 					    </select>
 					    <span id="officerError" style="color:red"></span>
 					</div>

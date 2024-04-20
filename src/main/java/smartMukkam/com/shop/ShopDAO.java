@@ -137,7 +137,7 @@ public class ShopDAO {
 	    Connection connection = con.connection;
 
 	    try {
-	        String sql = "SELECT s.shopId, s.name, s.email, s.password, s.number, s.typeOfShop, s.status, sd.shopeName, sd.addressOne, sd.addressTwo, sd.city, sd.state FROM shop s JOIN shopDetaild sd ON s.shopId = sd.sid ;";
+	        String sql = "SELECT s.shopId, s.name, s.email, s.password, s.number, s.typeOfShop, s.sector, s.status, sd.shopeName, sd.addressOne, sd.addressTwo, sd.city, sd.state FROM shop s JOIN shopDetaild sd ON s.shopId = sd.sid ;";
 	        PreparedStatement stm = connection.prepareStatement(sql);
 	        ResultSet rs = stm.executeQuery();
 
@@ -150,6 +150,7 @@ public class ShopDAO {
 	            shop.setPassword(rs.getString("password"));
 	            shop.setPhone(rs.getLong("number"));
 	            shop.setShopType(rs.getString("typeOfShop"));
+	            shop.setSector(rs.getString("sector"));
 	            shop.setStatus(rs.getString("status"));
 	            shop.setShopName(rs.getString("shopeName"));
 	            shop.setAddressOne(rs.getString("addressOne"));

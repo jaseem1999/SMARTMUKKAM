@@ -426,7 +426,7 @@ String alert = (String) request.getParameter("message");
 					                    <i class="fa-solid fa-bars" style="color: black;"></i>
 					                </button>
 					                <ul class="dropdown-menu">
-					                    <li><a href="#" class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=TouristDAO.getNameByTourist(pass.getToid())%>')">Send email</a></li>
+					                    <li><div href="#" class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=TouristDAO.getNameByTourist(pass.getToid())%>')">Send email</div></li>
 										<li><a href="#" class="dropdown-item acceptLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Accept</a></li>
 					                    <li><a href="#" class="dropdown-item rejectLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Reject</a></li>
 					                </ul>
@@ -729,6 +729,8 @@ function sendEmail(email, password, Name) {
     window.location.href = 'mailto:' + recipientEmail + '?subject=Forget%20Password%20for%20hotel&body=' + encodeURIComponent(body);
      
 }
+
+
 
 </script>
 </body>

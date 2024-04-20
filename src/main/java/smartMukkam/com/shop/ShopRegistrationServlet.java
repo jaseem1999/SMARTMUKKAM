@@ -28,6 +28,7 @@ public class ShopRegistrationServlet extends HttpServlet {
         Long phone = Long.parseLong(request.getParameter("phone"));
         String password = request.getParameter("password");
         String type = request.getParameter("shop");
+        String section = request.getParameter("type"); 
         Part part1 = request.getPart("license");
         InputStream inpPdf = part1.getInputStream();
         Part part2 = request.getPart("image");
@@ -50,14 +51,15 @@ public class ShopRegistrationServlet extends HttpServlet {
             connection = con.connection;
 
             // Insert data into the shop table
-            String insertShopQuery = "INSERT INTO shop (name, email, password, number, typeOfShop, License) VALUES (?, ?, ?, ?, ?, ?)";
+            String insertShopQuery = "INSERT INTO shop (name, email, password, number, typeOfShop, sector,License) VALUES (?, ?, ?, ?, ?, ?, ?)";
             preparedStatement1 = connection.prepareStatement(insertShopQuery);
             preparedStatement1.setString(1, name);
             preparedStatement1.setString(2, email);
             preparedStatement1.setString(3, password);
             preparedStatement1.setLong(4, phone);
             preparedStatement1.setString(5, type);
-            preparedStatement1.setBlob(6, inpPdf);
+            preparedStatement1.setString(6, section);
+            preparedStatement1.setBlob(7, inpPdf);
             preparedStatement1.executeUpdate();
 
             // Get the generated shopId

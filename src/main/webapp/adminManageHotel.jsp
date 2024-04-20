@@ -424,7 +424,7 @@ String alert = (String) request.getParameter("message");
 					                    <i class="fa-solid fa-bars" style="color: black;"></i>
 					                </button>
 					                <ul class="dropdown-menu">
-					                    <li><a href="#" class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=HotelDAO.getHotelName(pass.getHoid())%>')">Send email</a></li>
+					                    <li><div class="dropdown-item" onclick="sendEmail('<%= pass.getEmail() %>','<%= pass.getPass()%>','<%=HotelDAO.getHotelName(pass.getHoid())%>')">Send email</div></li>
 										<li><a href="#" class="dropdown-item acceptLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Accept</a></li>
 					                    <li><a href="#" class="dropdown-item rejectLinkPassword" data-tid="<%=pass.getTid()%>" type="button">Reject</a></li>
 					                </ul>

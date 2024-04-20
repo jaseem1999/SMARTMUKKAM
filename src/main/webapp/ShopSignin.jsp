@@ -44,7 +44,7 @@ String email = (String) session.getAttribute("emailVerificationShop");
         <div class="col">
 
             <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
+                <label for="email" class="form-label">Email address : <%=email %></label>
                 <input  type="hidden" class="form-control" id="email" name="email" value="<%=email%>" >
                 <span class="error" id="emailError"></span>
             </div>
@@ -76,6 +76,23 @@ String email = (String) session.getAttribute("emailVerificationShop");
             </div>
             <span class="error" id="passwordError"></span>
             <span class="error" id="confirmPasswordError"></span>
+             <div class="mb-3">
+            <label for="type" class="form-label">Type of Shop Sector</label>
+            <select class="form-select" id="type" name="type">
+                <option value="Super market" selected>Super market</option>
+                <option value="vegetables and fruits">vegetables and fruits</option>
+                <option value="IT sector">IT sector</option>
+                <option value="Clothing stores">Clothing stores</option>
+                <option value="Bookstores">Bookstores</option>
+                <option value="Hardware stores">Hardware stores</option>
+                <option value="Pharmacies">Pharmacies</option>
+                <option value="Jewellery">Jewellery</option>
+                <option value="Other">Other</option>
+                <!-- You can add more options here as needed -->
+            </select>
+            <span class="error" id="typeError"></span>
+        </div>
+            
             <div class="mb-3">
                 <label for="shop" class="form-label">Type of shop</label>
                 <select class="form-select" id="shop" name="shop">
@@ -177,6 +194,8 @@ String email = (String) session.getAttribute("emailVerificationShop");
         let password = document.getElementById("password").value;
         let confirmPassword = document.getElementById("conPassword").value;
         let country = document.getElementById("shop").value;
+
+        
         let status = true;
 
         function isValidPhoneNumber(num) {

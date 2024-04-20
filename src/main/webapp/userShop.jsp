@@ -109,6 +109,7 @@ if (email == null){
                         <% if ("accept".equals(shop.getStatus())) { %>
 						    <a class="destination-overlay text-white text-decoration-none" href="userShops.jsp?id=<%= shop.getSid() %>">
 						        <h5 class="text-white"><%= shop.getShopName() %></h5>
+						        <span><%= shop.getSector() %></span>
 						        <span><%= shop.getShopType() %></span>
 						    </a>
 						<% } else if ("reject".equals(shop.getStatus())) { %>

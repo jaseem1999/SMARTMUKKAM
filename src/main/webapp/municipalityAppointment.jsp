@@ -222,9 +222,57 @@ if(email == null){
         <td><%=UserDAO.getUserName(appo.getUid())%></td>
         <td><%=UserDAO.getUserEmail(appo.getUid())%></td>
         <td><%=UserDAO.getUserPhone(appo.getUid()) %></td>
-        <td><%=appo.getOfficer() %></td>
+        <td>
+        <%
+        if(appo.getOfficer().equals("other")){
+        %>
+		<form action="otherAppoiServlet.jsp" method="post" onsubmit="return validateForm()">
+		
+        <input type="hidden" id="tid" name="tid" value="<%=appo.getTid()%>">
+         <div class="mb-3">
+					    <select class="form-control" id="officer" name="officer">
+					        <option value="">Select Committee</option>
+					        <option value="Chairman">Chairman (Elected)</option>
+					        <option value="Vice Chairperson">Vice Chairperson (Elected)</option>
+					        <option value="secretary">Secretary</option>
+					        <option value="Addl Chief Engineer">Addl Chief Engineer LSGD</option>
+					        <option value="Executive Engineer">Executive Engineerr LSGD</option>
+					        <option value="Asst Executive Engineer">Asst Exicutive Engineer LSGD</option>
+					        <option value="Asst Engineer">Asst Engineer LSGD</option>
+					        <option value="Superintendent">Superintendent</option>
+					        <option value="Revenue Inspector">Revenue Inspector</option>
+					        <option value="Health Inspector">Health Inspector</option>
+					        <option value="Public information officer">Public information officer(PIO state)</option>
+					        <option value="Finance Standing Committee Chairman">Finance Standing Committee Chairman (Elected)</option>
+					        <option value="Development Standing Committee Chairman">Development Standing Committee Chairman (Elected)</option>
+					        <option value="Welfare Standing Committee Chairman">Welfare Standing Committee Chairman (Elected)</option>
+					        <option value="Health Standing Committee Chairman">Health Standing Committee Chairman (Elected)</option>
+					        <option value="Public Works Standing Committee Chairman">Public Works Standing Committee Chairman (Elected)</option>
+					        <option value="Education, Arts & Sports Standing Committee Chairman">Education, Arts & Sports Standing Committee Chairman (Elected)</option>      
+					    </select>
+					     <button type="submit" class="btn btn-primary">Submit</button>
+
+			<span id="officerError" style="color:red"></span>
+			
+		</div>
+		</form>
+	
+        <%} else{%>
+        
+        	<%=appo.getOfficer() %>
+
+        <%} %>
+        </td>
         <td><%=appo.getReason() %></td>
-        <td><%=appo.getDate() %></td>
+        <td>
+        <%
+        if(appo.getDate() == null){
+        	out.print("N/A");
+        }else{
+        	out.print(appo.getDate());
+        }
+        %>
+        </td>
         <td  >
     	<div id="">
         <%
@@ -295,6 +343,8 @@ if(email == null){
 
 
 $(document).ready(function() {
+	
+	
     // Function to refresh the content of the specified element
     window.refreshContent = function() {
         $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
@@ -377,6 +427,85 @@ $(document).ready(function() {
     }
 });
    
+
+
+$(document).ready(function() {
+	
+	
+    // Function to refresh the content of the specified element
+    window.refreshContent = function() {
+        $('#contentToRefresh').load(location.href + ' #contentToRefresh', function() {
+            // Rebind event handlers after content refresh
+            bindEventHandlers();
+        });
+    }
+
+    // Click event to trigger the content refresh when the button is clicked
+    $('#refreshButton').on('click', function() {
+        window.refreshContent();
+    });
+
+    // Initial binding of event handlers
+    bindEventHandlers();
+
+    // Function to bind event handlers
+    function bindEventHandlers() {
+        // Handle the click event on the "Accept" link
+
+        // Handle the click event on the "Reject" link
+        $(".rejectLink").on("click", function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+
+            // Get the appointment id from the data-tid attribute
+            var appointmentId = $(this).data("tid");
+
+            // Make an AJAX request to the server to handle the rejection
+            $.ajax({
+                type: "GET",
+                url: "municipalityAppointmentReject.jsp",
+                data: { id: appointmentId },
+                success: function(response) {
+                    // Handle the success response (if needed)
+                    console.log("Appointment rejected successfully");
+
+                    // Show the rejection success message
+                    $("#appointmentRejectSuccessAlert").show().delay(3000).fadeOut();
+
+                    // Reload the content within the div with id "contentToRefresh" after rejection
+                    window.refreshContent();
+                },
+                error: function(xhr, status, error) {
+                    // Handle the error response (if needed)
+                    console.error("Error rejecting appointment: " + error);
+
+                    // You can show an error message if needed
+                }
+            });
+        });
+    }
+});
+   
+
+
+
+function validateForm() {
+    var officerField = document.getElementById('officer');
+    var officerValue = officerField.value.trim(); // Trim whitespace from the value
+
+    // Check if the officer value is not empty
+    if (officerValue === '') {
+        // Display an error message
+        document.getElementById('officerError').innerText = "Please select a committee.";
+        return false; // Prevent form submission
+    } else {
+        // Clear any existing error message
+        document.getElementById('officerError').innerText = "";
+        return true; // Allow form submission
+    }
+}
+
+
+
 
     
 </script>

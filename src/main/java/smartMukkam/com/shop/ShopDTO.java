@@ -6,6 +6,7 @@ public class ShopDTO {
 	private String email;
 	private String password;
 	private String shopType;
+	private String sector;
 	private long phone;
 	private String shopName;
 	private String addressOne;
@@ -17,6 +18,12 @@ public class ShopDTO {
 	private int pin;
 	
 	
+	public String getSector() {
+		return sector;
+	}
+	public void setSector(String sector) {
+		this.sector = sector;
+	}
 	public int getPin() {
 		return pin;
 	}

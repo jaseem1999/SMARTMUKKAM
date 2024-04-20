@@ -218,7 +218,13 @@ if(email == null){
 			      <td><%=pro.getProject() %></td>
 			      <td><%=pro.getIdea() %></td>
 			      <td><a href="sample.jsp?tid=<%=pro.getTid()%>" class=" badge-primary">view</a></td>
-			      <td><%=pro.getCommittee() %></td>
+			      <td><%
+			      if(pro.getCommittee() == null){
+			    	  out.print("N/A");
+			      }else{
+			    	  out.print(pro.getCommittee());
+			      }
+			      %></td>
 			      <td>
 			      <%
 			      if(pro.getStatus() == null){

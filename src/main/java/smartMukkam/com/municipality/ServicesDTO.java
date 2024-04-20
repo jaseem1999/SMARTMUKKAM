@@ -111,6 +111,49 @@ public class ServicesDTO {
 		return i;
 	}
 	
+	public static int updateOfficerAppointment(int tid, String officer) {
+	    int i = 0;
+	    Conn con = new Conn();
+	    Connection connection = con.connection;
+
+	    String update = "UPDATE appointmets SET officer = ? WHERE tid = ?;";
+
+	    try {
+	        // Create a PreparedStatement to safely handle parameterized SQL queries
+	        PreparedStatement preparedStatement = connection.prepareStatement(update);
+	        
+	        // Set the values for the PreparedStatement parameters
+	   
+	        preparedStatement.setString(1, officer);
+	        preparedStatement.setInt(2, tid);
+
+	        // Execute the update query
+	        int rowsAffected = preparedStatement.executeUpdate();
+
+	        // Check if any rows were affected
+	        if (rowsAffected > 0) {
+	            i = 1;
+	        }
+
+	        // Close the PreparedStatement
+	        preparedStatement.close();
+	    } catch (SQLException e) {
+	        // Handle any SQL exceptions
+	        e.printStackTrace(); // For debugging purposes, consider logging the exception
+	    } finally {
+	        // Close the database connection
+	        try {
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace(); // Handle any closing connection exceptions
+	        }
+	    }
+	    return i;
+	}
+
+	
 	//reject appointments 
 		public static int rejectAppointment(int tid) {
 			int i = 0;

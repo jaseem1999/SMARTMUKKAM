@@ -46,19 +46,22 @@ if (email == null){
 				out.print("<div id='alert' class='alert alert-danger' style='' role='alert'>Gallery added failed</div>");
 			}
 			%>
-			<form action="addUG" method="post" enctype="multipart/form-data" style="margin: 30px;">
-				  <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="hoid">
-				  <div class="mb-3">
-				    <label for="description" class="form-label">Description</label>
-				    <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
-				  </div>
-				  <div class="mb-3">
-				    <label for="image" class="form-label">Upload Image</label>
-				    <input type="file" class="form-control" id="image" name="image">
-				  </div>
-		
-				  <button type="submit" class="btn btn-primary">Submit</button>
+			<form id="uploadForm" action="addUG" method="post" enctype="multipart/form-data" style="margin: 30px;">
+			    <input type="hidden" value="<%=uid%>" class="form-control" id="uid" name="uid" aria-describedby="hoid">
+			    <div class="mb-3">
+			        <label for="description" class="form-label">Description</label>
+			        <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+			        <span id="descriptionError" style="color: red;"></span>
+			    </div>
+			    <div class="mb-3">
+			        <label for="image" class="form-label">Upload Image</label>
+			        <input type="file" class="form-control" id="image" name="image">
+			        <span id="imageError" style="color: red;"></span>
+			    </div>
+			
+			    <button type="submit" class="btn btn-primary">Submit</button>
 			</form>
+
 			<div class="row" style="margin-top: 30px;">
 			<%
 			List<GalleryDTO> gallery = UserDAO.getAllGalleryForUserSpecific(uid);
@@ -101,6 +104,39 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             alertElement.style.display = 'none';
         }, 2000); // 2000 milliseconds = 2 seconds
+    }
+});
+
+document.getElementById("uploadForm").addEventListener("submit", function(event) {
+    var descriptionInput = document.getElementById("description");
+    var description = descriptionInput.value.trim();
+    var fileInput = document.getElementById("image");
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+    // Reset error messages
+    document.getElementById("descriptionError").innerText = "";
+    document.getElementById("imageError").innerText = "";
+
+    // Check if description is empty or just whitespace
+    if (description === "") {
+        document.getElementById("descriptionError").innerText = "Please enter a description.";
+        event.preventDefault(); // Prevent form submission
+        return;
+    }
+
+    // Check if a file is selected
+    if (filePath === "") {
+        document.getElementById("imageError").innerText = "Please select an image file.";
+        event.preventDefault(); // Prevent form submission
+        return;
+    }
+
+    // Check if the selected file has a valid image extension
+    if (!allowedExtensions.exec(filePath)) {
+        document.getElementById("imageError").innerText = "Uploaded file must be an image (jpg, jpeg, png, gif).";
+        event.preventDefault(); // Prevent form submission
+        return;
     }
 });
 
