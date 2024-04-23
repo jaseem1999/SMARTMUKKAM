@@ -145,8 +145,8 @@ String alert = (String) request.getParameter("message");
                 <span class="error" id="imgErorr"></span>
             </div>
             <div class="mb-3">
-                <label for="surname" class="form-label">Surname</label>
-                <input type="text" class="form-control" id="surname" name="surname" placeholder="Enter surname" required="required">
+                <label for="surname" class="form-label">Surname / Home</label>
+                <input type="text" class="form-control" id="surname" name="surname" placeholder="Enter surname or home" required="required">
                 <span class="error" id="surnameErorr"></span>
             </div>
             <div class="mb-3">

@@ -170,6 +170,50 @@ public class ShopDAO {
 
 	    return li;
 	}
+	
+	//get all Shops 
+		public static List<ShopDTO> getAllShopsForSector(String sector){
+		    ArrayList<ShopDTO> li = new ArrayList<ShopDTO>();
+		    Conn con = new Conn();
+		    Connection connection = con.connection;
+
+		    try {
+		        String sql = "SELECT s.shopId, s.name, s.email, s.password, s.number, s.typeOfShop, s.sector, s.status, sd.shopeName, sd.addressOne, sd.addressTwo, sd.city, sd.state FROM shop s JOIN shopDetaild sd ON s.shopId = sd.sid where s.sector = ?;";
+		        PreparedStatement stm = connection.prepareStatement(sql);
+		        stm.setString(1, sector);
+		        ResultSet rs = stm.executeQuery();
+
+		        while (rs.next()) {
+		            ShopDTO shop = new ShopDTO(); // Create a new ShopDTO for each row
+
+		            shop.setSid(rs.getInt("shopId"));
+		            shop.setName(rs.getString("name"));
+		            shop.setEmail(rs.getString("email"));
+		            shop.setPassword(rs.getString("password"));
+		            shop.setPhone(rs.getLong("number"));
+		            shop.setShopType(rs.getString("typeOfShop"));
+		            shop.setSector(rs.getString("sector"));
+		            shop.setStatus(rs.getString("status"));
+		            shop.setShopName(rs.getString("shopeName"));
+		            shop.setAddressOne(rs.getString("addressOne"));
+		            shop.setAddressTwo(rs.getString("addressTwo"));
+		            shop.setCity(rs.getString("city"));
+		            shop.setState(rs.getString("state"));
+		           
+
+		            li.add(shop);
+		        }    
+		    } catch (Exception e) {
+		        // Handle exceptions
+		        e.printStackTrace();
+		    } finally {
+		        // Close resources (connection, statement, etc.) in a finally block if needed
+		    }
+
+		    return li;
+		}
+
+		
 	// get all shop details based sid
 	public static List<ShopDTO> getAllShopsBasedSid(int sid){
 	    ArrayList<ShopDTO> li = new ArrayList<ShopDTO>();

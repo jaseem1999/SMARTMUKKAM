@@ -425,7 +425,7 @@ String alert = (String) request.getParameter("message");
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="destination-item position-relative overflow-hidden mb-2">
                         <img class="img-fluid" src="images/shop.jpg" alt="">
-                        <a class="destination-overlay text-white text-decoration-none" href="userShop.jsp">
+                        <a class="destination-overlay text-white text-decoration-none" href="userShopList.jsp">
                             <h5 class="text-white">Shops</h5>
                            
                         </a>

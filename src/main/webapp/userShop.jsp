@@ -14,6 +14,7 @@ String name = (String) session.getAttribute("name");
 String email = (String) session.getAttribute("email");
 String country = (String) session.getAttribute("country");
 Long number =(Long) session.getAttribute("phone");
+String sector = (String) request.getParameter("sector");
 
 if (email == null){
 	response.sendRedirect("index.jsp?message=login");
@@ -96,11 +97,11 @@ if (email == null){
         <div class="container pt-5 pb-3" id="services">
             <div class="text-center mb-3 pb-3">
                 <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Buy product best shops</h6>
-                <h1>Shops</h1>
+                <h1><%=sector %></h1>
             </div>
             <div class="row">
             	<%
-            	List<ShopDTO> shops = ShopDAO.getAllShops();
+            	List<ShopDTO> shops = ShopDAO.getAllShopsForSector(sector);
             	for(ShopDTO shop : shops){
             	%>
                 <div class="col-lg-4 col-md-6 mb-4" style="">

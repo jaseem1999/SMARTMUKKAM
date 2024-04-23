@@ -372,7 +372,13 @@ String alert = (String) request.getParameter("message");
         <td><%=UserDAO.getUserPhone(appo.getUid()) %></td>
         <td><%=appo.getOfficer() %></td>
         <td><%=appo.getReason() %></td>
-        <td><%=appo.getDate() %></td>
+        <td><%
+        if(appo.getDate() == null){
+        	out.print("N/A");
+        }else{
+        	out.print(appo.getDate());
+        }
+        %></td>
         <td>
     	<div id="">
         <%

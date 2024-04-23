@@ -364,7 +364,13 @@ String alert = (String) request.getParameter("message");
 				        <td><%=pro.getProject() %></td>
 				        <td><%=pro.getIdea() %></td>
 				        <td><a href="userProjectPDF.jsp?tid=<%=pro.getTid()%>" class="">view</a></td>
-				        <td><%=pro.getCommittee() %></td>
+				        <td><%
+				        if(pro.getCommittee() == null){
+				        	out.print("N/A");
+				        }else{
+				        	out.print(pro.getCommittee());
+				        }
+				        %></td>
 				        <td>
 				    	
 				        <%
