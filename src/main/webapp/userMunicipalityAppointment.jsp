@@ -351,7 +351,7 @@ String alert = (String) request.getParameter("message");
 					      <th scope="col">Reason</th>
 					      <th scope="col">Date</th>
 					      <th scope="col">Status</th>
-					      
+					      <th scope="col">Action</th>
 					    </tr>
 					    </thead>
 					    <%
@@ -394,6 +394,13 @@ String alert = (String) request.getParameter("message");
         %>
    		</div>
 		</td>
+		<td><%
+		if(appo.getAction() != null){
+			out.print(appo.getAction());
+		}else{
+			out.print("");
+		}
+		%></td>
 
         
     </tr>

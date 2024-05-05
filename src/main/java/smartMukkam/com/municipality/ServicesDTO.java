@@ -67,7 +67,7 @@ public class ServicesDTO {
 		Conn con = new Conn();
 		Connection connection = con.connection;
 		try {
-			String sql = "select tid,uid,officer,reason,date,status from appointmets;";
+			String sql = "select tid,uid,officer,reason,date,status,action from appointmets;";
 			PreparedStatement stm =connection.prepareStatement(sql);
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()) {
@@ -78,6 +78,7 @@ public class ServicesDTO {
 				app.setReason(rs.getString(4));
 				app.setDate(rs.getString(5));
 				app.setStatus(rs.getString(6));
+				app.setAction(rs.getString(7));
 				li.add(app);
 			}
 		}catch (Exception e) {
@@ -88,6 +89,33 @@ public class ServicesDTO {
 		
 		return li;
 	}
+	
+	public static int actionAppointment(int tid, String action) {
+	    int i = 0;
+	    Conn con = new Conn();
+	    Connection connection = con.connection;
+	    
+	    String update = "UPDATE appointmets SET action = ? WHERE tid = ?";
+
+	    try {
+	        PreparedStatement statement = connection.prepareStatement(update);
+	        statement.setString(1, action);
+	        statement.setInt(2, tid);
+	        
+	        int rowsAffected = statement.executeUpdate();
+	        
+	        if (rowsAffected > 0) {
+	            i = 1;
+	        }
+	        
+	        statement.close();
+	        connection.close(); // Don't forget to close the connection
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // print the error stack trace for debugging
+	    }
+	    return i;
+	}
+
 	
 	//accept appointments 
 	public static int acceptAppointment(int tid) {
@@ -201,7 +229,7 @@ public class ServicesDTO {
 			Conn con = new Conn();
 			Connection connection = con.connection;
 			try {
-				String sql = "select tid,uid,officer,reason,date,status from appointmets where uid="+uid+";";
+				String sql = "select tid,uid,officer,reason,date,status,action from appointmets where uid="+uid+";";
 				PreparedStatement stm =connection.prepareStatement(sql);
 				ResultSet rs = stm.executeQuery();
 				while(rs.next()) {
@@ -212,6 +240,7 @@ public class ServicesDTO {
 					app.setReason(rs.getString(4));
 					app.setDate(rs.getString(5));
 					app.setStatus(rs.getString(6));
+					app.setAction(rs.getString(7));
 					li.add(app);
 				}
 			}catch (Exception e) {

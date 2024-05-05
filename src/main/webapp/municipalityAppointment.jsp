@@ -79,7 +79,7 @@
   			margin-top: 29px;
 		}
 		.homeFull{
-		 	max-width: 1000px;
+		 	max-width: 1450px;
 		 	height: 500px;
 		 	border: 1px solid;
 		}
@@ -203,6 +203,7 @@ if(email == null){
 					      <th scope="col">Reason</th>
 					      <th scope="col">Date</th>
 					      <th scope="col">Status</th>
+					      <th scope="col">Action</th>
 					      <th scope="col"></th>
 					    </tr>
 					    </thead>
@@ -287,6 +288,33 @@ if(email == null){
             }
         %>
    		</div>
+		</td>
+		
+		<td >
+		<form action="appoinAction.jsp" method="post" style="">
+			<input type="hidden" name="tid" value="<%=appo.getTid()%>">
+			  <div class="input-group mb-3">
+				    <span class="input-group-text"><i class="fa fa-tasks" aria-hidden="true"></i></span>
+				    <input type="text" style="width: 200px;
+				    color:<%
+				    if(appo.getStatus() == null){
+		                out.print("blue");
+		            } else if(appo.getStatus().equals("accept")){
+		                out.print("green");
+		            } else if(appo.getStatus().equals("reject")){
+		                out.print("red");
+		            }else{
+		            	out.print("red");
+		            }
+				    %>;
+				    " class="form-control" id="action" name="action"  placeholder="If need any action" value="<%
+				    if(appo.getAction()!= null){
+				    	out.print(appo.getAction());
+				    }
+				    %>" aria-describedby="actionHelp" required="required">
+				    <button type="submit" class="btn btn-outline-success">Ok</button>
+				</div>
+		</form>
 		</td>
 
         <td>

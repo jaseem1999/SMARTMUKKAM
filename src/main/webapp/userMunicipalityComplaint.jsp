@@ -341,6 +341,7 @@ String alert = (String) request.getParameter("message");
 					      <th scope="col">Committee</th>
 					      <th scope="col">Date</th>
 					      <th scope="col">Status</th>
+					      <th scope="col">Action</th>
 					      
 					    </tr>
 					    </thead>
@@ -368,6 +369,19 @@ String alert = (String) request.getParameter("message");
 							            	out.print("<span  style='color : red;'></span>");
 							            }
 				        			%>
+				        		</td>
+				        		<td>
+				        		<%
+									if(com.getStatus() == null){
+					                out.print("<span  style='color : blue;'></span>");
+					            	}else if(com.getStatus().equals("accept")){
+						                out.print("<span  style='color : green;'>Your complaint has been accepted. The hearing committee will contact you.</span>");
+						            }else if(com.getStatus().equals("reject")){
+						                out.print("<span  style='color : red;'>Your complaint has been rejected. If you wish to take further action, please visit the municipality office with relevant evidence</span>");
+						            }else{
+						            	out.print("<span  style='color : red;'></span>");
+						            }
+				        		%>
 				        		</td>
 				        	</tr>
 				        	<%} %>

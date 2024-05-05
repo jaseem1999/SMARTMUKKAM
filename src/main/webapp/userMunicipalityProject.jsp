@@ -343,6 +343,7 @@ String alert = (String) request.getParameter("message");
 					      <th scope="col">PDF</th>
 					     <th scope="col">Committee</th>
 					      <th scope="col">Status</th>
+					      <th scope="col">action</th>
 					      
 					    </tr>
 					    </thead>
@@ -385,6 +386,20 @@ String alert = (String) request.getParameter("message");
 				            }
 				        %>
 						   		
+						</td>
+						
+						<td>
+						<%
+							if(pro.getStatus() == null){
+			                out.print("<span  style='color : blue;'></span>");
+			            	}else if(pro.getStatus().equals("accept")){
+				                out.print("<span  style='color : green;'>Your project has been accepted. The municipality will contact you</span>");
+				            }else if(pro.getStatus().equals("reject")){
+				                out.print("<span  style='color : red;'>I'm sorry, but your project has been rejected. Please visit the municipality for further assistance.</span>");
+				            }else{
+				            	out.print("<span  style='color : red;'></span>");
+				            }
+				        %>
 						</td>
 					</tr>
 					<%} %>
