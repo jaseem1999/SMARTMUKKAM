@@ -302,8 +302,8 @@ String alert = (String) request.getParameter("message");
 					    		<td><%=shop.getShopName() %></td>
 					    		<td><%=shop.getName() %></td>
 					    		<td><%=shop.getEmail() %></td>
-					    		<td><%=shop.getPhone() %></td>
 					    		<td><%=shop.getPassword() %></td>
+					    		<td><%=shop.getPhone() %></td>
 					    		<td><%=shop.getShopType() %></td>
 					    		<td><a href="shopLicenseAdminServlet.jsp?sid=<%=shop.getSid()%>" class=" badge-primary">view</a></td>
 					    		<td><%=shop.getAddressOne() %></td>

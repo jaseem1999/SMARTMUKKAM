@@ -78,7 +78,7 @@
   			margin-top: 29px;
 		}
 		.homeFull{
-		 	max-width: 1000px;
+		 	max-width: 1300px;
 		 	height: 500px;
 		 	border: 1px solid;
 		}

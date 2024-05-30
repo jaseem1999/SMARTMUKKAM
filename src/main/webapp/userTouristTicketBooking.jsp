@@ -180,7 +180,7 @@ for(TicketBookedDTO tb : tbs) {
         if(tb.getStatus() == null){
             out.print("<span  style='color : blue;'>Processing</span>");
         } else if(tb.getStatus().equals("Accept")){
-            out.print("<span  style='color : green;'>Accept</span>");
+            out.print("<span  style='color : green;'>Accept (Please visit within 24 hours.)</span>");
         } else if(tb.getStatus().equals("Reject")){
             out.print("<span  style='color : red;'>Reject</span>");
         } else {

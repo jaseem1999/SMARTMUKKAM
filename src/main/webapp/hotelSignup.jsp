@@ -83,6 +83,7 @@ String email = (String) request.getParameter("hotelEmail");
             <div class="mb-3">
                 <label for="license" class="form-label ">Upload License(.pdf):</label>
                 <input class="form-control custom-file-input" type="file" id="license" name="license" required="required">
+                <span class="error" id="fileError"></span>
             </div>
             
         </div>
@@ -168,6 +169,7 @@ String email = (String) request.getParameter("hotelEmail");
         let phone = document.getElementById("phone").value;
         let password = document.getElementById("password").value;
         let confirmPassword = document.getElementById("conPassword").value;
+        var report = document.getElementById("license").value.trim();
        
         let status = true;
 
@@ -203,6 +205,19 @@ String email = (String) request.getParameter("hotelEmail");
         } else {
             document.getElementById("passwordError").innerHTML = "";
         }
+        if (report === "") {
+            document.getElementById("fileError").innerText = "Please upload a PDF file.";
+            status = false;
+        } else {
+            var allowedExtensions = /(\.pdf)$/i;
+            if (!allowedExtensions.exec(report)) {
+                document.getElementById("fileError").innerText = "Uploaded file must be a PDF.";
+                status = false;
+            } else {
+                document.getElementById("fileError").innerText = "";
+            }
+        }
+        
         console.log(status);
         return status;
     }

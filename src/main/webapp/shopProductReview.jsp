@@ -245,7 +245,13 @@ if(shopType == null){
 							<td>
 							 <form id="reviewForm_<%= r.getTid() %>" class="reviewForm">
             <input type="hidden" placeholder="Enter review comment" value="<%= r.getTid() %>" name="tid" />
-            <input type="text" placeholder="Enter review comment" value="<%= r.getComment() %>" name="comment" />
+            <input type="text" placeholder="Enter review comment" value="<% if(r.getComment() != null){
+            	out.print(r.getComment());
+            }else{
+            	
+            }
+            
+            %>" name="comment" />
             <button type="button" class="btn btn-primary submitReview">Submit</button>
         </form>
 							</td>
